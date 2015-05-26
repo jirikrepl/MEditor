@@ -308,7 +308,7 @@ public class ServerModule
         bind(LogInOutDAO.class).to(LogInOutDAOImpl.class);
         bind(ConversionDAO.class).to(ConversionDAOImpl.class);
         //        bind(UserDAO.class).to(UserDAOImpl.class);
-        bind(SecurityUserDAO.class).to(SecurityUserDAOImpl.class);
+        //bind(SecurityUserDAO.class).to(SecurityUserDAOImpl.class);
         bind(UserDAO.class).to(UserDAOImpl.class);
         //        bind(DBSchemaDAO.class).to(DBSchemaDAOImpl.class);
         //        bind(DAOUtils.class).to(DAOUtilsImpl.class);
@@ -348,11 +348,11 @@ public class ServerModule
         requestStaticInjection(FOXMLBuilderMapping.class);
         requestStaticInjection(JanrainClient.class);
         requestStaticInjection(JanrainAuthenticationFilter.class);
-        requestStaticInjection(SessionListener.class);
+        //requestStaticInjection(SessionListener.class);
         requestStaticInjection(ShibbolethAuthenticationFilter.class);
         requestStaticInjection(ShibbolethClient.class);
-        requestStaticInjection(LDAPAuthenticationProvider.class);
-        requestStaticInjection(LDAPAuthenticationFilter.class);
+        //requestStaticInjection(LDAPAuthenticationProvider.class);
+        //requestStaticInjection(LDAPAuthenticationFilter.class);
         requestStaticInjection(RequestForAddingServiceImpl.class);
     }
 }

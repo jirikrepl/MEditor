@@ -12,6 +12,8 @@ import cz.mzk.editor.client.util.Constants;
 import cz.mzk.editor.client.util.Constants.USER_IDENTITY_TYPES;
 import cz.mzk.editor.server.EditorUserAuthentication;
 
+import javax.inject.Inject;
+
 /*
  * Metadata Editor
  * 
@@ -43,6 +45,9 @@ import cz.mzk.editor.server.EditorUserAuthentication;
 public class ShibbolethAuthenticationProvider
         implements AuthenticationProvider {
 
+    @Inject
+    private  ShibbolethClient shibbolethClient;
+
     /**
      * {@inheritDoc}
      */
@@ -50,7 +55,7 @@ public class ShibbolethAuthenticationProvider
         String shibbolethIdentifier = (String) authentication.getPrincipal();
         Long userId = -1L;
 
-        if (shibbolethIdentifier != null) userId = ShibbolethClient.getUserId(shibbolethIdentifier);
+        if (shibbolethIdentifier != null) userId = shibbolethClient.getUserId(shibbolethIdentifier);
 
         if (userId < 0) {
             SecurityContextHolder.clearContext();

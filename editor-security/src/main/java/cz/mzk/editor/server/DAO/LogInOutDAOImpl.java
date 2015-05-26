@@ -36,7 +36,6 @@ import cz.mzk.editor.client.util.Constants;
  * @version Oct 23, 2012
  */
 public class LogInOutDAOImpl
-        extends AbstractDAO
         implements LogInOutDAO {
 
     private static final Logger LOGGER = Logger.getLogger(LogInOutDAOImpl.class);
@@ -51,33 +50,33 @@ public class LogInOutDAOImpl
      * {@inheritDoc}
      */
     public void logInOut(Long userId, boolean logIn) throws DatabaseException {
-        PreparedStatement insSt = null;
-
-        try {
-            insSt = getConnection().prepareStatement(INSERT_LOG_IN_ACTION);
-            insSt.setLong(1, userId);
-            insSt.setBoolean(2, logIn);
-
-            if (insSt.executeUpdate() == 1) {
-                LOGGER.debug("DB has been updated: The user " + userId + " item has been loged.");
-            } else {
-                LOGGER.error("DB has not been updated! " + insSt);
-            }
-        } catch (SQLException e) {
-            LOGGER.error("Unable to insert information about log in or log out: " + insSt, e);
-            e.printStackTrace();
-        }
+//        PreparedStatement insSt = null;
+//
+//        try {
+//            insSt = getConnection().prepareStatement(INSERT_LOG_IN_ACTION);
+//            insSt.setLong(1, userId);
+//            insSt.setBoolean(2, logIn);
+//
+//            if (insSt.executeUpdate() == 1) {
+//                LOGGER.debug("DB has been updated: The user " + userId + " item has been loged.");
+//            } else {
+//                LOGGER.error("DB has not been updated! " + insSt);
+//            }
+//        } catch (SQLException e) {
+//            LOGGER.error("Unable to insert information about log in or log out: " + insSt, e);
+//            e.printStackTrace();
+//        }
     }
 
     /**
      * {@inheritDoc}
      */
     public void logInOut(boolean logIn) throws DatabaseException {
-        try {
-            logInOut(getUserId(true), logIn);
-        } catch (SQLException e) {
-            LOGGER.error(e.getMessage());
-            e.printStackTrace();
-        }
+//        try {
+//            logInOut(getUserId(true), logIn);
+//        } catch (SQLException e) {
+//            LOGGER.error(e.getMessage());
+//            e.printStackTrace();
+//        }
     }
 }

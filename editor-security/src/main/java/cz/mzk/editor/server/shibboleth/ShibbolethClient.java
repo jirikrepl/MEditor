@@ -56,13 +56,13 @@ public class ShibbolethClient {
 
     /** The log in out dao. */
     @Inject
-    private static LogInOutDAO logInOutDAO;
+    private LogInOutDAO logInOutDAO;
 
     /** The security user dao. */
     @Inject
-    private static SecurityUserDAO securityUserDAO;
+    private SecurityUserDAO securityUserDAO;
 
-    public static Long getUserId(String shibboleth) {
+    public Long getUserId(String shibboleth) {
 	Long userId = -1L;
 	try {
 	    userId = securityUserDAO.getUserId(shibboleth, USER_IDENTITY_TYPES.SHIBBOLETH, true);

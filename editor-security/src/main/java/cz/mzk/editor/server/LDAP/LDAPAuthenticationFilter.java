@@ -26,6 +26,7 @@ package cz.mzk.editor.server.LDAP;
 
 import java.io.IOException;
 
+import javax.annotation.Resource;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -61,7 +62,7 @@ public class LDAPAuthenticationFilter
         extends UsernamePasswordAuthenticationFilter {
 
     @Inject
-    private static EditorConfiguration configuration;
+    private EditorConfiguration configuration;
 
     /** The Constant LOGGER. */
     private static final Logger LOGGER = Logger.getLogger(LDAPAuthenticationFilter.class.getPackage()

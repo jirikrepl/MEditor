@@ -52,13 +52,13 @@ public class JanrainClient {
 
     /** The log in out dao. */
     @Inject
-    private static LogInOutDAO logInOutDAO;
+    private LogInOutDAO logInOutDAO;
 
     /** The security user dao. */
     @Inject
-    private static SecurityUserDAO securityUserDAO;
+    private SecurityUserDAO securityUserDAO;
 
-    public static Long getUserId(String openId) throws DatabaseException, SQLException {
+    public Long getUserId(String openId) throws DatabaseException, SQLException {
         try {
             Long userId = securityUserDAO.getUserId(openId, USER_IDENTITY_TYPES.OPEN_ID, true);
             if (userId > 0) {

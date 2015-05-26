@@ -79,11 +79,11 @@ public class LDAPAuthenticationProvider
 
     /** The log in out dao. */
     @Inject
-    private static LogInOutDAO logInOutDAO;
+    private LogInOutDAO logInOutDAO;
 
     /** The security user dao. */
     @Inject
-    private static SecurityUserDAO securityUserDAO;
+    private SecurityUserDAO securityUserDAO;
 
     private Properties ldapProperties = null;
 

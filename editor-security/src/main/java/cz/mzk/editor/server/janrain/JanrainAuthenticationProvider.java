@@ -17,6 +17,8 @@ import cz.mzk.editor.client.util.Constants.USER_IDENTITY_TYPES;
 import cz.mzk.editor.server.EditorUserAuthentication;
 import cz.mzk.editor.server.DAO.DatabaseException;
 
+import javax.inject.Inject;
+
 /*
  * Metadata Editor
  * 
@@ -48,6 +50,9 @@ import cz.mzk.editor.server.DAO.DatabaseException;
 public class JanrainAuthenticationProvider
         implements AuthenticationProvider {
 
+    @Inject
+    private JanrainClient janrainClient;
+
     /**
      * {@inheritDoc}
      */
@@ -56,7 +61,7 @@ public class JanrainAuthenticationProvider
         Long userId = -1L;
         if (openId != null)
 	    try {
-		userId = JanrainClient.getUserId(openId);
+		userId = janrainClient.getUserId(openId);
 	    } catch (DatabaseException e) {
 		throw new AuthenticationServiceException(Constants.CANNOT_CONNECT_TO_DB);
 	    } catch (SQLException e) {

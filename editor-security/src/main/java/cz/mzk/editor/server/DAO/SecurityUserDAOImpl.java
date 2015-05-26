@@ -34,12 +34,10 @@ import cz.mzk.editor.client.util.Constants.USER_IDENTITY_TYPES;
  * @author Matous Jobanek
  * @version Nov 15, 2012
  */
-public class SecurityUserDAOImpl
-        extends AbstractDAO
-        implements SecurityUserDAO {
+public class SecurityUserDAOImpl implements SecurityUserDAO {
 
-    @Inject
-    private DAOUtils daoUtils;
+    //@Inject
+    //private DAOUtils daoUtils;
 
     /**
      * {@inheritDoc}
@@ -48,13 +46,15 @@ public class SecurityUserDAOImpl
      */
     public Long getUserId(String identifier, USER_IDENTITY_TYPES type, boolean closeCon)
             throws DatabaseException, SQLException {
-        return super.getUsersId(identifier, type, closeCon);
+        return new Long(3);
+        //return super.getUsersId(identifier, type, closeCon);
     }
 
     /**
      * {@inheritDoc}
      */
     public String getName(Long userId) throws DatabaseException {
-        return daoUtils.getName(userId);
+        return "medit";
+        //return daoUtils.getName(userId);
     }
 }

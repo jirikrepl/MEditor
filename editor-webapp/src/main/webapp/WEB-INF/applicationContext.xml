@@ -2,8 +2,10 @@
 
 
 <b:beans xmlns="http://www.springframework.org/schema/security"
+    xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:b="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+	                        http://www.springframework.org/schema/context	http://www.springframework.org/schema/context/spring-context-3.2.xsd
 	                        http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.2.xsd">
     <!-- white list -->
     <http pattern="/html/**" security="none" />
@@ -29,7 +31,11 @@
 		<custom-filter position="CHANNEL_FILTER" ref="channelProcessingFilter" />
 	</http>
 
-	<b:bean id="ldapAuthenticationProvider"
+    <context:annotation-config />
+    <b:bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"/>
+
+
+    <b:bean id="ldapAuthenticationProvider"
 		class="cz.mzk.editor.server.LDAP.LDAPAuthenticationProvider" />
 
 	<b:bean id="janrainAuthenticationProvider"
@@ -39,6 +45,14 @@
 	<b:bean id="shibbolethAuthenticationProvider"
 		class="cz.mzk.editor.server.shibboleth.ShibbolethAuthenticationProvider">
 	</b:bean>
+
+    <b:bean id="logInOutDAO" class="cz.mzk.editor.server.DAO.LogInOutDAOImpl" />
+    <b:bean id="securityUserDAO" class="cz.mzk.editor.server.DAO.SecurityUserDAOImpl" />
+
+    <b:bean id="janrainClient" class="cz.mzk.editor.server.janrain.JanrainClient" />
+    <b:bean id="shibbolethClient" class="cz.mzk.editor.server.shibboleth.ShibbolethClient" />
+
+    <b:bean id="editorConfiguration" class="cz.mzk.editor.server.config.EditorConfigurationImpl" />
 
 	<authentication-manager alias="authenticationManager">
 		<authentication-provider ref="ldapAuthenticationProvider" />

@@ -33,6 +33,7 @@ import java.text.SimpleDateFormat;
 
 import java.util.Date;
 
+import javax.servlet.ServletContextEvent;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
@@ -47,6 +48,7 @@ import cz.mzk.editor.server.DAO.DatabaseException;
 import cz.mzk.editor.server.DAO.LogInOutDAOImpl;
 import cz.mzk.editor.server.DAO.SecurityUserDAO;
 import cz.mzk.editor.server.config.EditorConfiguration.ServerConstants;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
 public class SessionListener
         implements HttpSessionListener {
@@ -56,15 +58,22 @@ public class SessionListener
     private static final SimpleDateFormat FORMATTER = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 
     @Inject
-    private static LogInOutDAOImpl logInOutDAO;
+    private LogInOutDAOImpl logInOutDAO;
 
     @Inject
-    private static SecurityUserDAO securityUserDAO;
+    private SecurityUserDAO securityUserDAO;
 
     /**
      * {@inheritDoc}
      */
     public void sessionCreated(HttpSessionEvent se) {
+    }
+
+    public void contextInitialized(ServletContextEvent sce) {
+        WebApplicationContextUtils
+                .getRequiredWebApplicationContext(sce.getServletContext())
+                .getAutowireCapableBeanFactory()
+                .autowireBean(this);
     }
 
     /**
