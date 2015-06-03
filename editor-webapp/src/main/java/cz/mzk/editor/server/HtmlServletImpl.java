@@ -2,6 +2,8 @@ package cz.mzk.editor.server;
 
 import com.google.inject.Injector;
 import cz.mzk.editor.server.config.EditorConfiguration;
+import org.springframework.context.ApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import javax.inject.Inject;
 import javax.servlet.ServletConfig;
@@ -24,20 +26,13 @@ public class HtmlServletImpl  extends HttpServlet {
 
     @Override
     public void init(ServletConfig config) throws ServletException {
-        super.init(config);
-        Injector injector = getInjector();
-        injector.injectMembers(this);
-    }
+        WebApplicationContextUtils
+                .getRequiredWebApplicationContext(config.getServletContext())
+                .getAutowireCapableBeanFactory()
+                .autowireBean(this);
+        super.init();
 
-    /**
-     * Gets the injector.
-     *
-     * @return the injector
-     */
-    protected Injector getInjector() {
-        return (Injector) getServletContext().getAttribute(Injector.class.getName());
     }
-
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 

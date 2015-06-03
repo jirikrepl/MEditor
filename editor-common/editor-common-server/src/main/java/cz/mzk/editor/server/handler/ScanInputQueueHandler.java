@@ -35,6 +35,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import javax.annotation.Resource;
 import javax.inject.Inject;
 
 import com.google.inject.name.Named;
@@ -57,11 +58,15 @@ import cz.mzk.editor.shared.rpc.InputQueueItem;
 import cz.mzk.editor.shared.rpc.ServerActionResult;
 import cz.mzk.editor.shared.rpc.action.ScanInputQueueAction;
 import cz.mzk.editor.shared.rpc.action.ScanInputQueueResult;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Service;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class ScanInputQueueHandler.
  */
+@Service
 public class ScanInputQueueHandler
         implements ActionHandler<ScanInputQueueAction, ScanInputQueueResult> {
 
@@ -76,7 +81,7 @@ public class ScanInputQueueHandler
 
     /** The fedora access. */
     @Inject
-    @Named("securedFedoraAccess")
+    @Qualifier("securedFedoraAccess")
     private FedoraAccess fedoraAccess;
 
     /** The input queue dao. */

@@ -43,11 +43,13 @@ import org.apache.log4j.Logger;
 import cz.mzk.editor.client.util.Constants;
 import cz.mzk.editor.shared.rpc.IngestInfo;
 import cz.mzk.editor.shared.rpc.InputQueueItem;
+import org.springframework.stereotype.Repository;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class InputQueueItemDAOImpl.
  */
+@Repository
 public class InputQueueItemDAOImpl
         extends AbstractDAO
         implements InputQueueItemDAO {

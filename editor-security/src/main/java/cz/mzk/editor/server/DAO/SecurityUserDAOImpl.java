@@ -29,6 +29,7 @@ import java.sql.SQLException;
 import javax.inject.Inject;
 
 import cz.mzk.editor.client.util.Constants.USER_IDENTITY_TYPES;
+import org.jooq.DSLContext;
 
 /**
  * @author Matous Jobanek
@@ -36,14 +37,10 @@ import cz.mzk.editor.client.util.Constants.USER_IDENTITY_TYPES;
  */
 public class SecurityUserDAOImpl implements SecurityUserDAO {
 
-    //@Inject
-    //private DAOUtils daoUtils;
 
-    /**
-     * {@inheritDoc}
-     * 
-     * @throws SQLException
-     */
+    @Inject
+    DSLContext create;
+
     public Long getUserId(String identifier, USER_IDENTITY_TYPES type, boolean closeCon)
             throws DatabaseException, SQLException {
         return new Long(3);

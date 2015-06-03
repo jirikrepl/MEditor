@@ -11,9 +11,10 @@ public class GuiceFactory {
     private static Injector injector;
 
     public static Injector getInjector() {
-        if (injector == null) {
-            injector = Guice.createInjector(new ServerModule(), new DispatchServletModule());
-        }
-        return injector;
+        //if (injector == null) {
+        //    injector = Guice.createInjector(new ServerModule(), new DispatchServletModule());
+        //}
+        //return injector;
+        return null;
     }
 }

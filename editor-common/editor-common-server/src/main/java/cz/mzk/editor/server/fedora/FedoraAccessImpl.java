@@ -55,6 +55,7 @@ import javax.inject.Inject;
 
 import org.apache.log4j.Logger;
 
+import org.springframework.stereotype.Component;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -91,6 +92,7 @@ import static cz.mzk.editor.server.fedora.utils.FedoraUtils.getFedoraDatastreams
  * @see FedoraAccess
  * @author pavels
  */
+@Component("rawFedoraAccess")
 public class FedoraAccessImpl
         implements FedoraAccess {
 

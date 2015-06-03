@@ -36,11 +36,13 @@ import org.apache.log4j.Logger;
 
 import cz.mzk.editor.client.util.Constants;
 import cz.mzk.editor.shared.rpc.InputQueueItem;
+import org.springframework.stereotype.Repository;
 
 /**
  * @author Matous Jobanek
  * @version Oct 24, 2012
  */
+@Repository
 public class ConversionDAOImpl
         extends AbstractDAO
         implements ConversionDAO {

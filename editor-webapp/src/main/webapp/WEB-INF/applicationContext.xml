@@ -32,6 +32,11 @@
 	</http>
 
     <context:annotation-config />
+
+	<context:component-scan base-package="com.gwtplatform.dispatch.server.spring, cz.mzk.editor.shared.rpc,
+		cz.mzk.editor.server.handler, cz.mzk.editor.server.fedora, cz.mzk.editor.server.fedora, cz.mzk.editor.server.DAO" />
+
+
     <b:bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"/>
 
 
@@ -75,6 +80,18 @@
 		<b:property name="authenticationManager" ref="authenticationManager" />
 	</b:bean>
 
+	<b:bean class="cz.mzk.editor.server.guice.ServerModule"/>
+
+	<b:bean id="logger" class="com.gwtplatform.dispatch.server.spring.LoggerFactoryBean">
+		<b:constructor-arg>
+			<b:bean class="java.util.logging.Logger" factory-method="getAnonymousLogger">
+				<b:property name="level">
+					<b:value>FINEST</b:value>
+				</b:property>
+			</b:bean>
+		</b:constructor-arg>
+	</b:bean>
+
 	<b:bean id="channelProcessingFilter"
 		class="org.springframework.security.web.access.channel.ChannelProcessingFilter">
 		<b:property name="channelDecisionManager" ref="channelDecisionManager" />
@@ -99,5 +116,49 @@
 		class="org.springframework.security.web.access.channel.SecureChannelProcessor" />
 	<b:bean id="insecureChannelProcessor"
 		class="org.springframework.security.web.access.channel.InsecureChannelProcessor" />
+
+	<b:bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close" >
+		<!-- These properties are replaced by Maven "resources" -->
+		<b:property name="url" value="jdbc:postgresql://localhost/meditor" />
+		<b:property name="driverClassName" value="org.postgresql.Driver" />
+		<b:property name="username" value="meditor" />
+		<b:property name="password" value="meditor" />
+	</b:bean>
+
+	<!-- Configure Spring's transaction manager to use a DataSource -->
+	<b:bean id="transactionManager"
+		  class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<b:property name="dataSource" ref="dataSource" />
+	</b:bean>
+
+	<!-- Configure jOOQ's ConnectionProvider to use Spring's TransactionAwareDataSourceProxy,
+         which can dynamically discover the transaction context -->
+	<b:bean id="transactionAwareDataSource"
+		  class="org.springframework.jdbc.datasource.TransactionAwareDataSourceProxy">
+		<b:constructor-arg ref="dataSource" />
+	</b:bean>
+
+	<b:bean class="org.jooq.impl.DataSourceConnectionProvider" name="connectionProvider">
+		<b:constructor-arg ref="transactionAwareDataSource" />
+	</b:bean>
+
+	<!-- Configure the DSL object, optionally overriding jOOQ Exceptions with Spring Exceptions -->
+	<b:bean id="dsl" class="org.jooq.impl.DefaultDSLContext">
+		<b:constructor-arg ref="config" />
+	</b:bean>
+
+
+	<!-- Invoking an internal, package-private constructor for the example
+         Implement your own Configuration for more reliable behaviour -->
+	<b:bean class="org.jooq.impl.DefaultConfiguration" name="config">
+		<b:constructor-arg index="0" ref="connectionProvider" />
+		<b:constructor-arg index="1"><b:null /></b:constructor-arg>
+		<b:constructor-arg index="2"><b:null /></b:constructor-arg>
+		<b:constructor-arg index="3"><b:null /></b:constructor-arg>
+		<b:constructor-arg index="4"><b:null /></b:constructor-arg>
+		<b:constructor-arg index="5"><b:value type="org.jooq.SQLDialect">POSTGRES_9_3</b:value></b:constructor-arg>
+		<b:constructor-arg index="6"><b:null /></b:constructor-arg>
+		<b:constructor-arg index="7"><b:null /></b:constructor-arg>
+	</b:bean>
 
 </b:beans>

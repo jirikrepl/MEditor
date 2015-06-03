@@ -32,8 +32,9 @@ import javax.xml.namespace.NamespaceContext;
 import com.google.inject.Scopes;
 import com.google.inject.assistedinject.FactoryModuleBuilder;
 import com.google.inject.name.Names;
-import com.gwtplatform.dispatch.server.guice.HandlerModule;
+import com.gwtplatform.dispatch.server.spring.HandlerModule;
 
+import com.gwtplatform.dispatch.server.spring.configuration.DefaultModule;
 import cz.mzk.editor.server.*;
 import cz.mzk.editor.server.metadataDownloader.*;
 import org.quartz.SchedulerFactory;
@@ -215,11 +216,16 @@ import cz.mzk.editor.shared.rpc.action.StoreTreeStructureAction;
 import cz.mzk.editor.shared.rpc.action.StoredItemsAction;
 import cz.mzk.editor.shared.rpc.action.UnlockDigitalObjectAction;
 import cz.mzk.editor.shared.rpc.action.QuartzAddOcrAction;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 
 // TODO: Auto-generated Javadoc
 /**
  * Module which binds the handlers and configurations.
  */
+@Configuration
+@Import(DefaultModule.class)
 public class ServerModule
         extends HandlerModule {
 
@@ -264,7 +270,7 @@ public class ServerModule
         bindHandler(QuartzConvertImagesAction.class, QuartzConvertImagesHandler.class);
         bindHandler(QuartzAddOcrAction.class, QuartzAddOcrHandler.class);
         bindHandler(QuartzScheduleJobsAction.class, QuartzScheduleJobsHandler.class);
-        bind(EditorConfiguration.class).to(EditorConfigurationImpl.class).asEagerSingleton();
+//        bind(EditorConfiguration.class).to(EditorConfigurationImpl.class).asEagerSingleton();
 
         bindHandler(GetUsersInfoAction.class, GetUsersInfoHandler.class);
         bindHandler(RemoveUserAction.class, RemoveUserHandler.class);
@@ -294,65 +300,65 @@ public class ServerModule
         //        bind(EditorConfiguration.class).to(EditorConfigurationImpl.class).asEagerSingleton();
         bindHandler(GetHistoryDaysAction.class, GetHistoryDaysHandler.class);
 
-        // DAO
-        bind(InputQueueItemDAO.class).to(InputQueueItemDAOImpl.class);
-        bind(ImageResolverDAO.class).to(ImageResolverDAOImpl.class);
-        bind(RecentlyModifiedItemDAO.class).to(RecentlyModifiedItemDAOImpl.class);
-        bind(RequestDAO.class).to(RequestDAOImpl.class);
-        bind(LockDAO.class).to(LockDAOImpl.class);
-        bind(StoredItemsDAO.class).to(StoredItemsDAOImpl.class);
-        bind(TreeStructureDAO.class).to(TreeStructureDAOImpl.class);
-        bind(DAOUtils.class).to(DAOUtilsImpl.class);
-        bind(DescriptionDAO.class).to(DescriptionDAOImpl.class);
-        bind(DigitalObjectDAO.class).to(DigitalObjectDAOImpl.class);
-        bind(LogInOutDAO.class).to(LogInOutDAOImpl.class);
-        bind(ConversionDAO.class).to(ConversionDAOImpl.class);
-        //        bind(UserDAO.class).to(UserDAOImpl.class);
-        //bind(SecurityUserDAO.class).to(SecurityUserDAOImpl.class);
-        bind(UserDAO.class).to(UserDAOImpl.class);
-        //        bind(DBSchemaDAO.class).to(DBSchemaDAOImpl.class);
-        //        bind(DAOUtils.class).to(DAOUtilsImpl.class);
-        bind(ActionDAO.class).to(ActionDAOImpl.class);
-        bind(StoredAndLocksDAO.class).to(StoredAndLocksDAOImpl.class);
-        bind(OcrDao.class).to(OcrDaoImpl.class);
-
-        // Fedora
-        bind(FedoraAccess.class).annotatedWith(Names.named("rawFedoraAccess")).to(FedoraAccessImpl.class)
-                .in(Scopes.SINGLETON);
-        bind(FedoraAccess.class).annotatedWith(Names.named("securedFedoraAccess"))
-                .to(SecuredFedoraAccessImpl.class).in(Scopes.SINGLETON);
-        bind(NamespaceContext.class).to(FedoraNamespaceContext.class).in(Scopes.SINGLETON);
-
-        bind(FedoraDigitalObjectHandler.class).to(FedoraDigitalObjectHandlerImpl.class);
-        bind(StoredDigitalObjectHandler.class).to(StoredDigitalObjectHandlerImpl.class);
-        bind(Z3950Client.class).to(Z3950ClientImpl.class);
-        bind(OAIPMHClient.class).to(OAIPMHClientImpl.class);
-        bind(XServicesClient.class).to(XServicesClientImpl.class);
-
-        bind(IPaddressChecker.class).to(RequestIPaddressChecker.class);
-
-        // Quartz
-        bind(SchedulerFactory.class).to(StdSchedulerFactory.class).in(Scopes.SINGLETON);
-        bind(GuiceJobFactory.class).in(Scopes.SINGLETON);
-        bind(Quartz.class).in(Scopes.SINGLETON);
-
-        install(new FactoryModuleBuilder()
-                .implement(ScanFolder.class, ScanFolderImpl.class)
-                .build(ScanFolderImpl.ScanFolderFactory.class));
-
-        // static injection
-        requestStaticInjection(FedoraUtils.class);
-        requestStaticInjection(URLS.class);
-        requestStaticInjection(IngestUtils.class);
-        requestStaticInjection(ServerUtils.class);
-        requestStaticInjection(FOXMLBuilderMapping.class);
-        requestStaticInjection(JanrainClient.class);
-        requestStaticInjection(JanrainAuthenticationFilter.class);
-        //requestStaticInjection(SessionListener.class);
-        requestStaticInjection(ShibbolethAuthenticationFilter.class);
-        requestStaticInjection(ShibbolethClient.class);
-        //requestStaticInjection(LDAPAuthenticationProvider.class);
-        //requestStaticInjection(LDAPAuthenticationFilter.class);
-        requestStaticInjection(RequestForAddingServiceImpl.class);
+//        // DAO
+//        bind(InputQueueItemDAO.class).to(InputQueueItemDAOImpl.class);
+//        bind(ImageResolverDAO.class).to(ImageResolverDAOImpl.class);
+//        bind(RecentlyModifiedItemDAO.class).to(RecentlyModifiedItemDAOImpl.class);
+//        bind(RequestDAO.class).to(RequestDAOImpl.class);
+//        bind(LockDAO.class).to(LockDAOImpl.class);
+//        bind(StoredItemsDAO.class).to(StoredItemsDAOImpl.class);
+//        bind(TreeStructureDAO.class).to(TreeStructureDAOImpl.class);
+//        bind(DAOUtils.class).to(DAOUtilsImpl.class);
+//        bind(DescriptionDAO.class).to(DescriptionDAOImpl.class);
+//        bind(DigitalObjectDAO.class).to(DigitalObjectDAOImpl.class);
+//        bind(LogInOutDAO.class).to(LogInOutDAOImpl.class);
+//        bind(ConversionDAO.class).to(ConversionDAOImpl.class);
+//        //        bind(UserDAO.class).to(UserDAOImpl.class);
+//        //bind(SecurityUserDAO.class).to(SecurityUserDAOImpl.class);
+//        bind(UserDAO.class).to(UserDAOImpl.class);
+//        //        bind(DBSchemaDAO.class).to(DBSchemaDAOImpl.class);
+//        //        bind(DAOUtils.class).to(DAOUtilsImpl.class);
+//        bind(ActionDAO.class).to(ActionDAOImpl.class);
+//        bind(StoredAndLocksDAO.class).to(StoredAndLocksDAOImpl.class);
+//        bind(OcrDao.class).to(OcrDaoImpl.class);
+//
+//        // Fedora
+//        bind(FedoraAccess.class).annotatedWith(Names.named("rawFedoraAccess")).to(FedoraAccessImpl.class)
+//                .in(Scopes.SINGLETON);
+//        bind(FedoraAccess.class).annotatedWith(Names.named("securedFedoraAccess"))
+//                .to(SecuredFedoraAccessImpl.class).in(Scopes.SINGLETON);
+//        bind(NamespaceContext.class).to(FedoraNamespaceContext.class).in(Scopes.SINGLETON);
+//
+//        bind(FedoraDigitalObjectHandler.class).to(FedoraDigitalObjectHandlerImpl.class);
+//        bind(StoredDigitalObjectHandler.class).to(StoredDigitalObjectHandlerImpl.class);
+//        bind(Z3950Client.class).to(Z3950ClientImpl.class);
+//        bind(OAIPMHClient.class).to(OAIPMHClientImpl.class);
+//        bind(XServicesClient.class).to(XServicesClientImpl.class);
+//
+//        bind(IPaddressChecker.class).to(RequestIPaddressChecker.class);
+//
+//        // Quartz
+//        bind(SchedulerFactory.class).to(StdSchedulerFactory.class).in(Scopes.SINGLETON);
+//        bind(GuiceJobFactory.class).in(Scopes.SINGLETON);
+//        bind(Quartz.class).in(Scopes.SINGLETON);
+//
+//        install(new FactoryModuleBuilder()
+//                .implement(ScanFolder.class, ScanFolderImpl.class)
+//                .build(ScanFolderImpl.ScanFolderFactory.class));
+//
+//        // static injection
+//        requestStaticInjection(FedoraUtils.class);
+//        requestStaticInjection(URLS.class);
+//        requestStaticInjection(IngestUtils.class);
+//        requestStaticInjection(ServerUtils.class);
+//        requestStaticInjection(FOXMLBuilderMapping.class);
+//        requestStaticInjection(JanrainClient.class);
+//        requestStaticInjection(JanrainAuthenticationFilter.class);
+//        //requestStaticInjection(SessionListener.class);
+//        requestStaticInjection(ShibbolethAuthenticationFilter.class);
+//        requestStaticInjection(ShibbolethClient.class);
+//        //requestStaticInjection(LDAPAuthenticationProvider.class);
+//        //requestStaticInjection(LDAPAuthenticationFilter.class);
+//        requestStaticInjection(RequestForAddingServiceImpl.class);
     }
 }
