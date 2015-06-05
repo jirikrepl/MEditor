@@ -33,6 +33,7 @@ import java.text.SimpleDateFormat;
 
 import javax.inject.Inject;
 
+import cz.mzk.editor.server.cz.mzk.server.editor.api.LockDAO;
 import org.apache.log4j.Logger;
 
 import cz.mzk.editor.client.util.Constants;

@@ -37,6 +37,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import cz.mzk.editor.server.cz.mzk.server.editor.api.ImageResolverDAO;
 import org.apache.log4j.Logger;
 
 import cz.mzk.editor.client.util.Constants;

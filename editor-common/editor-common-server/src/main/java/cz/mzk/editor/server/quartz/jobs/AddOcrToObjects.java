@@ -9,7 +9,7 @@ import com.google.inject.Injector;
 import com.google.inject.Key;
 import com.google.inject.name.Names;
 import cz.mzk.editor.server.DAO.DatabaseException;
-import cz.mzk.editor.server.DAO.OcrDao;
+import cz.mzk.editor.server.cz.mzk.server.editor.api.OcrDao;
 import cz.mzk.editor.server.config.EditorConfiguration;
 import cz.mzk.editor.server.fedora.FedoraAccess;
 import cz.mzk.editor.server.fedora.ImageMimeType;

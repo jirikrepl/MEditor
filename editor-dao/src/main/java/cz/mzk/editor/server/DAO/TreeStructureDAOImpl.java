@@ -40,6 +40,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import cz.mzk.editor.server.cz.mzk.server.editor.api.TreeStructureDAO;
 import org.apache.log4j.Logger;
 
 import cz.mzk.editor.client.util.Constants;

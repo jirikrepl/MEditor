@@ -30,6 +30,7 @@ import java.sql.SQLException;
 
 import javax.inject.Inject;
 
+import cz.mzk.editor.server.cz.mzk.server.editor.api.DescriptionDAO;
 import org.apache.log4j.Logger;
 
 import cz.mzk.editor.client.util.Constants;

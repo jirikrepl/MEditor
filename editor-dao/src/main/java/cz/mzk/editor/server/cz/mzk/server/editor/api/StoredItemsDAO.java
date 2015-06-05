@@ -1,11 +1,8 @@
 /*
  * Metadata Editor
- * @author Jiri Kremser
- * 
- * 
  * 
  * Metadata Editor - Rich internet application for editing metadata.
- * Copyright (C) 2011  Jiri Kremser (kremser@mzk.cz)
+ * Copyright (C) 2011  Matous Jobanek (matous.jobanek@mzk.cz)
  * Moravian Library in Brno
  *
  * This program is free software; you can redistribute it and/or
@@ -25,40 +22,32 @@
  * 
  */
 
-package cz.mzk.editor.server.DAO;
+package cz.mzk.editor.server.cz.mzk.server.editor.api;
 
-import java.util.ArrayList;
-
-import cz.mzk.editor.shared.rpc.RecentlyModifiedItem;
+import cz.mzk.editor.server.DAO.DatabaseException;
+import cz.mzk.editor.shared.rpc.StoredItem;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Interface RecentlyModifiedItemDAO.
+ * The Interface StoredItemsDAO.
+ * 
+ * @author Matous Jobanek
+ * @version $Id$
  */
-public interface RecentlyModifiedItemDAO {
+
+public interface StoredItemsDAO {
 
     /**
-     * Put.
+     * Check stored digital object.
      * 
-     * @param toPut
-     *        the to put
+     * @param userId
+     *        the user id
+     * @param storedItem
+     *        the stored item
      * @return true, if successful
      * @throws DatabaseException
      *         the database exception
      */
-    boolean put(RecentlyModifiedItem toPut) throws DatabaseException;
-
-    /**
-     * Gets the items.
-     * 
-     * @param nLatest
-     *        the n latest
-     * @param user_id
-     *        the user_id
-     * @return the items
-     * @throws DatabaseException
-     *         the database exception
-     */
-    ArrayList<RecentlyModifiedItem> getItems(int nLatest, Long user_id) throws DatabaseException;
+    boolean checkStoredDigitalObject(long userId, StoredItem storedItem) throws DatabaseException;
 
 }

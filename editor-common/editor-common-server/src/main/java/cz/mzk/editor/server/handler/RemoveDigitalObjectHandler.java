@@ -49,7 +49,7 @@ import org.w3c.dom.Document;
 
 import cz.mzk.editor.client.util.Constants;
 import cz.mzk.editor.client.util.Constants.EDITOR_RIGHTS;
-import cz.mzk.editor.server.DAO.DigitalObjectDAO;
+import cz.mzk.editor.server.cz.mzk.server.editor.api.DigitalObjectDAO;
 import cz.mzk.editor.server.config.EditorConfiguration;
 import cz.mzk.editor.server.fedora.FedoraAccess;
 import cz.mzk.editor.server.fedora.utils.FedoraUtils;

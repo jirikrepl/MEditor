@@ -32,6 +32,7 @@ import java.util.ArrayList;
 
 import javax.inject.Inject;
 
+import cz.mzk.editor.server.cz.mzk.server.editor.api.ConversionDAO;
 import org.apache.log4j.Logger;
 
 import cz.mzk.editor.client.util.Constants;

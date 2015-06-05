@@ -23,10 +23,11 @@ public class FlywayListener implements ServletContextListener {
 
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {
-        WebApplicationContextUtils
-                .getRequiredWebApplicationContext(servletContextEvent.getServletContext())
-                .getAutowireCapableBeanFactory()
-                .autowireBean(this);
+            WebApplicationContextUtils
+                    .getRequiredWebApplicationContext(servletContextEvent.getServletContext())
+                    .getAutowireCapableBeanFactory()
+                    .autowireBean(this);
+
 
         Flyway flyway = new Flyway();
         String login = configuration.getDBLogin();

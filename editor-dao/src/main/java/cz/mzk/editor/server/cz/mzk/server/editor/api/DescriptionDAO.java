@@ -22,7 +22,9 @@
  * 
  */
 
-package cz.mzk.editor.server.DAO;
+package cz.mzk.editor.server.cz.mzk.server.editor.api;
+
+import cz.mzk.editor.server.DAO.DatabaseException;
 
 /**
  * @author Matous Jobanek

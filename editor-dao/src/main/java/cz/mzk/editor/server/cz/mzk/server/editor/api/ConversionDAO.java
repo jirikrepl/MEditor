@@ -22,10 +22,11 @@
  * 
  */
 
-package cz.mzk.editor.server.DAO;
+package cz.mzk.editor.server.cz.mzk.server.editor.api;
 
 import java.util.ArrayList;
 
+import cz.mzk.editor.server.DAO.DatabaseException;
 import cz.mzk.editor.shared.rpc.InputQueueItem;
 
 /**

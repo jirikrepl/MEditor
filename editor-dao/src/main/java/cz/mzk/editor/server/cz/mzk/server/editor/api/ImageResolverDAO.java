@@ -25,11 +25,12 @@
  * 
  */
 
-package cz.mzk.editor.server.DAO;
+package cz.mzk.editor.server.cz.mzk.server.editor.api;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import cz.mzk.editor.server.DAO.DatabaseException;
 import cz.mzk.editor.shared.rpc.ImageItem;
 
 // TODO: Auto-generated Javadoc

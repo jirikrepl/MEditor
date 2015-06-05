@@ -29,6 +29,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import cz.mzk.editor.server.cz.mzk.server.editor.api.StoredItemsDAO;
 import org.apache.log4j.Logger;
 
 import cz.mzk.editor.client.util.Constants;

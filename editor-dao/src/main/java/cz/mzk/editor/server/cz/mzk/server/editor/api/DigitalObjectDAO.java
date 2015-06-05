@@ -22,11 +22,12 @@
  * 
  */
 
-package cz.mzk.editor.server.DAO;
+package cz.mzk.editor.server.cz.mzk.server.editor.api;
 
 import java.util.List;
 
 import cz.mzk.editor.client.util.Constants.CRUD_ACTION_TYPES;
+import cz.mzk.editor.server.DAO.DatabaseException;
 
 // TODO: Auto-generated Javadoc
 /**

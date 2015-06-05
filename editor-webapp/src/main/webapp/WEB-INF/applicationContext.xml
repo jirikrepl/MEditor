@@ -34,7 +34,7 @@
     <context:annotation-config />
 
 	<context:component-scan base-package="com.gwtplatform.dispatch.server.spring, cz.mzk.editor.shared.rpc,
-		cz.mzk.editor.server.handler, cz.mzk.editor.server.fedora, cz.mzk.editor.server.fedora, cz.mzk.editor.server.DAO" />
+		cz.mzk.editor.server.handler, cz.mzk.editor.server.fedora, cz.mzk.editor.server.fedora, cz.mzk.editor.server.api, cz.mzk.editor.server.jooq.DAO" />
 
 
     <b:bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"/>
@@ -119,7 +119,7 @@
 
 	<b:bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close" >
 		<!-- These properties are replaced by Maven "resources" -->
-		<b:property name="url" value="jdbc:postgresql://localhost/meditor" />
+		<b:property name="url" value="jdbc:postgresql://localhost:5432/meditor" />
 		<b:property name="driverClassName" value="org.postgresql.Driver" />
 		<b:property name="username" value="meditor" />
 		<b:property name="password" value="meditor" />

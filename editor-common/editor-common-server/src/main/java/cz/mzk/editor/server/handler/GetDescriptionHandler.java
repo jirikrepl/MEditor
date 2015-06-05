@@ -36,7 +36,7 @@ import com.gwtplatform.dispatch.shared.ActionException;
 import org.apache.log4j.Logger;
 
 import cz.mzk.editor.server.DAO.DatabaseException;
-import cz.mzk.editor.server.DAO.DescriptionDAO;
+import cz.mzk.editor.server.cz.mzk.server.editor.api.DescriptionDAO;
 import cz.mzk.editor.server.util.ServerUtils;
 import cz.mzk.editor.shared.rpc.action.GetDescriptionAction;
 import cz.mzk.editor.shared.rpc.action.GetDescriptionResult;

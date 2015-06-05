@@ -1,6 +1,7 @@
 package cz.mzk.editor.server.DAO;
 
 import cz.mzk.editor.client.util.Constants;
+import cz.mzk.editor.server.cz.mzk.server.editor.api.OcrDao;
 import org.apache.log4j.Logger;
 
 import java.sql.PreparedStatement;

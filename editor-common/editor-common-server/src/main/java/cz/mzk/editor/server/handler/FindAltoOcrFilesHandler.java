@@ -42,7 +42,7 @@ import org.dom4j.DocumentException;
 import org.dom4j.io.SAXReader;
 
 import cz.mzk.editor.server.DAO.DatabaseException;
-import cz.mzk.editor.server.DAO.ImageResolverDAO;
+import cz.mzk.editor.server.cz.mzk.server.editor.api.ImageResolverDAO;
 import cz.mzk.editor.server.util.ServerUtils;
 import cz.mzk.editor.shared.rpc.action.FindAltoOcrFilesAction;
 import cz.mzk.editor.shared.rpc.action.FindAltoOcrFilesResult;

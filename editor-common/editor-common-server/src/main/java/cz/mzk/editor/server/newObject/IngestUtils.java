@@ -29,7 +29,7 @@ import javax.inject.Inject;
 import org.apache.log4j.Logger;
 
 import cz.mzk.editor.server.DAO.DatabaseException;
-import cz.mzk.editor.server.DAO.DigitalObjectDAO;
+import cz.mzk.editor.server.cz.mzk.server.editor.api.DigitalObjectDAO;
 import cz.mzk.editor.server.config.EditorConfiguration;
 import cz.mzk.editor.server.config.EditorConfiguration.ServerConstants;
 import cz.mzk.editor.server.util.RESTHelper;

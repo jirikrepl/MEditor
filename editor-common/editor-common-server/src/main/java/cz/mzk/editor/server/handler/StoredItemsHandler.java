@@ -44,7 +44,7 @@ import org.apache.log4j.Logger;
 import cz.mzk.editor.client.util.Constants;
 import cz.mzk.editor.server.DAO.DAOUtils;
 import cz.mzk.editor.server.DAO.DatabaseException;
-import cz.mzk.editor.server.DAO.StoredItemsDAO;
+import cz.mzk.editor.server.cz.mzk.server.editor.api.StoredItemsDAO;
 import cz.mzk.editor.server.config.EditorConfiguration;
 import cz.mzk.editor.server.fedora.utils.FedoraUtils;
 import cz.mzk.editor.server.modelHandler.StoredDigitalObjectHandlerImpl;

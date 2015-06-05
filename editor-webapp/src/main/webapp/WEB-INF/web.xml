@@ -36,6 +36,10 @@
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
 
+    <listener>
+        <listener-class>cz.mzk.editor.server.FlywayListener</listener-class>
+    </listener>
+
 	<listener>
 		<listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
 	</listener>
@@ -49,10 +53,6 @@
 		<servlet-name>dispatch</servlet-name>
 		<url-pattern>/dispatch/*</url-pattern>
 	</servlet-mapping>
-
-    <listener>
-        <listener-class>cz.mzk.editor.server.FlywayListener</listener-class>
-    </listener>
 
 
 	<!-- request 4 adding servlet -->
