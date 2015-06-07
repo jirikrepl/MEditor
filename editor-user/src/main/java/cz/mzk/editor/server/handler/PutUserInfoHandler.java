@@ -55,6 +55,9 @@ public class PutUserInfoHandler
     @Inject
     private UserDAO userDAO;
 
+    @Inject
+    ServerUtils serverUtils;
+
     /*
      * (non-Javadoc)
      * @see
@@ -67,9 +70,9 @@ public class PutUserInfoHandler
             throws ActionException {
 
         LOGGER.debug("Processing action: PutUserInfoAction " + action.getUser().getId());
-        ServerUtils.checkExpiredSession();
+        serverUtils.checkExpiredSession();
 
-        if (!ServerUtils.checkUserRightOrAll(EDITOR_RIGHTS.EDIT_USERS)) {
+        if (!serverUtils.checkUserRightOrAll(EDITOR_RIGHTS.EDIT_USERS)) {
             LOGGER.warn("Bad authorization in " + this.getClass().toString());
             throw new ActionException("Bad authorization in " + this.getClass().toString());
         }

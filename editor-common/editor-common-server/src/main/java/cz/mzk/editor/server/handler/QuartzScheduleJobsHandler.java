@@ -27,7 +27,6 @@ package cz.mzk.editor.server.handler;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.google.inject.Inject;
 import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.server.actionhandler.ActionHandler;
 import com.gwtplatform.dispatch.shared.ActionException;
@@ -47,6 +46,8 @@ import cz.mzk.editor.shared.rpc.ProcessItem;
 import cz.mzk.editor.shared.rpc.action.QuartzScheduleJobsAction;
 import cz.mzk.editor.shared.rpc.action.QuartzScheduleJobsResult;
 
+import javax.inject.Inject;
+
 /**
  * @author Martin Rumanek
  * @version 29.8.2012
@@ -61,6 +62,9 @@ public class QuartzScheduleJobsHandler
     @Inject
     Quartz quartz;
 
+    @Inject
+    ServerUtils serverUtils;
+
     /**
      * {@inheritDoc}
      */
@@ -69,9 +73,9 @@ public class QuartzScheduleJobsHandler
             throws ActionException {
 
         LOGGER.debug("Processing action: QuartzScheduleJobsAction");
-        ServerUtils.checkExpiredSession();
+        serverUtils.checkExpiredSession();
 
-        if (!ServerUtils.checkUserRightOrAll(EDITOR_RIGHTS.LONG_RUNNING_PROCESS)) {
+        if (!serverUtils.checkUserRightOrAll(EDITOR_RIGHTS.LONG_RUNNING_PROCESS)) {
             LOGGER.warn("Bad authorization in " + this.getClass().toString());
             throw new ActionException("Bad authorization in " + this.getClass().toString());
         }

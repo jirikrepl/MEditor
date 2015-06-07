@@ -73,6 +73,9 @@ public class LockDigitalObjectHandler
         this.getLockInformationHandler = new GetLockInformationHandler();
     }
 
+    @Inject
+    ServerUtils serverUtils;
+
     /**
      * {@inheritDoc}
      */
@@ -82,7 +85,7 @@ public class LockDigitalObjectHandler
             throws ActionException {
 
         LOGGER.debug("Processing action: LockDigitalObjectAction " + action.getUuid());
-        ServerUtils.checkExpiredSession();
+        serverUtils.checkExpiredSession();
 
         String uuid = action.getUuid();
         String description = (action.getDescription() == null ? "" : action.getDescription());

@@ -56,6 +56,9 @@ public class RemoveStoredWorkingCopyHandler
     @Inject
     private StoredAndLocksDAO storedAndLocksDAO;
 
+    @Inject
+    ServerUtils serverUtils;
+
     /**
      * {@inheritDoc}
      */
@@ -64,7 +67,7 @@ public class RemoveStoredWorkingCopyHandler
                                                       ExecutionContext context) throws ActionException {
 
         LOGGER.debug("Processing action: RemoveStoredWorkingCopyItemsAction");
-        ServerUtils.checkExpiredSession();
+        serverUtils.checkExpiredSession();
 
         boolean successful = true;
         try {

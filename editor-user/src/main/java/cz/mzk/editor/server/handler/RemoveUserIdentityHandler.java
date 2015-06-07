@@ -71,6 +71,9 @@ public class RemoveUserIdentityHandler
     @Inject
     private EditorConfiguration configuration;
 
+    @Inject
+    ServerUtils serverUtils;
+
     /*
      * (non-Javadoc)
      * @see
@@ -83,9 +86,9 @@ public class RemoveUserIdentityHandler
                                             final ExecutionContext context) throws ActionException {
 
         LOGGER.debug("Processing action: RemoveUserIdentityAction " + action.getUserIdentity());
-        ServerUtils.checkExpiredSession();
+        serverUtils.checkExpiredSession();
 
-        if (!ServerUtils.checkUserRightOrAll(EDITOR_RIGHTS.EDIT_USERS)) {
+        if (!serverUtils.checkUserRightOrAll(EDITOR_RIGHTS.EDIT_USERS)) {
             LOGGER.warn("Bad authorization in " + this.getClass().toString());
             throw new ActionException("Bad authorization in " + this.getClass().toString());
         }

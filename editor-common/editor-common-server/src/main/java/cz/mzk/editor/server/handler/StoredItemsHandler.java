@@ -76,6 +76,9 @@ public class StoredItemsHandler
     private static final Logger LOGGER = Logger.getLogger(StoredDigitalObjectHandlerImpl.class);
 
     @Inject
+    ServerUtils serverUtils;
+
+    @Inject
     public StoredItemsHandler(EditorConfiguration configuration) {
         this.configuration = configuration;
     }
@@ -89,7 +92,7 @@ public class StoredItemsHandler
             throws ActionException {
 
         LOGGER.debug("Processing action: StoredItemsAction " + action.getStoredItem().getFileName());
-        ServerUtils.checkExpiredSession();
+        serverUtils.checkExpiredSession();
 
         long userId = 0;
         try {

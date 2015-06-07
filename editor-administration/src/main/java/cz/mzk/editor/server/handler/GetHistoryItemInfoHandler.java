@@ -52,6 +52,9 @@ public class GetHistoryItemInfoHandler
     @Inject
     private ActionDAO actionDAO;
 
+    @javax.inject.Inject
+    ServerUtils serverUtils;
+
     /**
      * {@inheritDoc}
      */
@@ -60,7 +63,7 @@ public class GetHistoryItemInfoHandler
             throws ActionException {
 
         LOGGER.debug("Processing action: GetHistoryItemInfoAction " + action.getId());
-        ServerUtils.checkExpiredSession();
+        serverUtils.checkExpiredSession();
 
         HistoryItemInfo historyItemInfo = null;
         try {

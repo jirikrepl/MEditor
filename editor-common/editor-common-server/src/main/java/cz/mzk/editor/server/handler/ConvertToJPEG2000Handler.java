@@ -69,6 +69,9 @@ public class ConvertToJPEG2000Handler
 
     private String djatokaHome = null;
 
+    @Inject
+    ServerUtils serverUtils;
+
     /**
      * Instantiates a new scan input queue handler.
      * 
@@ -95,7 +98,7 @@ public class ConvertToJPEG2000Handler
         LOGGER.debug("Processing action: ConvertToJPEG2000Action " + action.getItem());
 
         if (context != null) {
-            ServerUtils.checkExpiredSession();
+            serverUtils.checkExpiredSession();
         }
 
         if (item != null && item.getMimeType() != null &&

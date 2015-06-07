@@ -76,6 +76,9 @@ public class PutDigitalObjectDetailHandler
 
     private final FedoraAccess fedoraAccess;
 
+    @Inject
+    ServerUtils serverUtils;
+
     // /** The injector. */
     // @Inject
     // Injector injector;
@@ -109,9 +112,9 @@ public class PutDigitalObjectDetailHandler
                                                 final ExecutionContext context) throws ActionException {
 
         LOGGER.debug("Processing action: PutDigitalObjectDetailAction " + action.getDetail().getUuid());
-        ServerUtils.checkExpiredSession();
+        serverUtils.checkExpiredSession();
 
-        if (!ServerUtils.checkUserRightOrAll(EDITOR_RIGHTS.PUBLISH)) {
+        if (!serverUtils.checkUserRightOrAll(EDITOR_RIGHTS.PUBLISH)) {
             LOGGER.warn("Bad authorization in " + this.getClass().toString());
             throw new ActionException("Bad authorization in " + this.getClass().toString());
         }
@@ -162,7 +165,7 @@ public class PutDigitalObjectDetailHandler
             }
 
             if (shouldReindex && action.isReindex()) {
-                ServerUtils.reindex(detail.getUuid());
+                serverUtils.reindex(detail.getUuid());
             }
         }
         return new PutDigitalObjectDetailResult(write);

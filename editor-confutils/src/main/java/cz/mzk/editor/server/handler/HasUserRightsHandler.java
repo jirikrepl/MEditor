@@ -34,16 +34,24 @@ import cz.mzk.editor.client.util.Constants.EDITOR_RIGHTS;
 import cz.mzk.editor.server.util.ServerUtils;
 import cz.mzk.editor.shared.rpc.action.HasUserRightsAction;
 import cz.mzk.editor.shared.rpc.action.HasUserRightsResult;
+import org.springframework.stereotype.Service;
+
+import javax.inject.Inject;
 
 /**
  * @author Matous Jobanek
  * @version Dec 20, 2012
  */
+@Service
 public class HasUserRightsHandler
         implements ActionHandler<HasUserRightsAction, HasUserRightsResult> {
 
     /** The logger. */
     private static final Logger LOGGER = Logger.getLogger(HasUserRightsHandler.class.getPackage().toString());
+
+    @Inject
+    ServerUtils serverUtils;
+
 
     /**
      * {@inheritDoc}
@@ -53,16 +61,17 @@ public class HasUserRightsHandler
             throws ActionException {
 
         LOGGER.debug("Processing action: HasUserRightsAction");
-        ServerUtils.checkExpiredSession();
+        serverUtils.checkExpiredSession();
 
         Boolean[] ok = new Boolean[action.getRights().length];
         for (int i = 0; i < ok.length; i++)
             ok[i] = false;
         int index = 0;
-        for (EDITOR_RIGHTS right : action.getRights()) {
-
-            ok[index++] = (ServerUtils.checkUserRightOrAll(right));
-        }
+        //TODO-MR: TODO!
+//        for (EDITOR_RIGHTS right : action.getRights()) {
+//
+//            ok[index++] = (serverUtils.checkUserRightOrAll(right));
+//        }
 
         return new HasUserRightsResult(ok);
     }

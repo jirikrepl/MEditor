@@ -42,6 +42,7 @@ import cz.mzk.editor.client.util.Constants;
 import cz.mzk.editor.client.util.Constants.CRUD_ACTION_TYPES;
 import cz.mzk.editor.shared.domain.DigitalObjectModel;
 import cz.mzk.editor.shared.rpc.RecentlyModifiedItem;
+import org.springframework.stereotype.Repository;
 
 // TODO: Auto-generated Javadoc
 /**

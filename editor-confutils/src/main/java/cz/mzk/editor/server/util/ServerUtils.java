@@ -64,11 +64,14 @@ import cz.mzk.editor.server.URLS;
 import cz.mzk.editor.server.DAO.DAOUtils;
 import cz.mzk.editor.server.DAO.DatabaseException;
 import cz.mzk.editor.server.config.EditorConfiguration;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class ServerUtils.
  */
+@Component
 public class ServerUtils {
 
     /** The Constant LOGGER. */
@@ -76,15 +79,14 @@ public class ServerUtils {
 
     /** The config. */
     @Inject
-    private static EditorConfiguration config;
+    private EditorConfiguration config;
 
     /** The dao utils. */
-    @Inject
-    private static DAOUtils daoUtils;
+    private DAOUtils daoUtils;
 
     /** The http session provider. */
     @Inject
-    private static Provider<HttpSession> httpSessionProvider;
+    private HttpSession httpSession;
 
     /**
      * Checks if is caused by exception.
@@ -112,11 +114,11 @@ public class ServerUtils {
         return authentication;
     }
 
-    public static EditorUserAuthentication getEditorUserAuthentication() {
-        return getEditorUserAuthentication(httpSessionProvider.get());
+    public EditorUserAuthentication getEditorUserAuthentication() {
+        return getEditorUserAuthentication(httpSession);
     }
 
-    public static Long checkExpiredSessionAndGetId(Provider<HttpSession> httpSessionProvider)
+    public Long checkExpiredSessionAndGetId(Provider<HttpSession> httpSessionProvider)
             throws ActionException {
         checkExpiredSession();
         try {
@@ -140,16 +142,17 @@ public class ServerUtils {
         }
     }
 
-    public static void checkExpiredSession() throws ActionException {
-        checkExpiredSession(httpSessionProvider.get());
+    public void checkExpiredSession() throws ActionException {
+        checkExpiredSession(httpSession);
     }
 
-    public static boolean checkUserRightOrAll(EDITOR_RIGHTS right) {
+    public boolean checkUserRightOrAll(EDITOR_RIGHTS right) {
 
         return checkUserRight(EDITOR_RIGHTS.ALL) || checkUserRight(right);
     }
 
-    public static boolean checkUserRight(EDITOR_RIGHTS right) {
+    @Deprecated
+    public boolean checkUserRight(EDITOR_RIGHTS right) {
         try {
             return daoUtils.hasUserRight(right);
         } catch (DatabaseException e) {
@@ -159,7 +162,7 @@ public class ServerUtils {
         }
     }
 
-    private static List<Field> getAllFields(Class<?> clazz) {
+    private List<Field> getAllFields(Class<?> clazz) {
         if (clazz == null || clazz.getName().contains("java.util.List")
                 || clazz.getName().contains("java.lang.String")) {
             return Collections.<Field> emptyList();
@@ -186,12 +189,12 @@ public class ServerUtils {
         }
     }
 
-    public static boolean reindex(String pid) {
+    public boolean reindex(String pid) {
         return krameriusRest(KRAMERIUS_ACTION.REINDEX, pid);
     }
 
     /**  */
-    public static boolean generateDeepZoom(String pid) {
+    public boolean generateDeepZoom(String pid) {
         return krameriusRest(KRAMERIUS_ACTION.GENERATE_DEEP_ZOOM, pid);
     }
 
@@ -202,7 +205,7 @@ public class ServerUtils {
      *        the pid
      */
     //TODO-MR: Rest api via lrservlet must be authenticated since version 4.6 of Kramerius. Look at new Remote API!
-    private static boolean krameriusRest(KRAMERIUS_ACTION action, String pid) {
+    private boolean krameriusRest(KRAMERIUS_ACTION action, String pid) {
         String host = config.getKrameriusHost();
         String login = config.getKrameriusLogin();
         String password = config.getKrameriusPassword();
@@ -248,7 +251,7 @@ public class ServerUtils {
         return true;
     }
 
-    private static boolean hasOnlyNullFields(Object object) {
+    private boolean hasOnlyNullFields(Object object) {
         if (object == null) {
             return true;
         }
@@ -315,7 +318,7 @@ public class ServerUtils {
         return isNull;
     }
 
-    public static <T> T collapseStructure(T object) {
+    public <T> T collapseStructure(T object) {
         if (hasOnlyNullFields(object)) {
             return null;
         }
@@ -422,7 +425,7 @@ public class ServerUtils {
         return addr.getHostName();
     }
 
-    public static boolean checkAvailability(String url, String usr, String pass) {
+    public boolean checkAvailability(String url, String usr, String pass) {
         boolean status = true;
         try {
             URLConnection con = RESTHelper.openConnection(url, usr, pass, false);

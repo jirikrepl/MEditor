@@ -41,6 +41,8 @@ import cz.mzk.editor.shared.domain.DigitalObjectModel;
 import cz.mzk.editor.shared.rpc.action.GetDOModelAction;
 import cz.mzk.editor.shared.rpc.action.GetDOModelResult;
 
+import javax.inject.Inject;
+
 /**
  * @author Jiri Kremser
  * @version 13.11.2011
@@ -50,6 +52,9 @@ public class GetDOModelHandler
 
     /** The logger. */
     private static final Logger LOGGER = Logger.getLogger(GetDOModelHandler.class.getPackage().toString());
+
+    @Inject
+    ServerUtils serverUtils;
 
     /*
      * (non-Javadoc)
@@ -63,7 +68,7 @@ public class GetDOModelHandler
             throws ActionException {
 
         LOGGER.debug("Processing action: GetDOModelAction " + action.getUuid());
-        ServerUtils.checkExpiredSession();
+        serverUtils.checkExpiredSession();
 
         // parse input
         String uuid = action.getUuid();

@@ -64,6 +64,9 @@ public class ChangeRightsHandler
     private @Named("securedFedoraAccess")
     FedoraAccess fedoraAccess;
 
+    @Inject
+    ServerUtils serverUtils;
+
     /** The configuration. */
     @Inject
     private EditorConfiguration configuration;
@@ -80,7 +83,7 @@ public class ChangeRightsHandler
 
         LOGGER.debug("Processing action: ChangeRightsAction " + action.getParentUuid() + " "
                 + action.getRight());
-        ServerUtils.checkExpiredSession();
+        serverUtils.checkExpiredSession();
 
         if (action.isForChildren()) {
             setChildrenRights(action.getParentUuid(), action.getRight());

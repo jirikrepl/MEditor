@@ -69,6 +69,9 @@ public class PutDescriptionHandler
     public PutDescriptionHandler() {
     }
 
+    @Inject
+    ServerUtils serverUtils;
+
     /*
      * (non-Javadoc)
      * @see
@@ -81,9 +84,9 @@ public class PutDescriptionHandler
             throws ActionException {
 
         LOGGER.debug("Processing action: PutDescriptionAction " + action.getUuid());
-        ServerUtils.checkExpiredSession();
+        serverUtils.checkExpiredSession();
 
-        if (!ServerUtils.checkUserRightOrAll(EDITOR_RIGHTS.PUBLISH)) {
+        if (!serverUtils.checkUserRightOrAll(EDITOR_RIGHTS.PUBLISH)) {
             LOGGER.warn("Bad authorization in " + this.getClass().toString());
             throw new ActionException("Bad authorization in " + this.getClass().toString());
         }

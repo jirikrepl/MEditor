@@ -99,6 +99,9 @@ public class ScanFolderHandler
     @Inject
     private UserProvider userProvider;
 
+    @Inject
+    ServerUtils serverUtils;
+
     /**
      * Instantiates a new scan input queue handler.
      * 
@@ -122,11 +125,11 @@ public class ScanFolderHandler
             throws ActionException {
 
         LOGGER.debug("Processing action: ScanFolderAction " + action.getModel() + " - " + action.getCode());
-        ServerUtils.checkExpiredSession();
+        serverUtils.checkExpiredSession();
 
         scanFolderFactory.create(action.getModel(), action.getCode());
 
-        if (!ServerUtils.checkUserRightOrAll(EDITOR_RIGHTS.SCAN_FOLDER_TO_CONVERT)) {
+        if (!serverUtils.checkUserRightOrAll(EDITOR_RIGHTS.SCAN_FOLDER_TO_CONVERT)) {
             LOGGER.warn("Bad authorization in " + this.getClass().toString());
             throw new ActionException("Bad authorization in " + this.getClass().toString());
         }

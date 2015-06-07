@@ -67,6 +67,9 @@ public class GetLockInformationHandler
     @Inject
     private DAOUtils daoUtils;
 
+    @Inject
+    ServerUtils serverUtils;
+
     /**
      * {@inheritDoc}
      */
@@ -76,7 +79,7 @@ public class GetLockInformationHandler
             throws ActionException {
 
         LOGGER.debug("Processing action: GetLockInformationAction " + action.getUuid());
-        ServerUtils.checkExpiredSession();
+        serverUtils.checkExpiredSession();
 
         String uuid = action.getUuid();
 

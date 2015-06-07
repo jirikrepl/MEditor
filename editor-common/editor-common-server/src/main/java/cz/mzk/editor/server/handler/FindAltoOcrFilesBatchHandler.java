@@ -64,6 +64,9 @@ public class FindAltoOcrFilesBatchHandler
     private static final String ALTOsuffix = ".xml";
     private static final String TXTsuffix = ".txt";
 
+    @Inject
+    ServerUtils serverUtils;
+
     /**
      * {@inheritDoc}
      */
@@ -72,7 +75,7 @@ public class FindAltoOcrFilesBatchHandler
             throws ActionException {
 
         LOGGER.debug("Processing action: FindAltoOcrFilesBatchAction");
-        ServerUtils.checkExpiredSession();
+        serverUtils.checkExpiredSession();
 
         Map<String, String> altoFileNames = new HashMap<String, String>();
         Map<String, String> ocrFileNames = new HashMap<String, String>();

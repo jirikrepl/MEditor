@@ -71,6 +71,9 @@ public class GetRelationshipsHandler
     private static FedoraAccess fedoraAccess;
 
     @Inject
+    ServerUtils serverUtils;
+
+    @Inject
     public GetRelationshipsHandler(@Named("securedFedoraAccess") FedoraAccess fedoraAccess) {
         this.fedoraAccess = fedoraAccess;
     }
@@ -84,7 +87,7 @@ public class GetRelationshipsHandler
             throws ActionException {
         this.action = action;
         LOGGER.debug("Processing action: GetRelationshipsAction " + action.getUuid());
-        ServerUtils.checkExpiredSession();
+        serverUtils.checkExpiredSession();
 
         uuidList = new ArrayList<String>();
         sharedPages = new ArrayList<String>();

@@ -66,6 +66,9 @@ public class GetHistoryHandler
     @Inject
     private DAOUtils daoUtils;
 
+    @Inject
+    ServerUtils serverUtils;
+
     /**
      * Execute.
      * 
@@ -81,12 +84,12 @@ public class GetHistoryHandler
     public GetHistoryResult execute(GetHistoryAction action, ExecutionContext context) throws ActionException {
 
         LOGGER.debug("Processing action: GetHistoryAction");
-        ServerUtils.checkExpiredSession();
+        serverUtils.checkExpiredSession();
 
         List<HistoryItem> historyItems = new ArrayList<HistoryItem>();
         try {
             if (action.getEditorUsedId() != null && daoUtils.getUserId(true) != action.getEditorUsedId()
-                    && !ServerUtils.checkUserRightOrAll(EDITOR_RIGHTS.SHOW_ALL_HISTORY)) {
+                    && !serverUtils.checkUserRightOrAll(EDITOR_RIGHTS.SHOW_ALL_HISTORY)) {
                 LOGGER.warn("Bad authorization in " + this.getClass().toString());
                 throw new ActionException("Bad authorization in " + this.getClass().toString());
             }

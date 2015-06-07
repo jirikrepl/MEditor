@@ -53,6 +53,9 @@ public class RemoveStoredTreeStructureHandler
     @Inject
     private StoredAndLocksDAO storedAndLocksDAO;
 
+    @Inject
+    ServerUtils serverUtils;
+
     /**
      * {@inheritDoc}
      */
@@ -61,7 +64,7 @@ public class RemoveStoredTreeStructureHandler
                                                         ExecutionContext context) throws ActionException {
 
         LOGGER.debug("Processing action: RemoveStoredTreeStructureItemsAction");
-        ServerUtils.checkExpiredSession();
+        serverUtils.checkExpiredSession();
 
         boolean successful = true;
         try {

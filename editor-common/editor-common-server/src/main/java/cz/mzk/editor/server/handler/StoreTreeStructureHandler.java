@@ -77,6 +77,9 @@ public class StoreTreeStructureHandler
     private DAOUtils daoUtils;
 
     @Inject
+    ServerUtils serverUtils;
+
+    @Inject
     public StoreTreeStructureHandler() {
     }
 
@@ -96,7 +99,7 @@ public class StoreTreeStructureHandler
                     + ((action.getId() == null && action.getBundle() != null) ? (" for object: " + action
                             .getBundle().getInfo().getInputPath()) : ""));
         }
-        ServerUtils.checkExpiredSession();
+        serverUtils.checkExpiredSession();
 
         switch (action.getVerb()) {
             case PUT:

@@ -54,6 +54,9 @@ public class UnlockDigitalObjectHandler
     @Inject
     private StoredAndLocksDAO storedAndLocksDAO;
 
+    @Inject
+    ServerUtils serverUtils;
+
     /** Instantiate a new unlock digital object handler **/
     @Inject
     public UnlockDigitalObjectHandler() {
@@ -68,7 +71,7 @@ public class UnlockDigitalObjectHandler
             throws ActionException {
 
         LOGGER.debug("Processing action: UnlockDigitalObject: " + action.getUuid());
-        ServerUtils.checkExpiredSession();
+        serverUtils.checkExpiredSession();
 
         String uuid = action.getUuid();
 

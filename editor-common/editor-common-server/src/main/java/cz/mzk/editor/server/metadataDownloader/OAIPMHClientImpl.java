@@ -84,6 +84,9 @@ public class OAIPMHClientImpl
         this.config = config;
     }
 
+    @Inject
+    ServerUtils serverUtils;
+
     @Override
     public ArrayList<MetadataBundle> search(String url, String base) {
         ArrayList<MetadataBundle> retList = new ArrayList<MetadataBundle>();
@@ -192,7 +195,7 @@ public class OAIPMHClientImpl
         if (hrefNode != null) {
             Attribute hrefAttr = hrefNode.attribute("href");
             if (onlyReplace
-                    || !(available = ServerUtils.checkAvailability(hrefAttr.getStringValue(), null, null))) {
+                    || !(available = serverUtils.checkAvailability(hrefAttr.getStringValue(), null, null))) {
                 hrefAttr.setText(config.getEditorHome() + MARC_UTILS);
             }
         }

@@ -35,6 +35,7 @@ import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.server.actionhandler.ActionHandler;
 import com.gwtplatform.dispatch.shared.ActionException;
 
+import cz.mzk.editor.server.UserProvider;
 import org.apache.log4j.Logger;
 
 import cz.mzk.editor.server.DAO.DAOUtils;
@@ -43,36 +44,30 @@ import cz.mzk.editor.server.DAO.UserDAO;
 import cz.mzk.editor.server.util.ServerUtils;
 import cz.mzk.editor.shared.rpc.action.GetLoggedUserAction;
 import cz.mzk.editor.shared.rpc.action.GetLoggedUserResult;
+import org.springframework.stereotype.Service;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class GetRecentlyModifiedHandler.
  */
+@Service
 public class GetLoggedUserHandler
         implements ActionHandler<GetLoggedUserAction, GetLoggedUserResult> {
 
     /** The logger. */
     private static final Logger LOGGER = Logger.getLogger(GetLoggedUserHandler.class.getPackage().toString());
 
-    /** The recently modified dao. */
-    private final UserDAO userDAO;
+    private
 
-    /** The dao utils. */
-    private final DAOUtils daoUtils;
-
-    /**
-     * Instantiates a new gets the recently modified handler.
-     * 
-     * @param userDAO
-     *        the user dao
-     * @param httpSessionProvider
-     *        the http session provider
-     */
     @Inject
-    public GetLoggedUserHandler(final UserDAO userDAO, final DAOUtils daoUtils) {
-        this.userDAO = userDAO;
-        this.daoUtils = daoUtils;
-    }
+    ServerUtils serverUtils;
+
+    @Inject
+    private UserProvider userProvider;
+
+    @Inject
+    private UserDAO userDAO;
+
 
     /*
      * (non-Javadoc)
@@ -86,16 +81,12 @@ public class GetLoggedUserHandler
             throws ActionException {
 
         LOGGER.debug("Processing action: GetLoggedUserAction");
-        ServerUtils.checkExpiredSession();
+        serverUtils.checkExpiredSession();
 
         try {
-            return new GetLoggedUserResult(userDAO.getName(daoUtils.getUserId(true)),
-                                           daoUtils.getUserId(true));
+            return new GetLoggedUserResult(userDAO.getName(userProvider.getUserId()),
+                    userProvider.getUserId());
         } catch (DatabaseException e) {
-            LOGGER.error(e.getMessage());
-            e.printStackTrace();
-            throw new ActionException(e);
-        } catch (SQLException e) {
             LOGGER.error(e.getMessage());
             e.printStackTrace();
             throw new ActionException(e);

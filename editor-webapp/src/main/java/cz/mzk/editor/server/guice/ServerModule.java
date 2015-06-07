@@ -183,14 +183,14 @@ public class ServerModule
     protected void configureHandlers() {
         bindHandler(ScanInputQueueAction.class, ScanInputQueueHandler.class);
 //        bindHandler(ScanFolderAction.class, ScanFolderHandler.class);
-//        bindHandler(GetClientConfigAction.class, GetClientConfigHandler.class);
+        bindHandler(GetClientConfigAction.class, GetClientConfigHandler.class);
 //        bindHandler(GetDigitalObjectDetailAction.class, GetDigitalObjectDetailHandler.class);
 //        bindHandler(PutDigitalObjectDetailAction.class, PutDigitalObjectDetailHandler.class);
-//        bindHandler(GetRecentlyModifiedAction.class, GetRecentlyModifiedHandler.class);
+        bindHandler(GetRecentlyModifiedAction.class, GetRecentlyModifiedHandler.class);
 //        bindHandler(PutRecentlyModifiedAction.class, PutRecentlyModifiedHandler.class);
 //        bindHandler(GetDescriptionAction.class, GetDescriptionHandler.class);
 //        bindHandler(PutDescriptionAction.class, PutDescriptionHandler.class);
-//        bindHandler(CheckAvailabilityAction.class, CheckAvailabilityHandler.class);
+        bindHandler(CheckAvailabilityAction.class, CheckAvailabilityHandler.class);
 //        bindHandler(FindMetadataAction.class, FindMetadataHandler.class);
 //        bindHandler(ConvertToJPEG2000Action.class, ConvertToJPEG2000Handler.class);
 //        bindHandler(LockDigitalObjectAction.class, LockDigitalObjectHandler.class);
@@ -225,7 +225,7 @@ public class ServerModule
 //        bindHandler(RemoveUserIdentityAction.class, RemoveUserIdentityHandler.class);
 //        bindHandler(PutRemoveUserRolesAction.class, PutRemoveUserRolesHandler.class);
 //        bindHandler(GetAllRolesAction.class, GetAllRolesHandler.class);
-//        bindHandler(GetLoggedUserAction.class, GetLoggedUserHandler.class);
+        bindHandler(GetLoggedUserAction.class, GetLoggedUserHandler.class);
 //        bindHandler(GetAllRequestItemsAction.class, GetAllRequestItemsHandler.class);
 //        bindHandler(RemoveRequestItemAction.class, RemoveRequestItemHandler.class);
 //        //        bindHandler(CheckAndUpdateDBSchemaAction.class, CheckAndUpdateDBSchemaHandler.class);
@@ -238,7 +238,7 @@ public class ServerModule
 //        bindHandler(RemoveStoredTreeStructureItemsAction.class, RemoveStoredTreeStructureHandler.class);
 //        bindHandler(GetAllLockItemsAction.class, GetAllLockItemsHandler.class);
 //        bindHandler(GetUserStatisticDataAction.class, GetUserStatisticDataHandler.class);
-//        bindHandler(HasUserRightsAction.class, HasUserRightsHandler.class);
+        bindHandler(HasUserRightsAction.class, HasUserRightsHandler.class);
 //
 //        bindHandler(GetHistoryItemInfoAction.class, GetHistoryItemInfoHandler.class);
 //        bindHandler(GetHistoryAction.class, GetHistoryHandler.class);

@@ -67,6 +67,9 @@ public class GetUserRolesRightsIdentitiesHandler
     /** The recently modified dao. */
     private final UserDAO userDAO;
 
+    @Inject
+    ServerUtils serverUtils;
+
     /**
      * Instantiates a new gets the recently modified handler.
      * 
@@ -95,7 +98,7 @@ public class GetUserRolesRightsIdentitiesHandler
                                                       final ExecutionContext context) throws ActionException {
 
         LOGGER.debug("Processing action: GetUserRolesAndIdentitiesAction " + action.getUserId());
-        ServerUtils.checkExpiredSession();
+        serverUtils.checkExpiredSession();
 
         if (action.getUserId() == null) return null;
         boolean getAll = true;

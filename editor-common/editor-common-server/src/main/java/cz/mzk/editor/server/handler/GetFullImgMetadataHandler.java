@@ -64,6 +64,9 @@ public class GetFullImgMetadataHandler
     @Inject
     private EditorConfiguration config;
 
+    @Inject
+    ServerUtils serverUtils;
+
     /**
      * {@inheritDoc}
      */
@@ -73,7 +76,7 @@ public class GetFullImgMetadataHandler
             throws ActionException {
 
         LOGGER.debug("Processing action: GetFullImgMetadataAction " + action.getUuid());
-        ServerUtils.checkExpiredSession();
+        serverUtils.checkExpiredSession();
 
         HttpServletRequest httpServletRequest = requestProvider.get();
 

@@ -88,6 +88,9 @@ public class ScanInputQueueHandler
     @Inject
     private ConversionDAO conversionDAO;
 
+    @Inject
+    ServerUtils serverUtils;
+
     /**
      * Instantiates a new scan input queue handler.
      * 
@@ -110,7 +113,7 @@ public class ScanInputQueueHandler
     public ScanInputQueueResult execute(final ScanInputQueueAction action, final ExecutionContext context)
             throws ActionException {
 
-        ServerUtils.checkExpiredSession();
+        serverUtils.checkExpiredSession();
 
         // parse input
         final String id = action.getId() == null ? "" : action.getId();

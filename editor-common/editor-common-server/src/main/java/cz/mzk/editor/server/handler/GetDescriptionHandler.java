@@ -56,6 +56,9 @@ public class GetDescriptionHandler
     @Inject
     private DescriptionDAO descriptionDAO;
 
+    @Inject
+    ServerUtils serverUtils;
+
     /**
      * Instantiates a new put recently modified handler.
      */
@@ -75,7 +78,7 @@ public class GetDescriptionHandler
             throws ActionException {
 
         LOGGER.debug("Processing action: GetDescriptionAction " + action.getUuid());
-        ServerUtils.checkExpiredSession();
+        serverUtils.checkExpiredSession();
 
         if (action.getUuid() == null || "".equals(action.getUuid()))
             throw new NullPointerException("getUuid()");

@@ -95,6 +95,9 @@ public class RemoveDigitalObjectHandler
     @Inject
     private DigitalObjectDAO digitalObjectDAO;
 
+    @Inject
+    ServerUtils serverUtils;
+
     private static final class RemovedDigitalObject {
 
         private final String uuid;
@@ -162,9 +165,9 @@ public class RemoveDigitalObjectHandler
                                              final ExecutionContext context) throws ActionException {
 
         LOGGER.debug("Processing action: RemoveDigitalObjectAction " + action.getUuid());
-        ServerUtils.checkExpiredSession();
+        serverUtils.checkExpiredSession();
 
-        if (!ServerUtils.checkUserRightOrAll(EDITOR_RIGHTS.DELETE)) {
+        if (!serverUtils.checkUserRightOrAll(EDITOR_RIGHTS.DELETE)) {
             LOGGER.warn("Bad authorization in " + this.getClass().toString());
             throw new ActionException("Bad authorization in " + this.getClass().toString());
         }

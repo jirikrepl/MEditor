@@ -61,6 +61,9 @@ public class GetHistoryDaysHandler
     @Inject
     private DAOUtils daoUtils;
 
+    @Inject
+    ServerUtils serverUtils;
+
     /**
      * {@inheritDoc}
      */
@@ -69,12 +72,12 @@ public class GetHistoryDaysHandler
             throws ActionException {
 
         LOGGER.debug("Processing action: GetHistoryDaysAction");
-        ServerUtils.checkExpiredSession();
+        serverUtils.checkExpiredSession();
 
         List<EditorDate> historyDays = null;
         try {
             if (action.getUserId() != null
-                    && !ServerUtils.checkUserRightOrAll(EDITOR_RIGHTS.SHOW_ALL_HISTORY)
+                    && !serverUtils.checkUserRightOrAll(EDITOR_RIGHTS.SHOW_ALL_HISTORY)
                     && daoUtils.getUserId(true) != action.getUserId()) {
                 LOGGER.warn("Bad authorization in " + this.getClass().toString());
                 throw new ActionException("Bad authorization in " + this.getClass().toString());

@@ -64,6 +64,9 @@ public class GetUsersInfoHandler
     /** The recently modified dao. */
     private final UserDAO userDAO;
 
+    @Inject
+    ServerUtils serverUtils;
+
     /**
      * Instantiates a new gets the recently modified handler.
      * 
@@ -88,12 +91,12 @@ public class GetUsersInfoHandler
             throws ActionException {
 
         LOGGER.debug("Processing action: GetUsersInfoAction");
-        ServerUtils.checkExpiredSession();
+        serverUtils.checkExpiredSession();
 
-        if (!ServerUtils.checkUserRightOrAll(EDITOR_RIGHTS.EDIT_USERS)
-                && !ServerUtils.checkUserRight(EDITOR_RIGHTS.SHOW_ALL_STORED_AND_LOCKS)
-                && !ServerUtils.checkUserRight(EDITOR_RIGHTS.SHOW_ALL_STATISTICS)
-                && !ServerUtils.checkUserRight(EDITOR_RIGHTS.SHOW_ALL_HISTORY)) {
+        if (!serverUtils.checkUserRightOrAll(EDITOR_RIGHTS.EDIT_USERS)
+                && !serverUtils.checkUserRight(EDITOR_RIGHTS.SHOW_ALL_STORED_AND_LOCKS)
+                && !serverUtils.checkUserRight(EDITOR_RIGHTS.SHOW_ALL_STATISTICS)
+                && !serverUtils.checkUserRight(EDITOR_RIGHTS.SHOW_ALL_HISTORY)) {
             ArrayList<UserInfoItem> user = new ArrayList<UserInfoItem>();
             try {
                 user.add(userDAO.getUser());

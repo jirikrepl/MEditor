@@ -93,6 +93,9 @@ public class InsertNewDigitalObjectHandler
     @Inject
     private ImageResolverDAO imageResolverDAO;
 
+    @Inject
+    ServerUtils serverUtils;
+
     private static RequestDispatcher erraiDispatcher;
 
     public InsertNewDigitalObjectHandler() {
@@ -107,9 +110,9 @@ public class InsertNewDigitalObjectHandler
             throws ActionException {
 
         LOGGER.debug("Processing action: InsertNewDigitalObjectAction " + action.getObject().getUuid());
-        ServerUtils.checkExpiredSession();
+        serverUtils.checkExpiredSession();
 
-        if (!ServerUtils.checkUserRightOrAll(EDITOR_RIGHTS.CREATE_NEW_OBJECTS)) {
+        if (!serverUtils.checkUserRightOrAll(EDITOR_RIGHTS.CREATE_NEW_OBJECTS)) {
             LOGGER.warn("Bad authorization in " + this.getClass().toString());
             throw new ActionException("Bad authorization in " + this.getClass().toString());
         }
@@ -179,12 +182,12 @@ public class InsertNewDigitalObjectHandler
             processPostIngestHooks(object);
 
             if (action.isReindex()) {
-                reindexSuccess = ServerUtils.reindex(pid);
+                reindexSuccess = serverUtils.reindex(pid);
             } else {
                 reindexSuccess = true;
             }
             if (config.getImageServerInternal()) {
-                deepZoomSuccess = ServerUtils.generateDeepZoom(pid);
+                deepZoomSuccess = serverUtils.generateDeepZoom(pid);
             }
 
         } catch (CreateObjectException e) {

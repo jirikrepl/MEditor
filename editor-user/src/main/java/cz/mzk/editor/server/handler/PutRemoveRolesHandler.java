@@ -60,6 +60,9 @@ public class PutRemoveRolesHandler
     @Inject
     private UserDAO userDAO;
 
+    @Inject
+    ServerUtils serverUtils;
+
     /**
      * {@inheritDoc}
      */
@@ -68,9 +71,9 @@ public class PutRemoveRolesHandler
             throws ActionException {
 
         LOGGER.debug("Processing action: PutRemoveRolesResult");
-        ServerUtils.checkExpiredSession();
+        serverUtils.checkExpiredSession();
 
-        if (!ServerUtils.checkUserRightOrAll(EDITOR_RIGHTS.EDIT_ROLES)) {
+        if (!serverUtils.checkUserRightOrAll(EDITOR_RIGHTS.EDIT_ROLES)) {
             LOGGER.warn("Bad authorization in " + this.getClass().toString());
             throw new ActionException("Bad authorization in " + this.getClass().toString());
         }

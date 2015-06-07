@@ -64,6 +64,9 @@ public class GetAllStoredWorkingCopyHandler
     @Inject
     private DAOUtils daoUtils;
 
+    @Inject
+    ServerUtils serverUtils;
+
     /**
      * {@inheritDoc}
      */
@@ -72,11 +75,11 @@ public class GetAllStoredWorkingCopyHandler
                                                       ExecutionContext context) throws ActionException {
 
         LOGGER.debug("Processing action: GetAllStoredWorkingCopyItemsResult");
-        ServerUtils.checkExpiredSession();
+        serverUtils.checkExpiredSession();
         List<StoredItem> storedItems = new ArrayList<StoredItem>();
         try {
             if (action.getUserId() != null
-                    && !ServerUtils.checkUserRightOrAll(EDITOR_RIGHTS.SHOW_ALL_STORED_AND_LOCKS)
+                    && !serverUtils.checkUserRightOrAll(EDITOR_RIGHTS.SHOW_ALL_STORED_AND_LOCKS)
                     && daoUtils.getUserId(true) != action.getUserId()) {
                 LOGGER.warn("Bad authorization in " + this.getClass().toString());
                 throw new ActionException("Bad authorization in " + this.getClass().toString());

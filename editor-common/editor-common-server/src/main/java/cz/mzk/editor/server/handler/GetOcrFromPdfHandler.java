@@ -57,6 +57,9 @@ public class GetOcrFromPdfHandler
     @Inject
     private EditorConfiguration conf;
 
+    @Inject
+    ServerUtils serverUtils;
+
     private static final Logger LOGGER = Logger.getLogger(GetOcrFromPdfHandler.class);
 
     /**
@@ -67,7 +70,7 @@ public class GetOcrFromPdfHandler
             throws ActionException {
 
         LOGGER.debug("Processing action: GetOcrFromPdfAction " + action.getUuid());
-        ServerUtils.checkExpiredSession();
+        serverUtils.checkExpiredSession();
 
         return new GetOcrFromPdfResult(pdftoText(conf.getImagesPath() + File.separator + action.getUuid()
                 + Constants.PDF_EXTENSION));

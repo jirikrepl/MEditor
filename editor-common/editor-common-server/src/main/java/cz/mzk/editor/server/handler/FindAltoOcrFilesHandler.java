@@ -66,6 +66,9 @@ public class FindAltoOcrFilesHandler
     private static final String ALTO = "ALTO";
     private static final String TXT = "txt";
 
+    @Inject
+    ServerUtils serverUtils;
+
     /**
      * {@inheritDoc}
      */
@@ -75,7 +78,7 @@ public class FindAltoOcrFilesHandler
             throws ActionException {
 
         LOGGER.debug("Processing action: FindAltoOcrFilesHandler");
-        ServerUtils.checkExpiredSession();
+        serverUtils.checkExpiredSession();
 
         String oldJpgFsPath = null;
 

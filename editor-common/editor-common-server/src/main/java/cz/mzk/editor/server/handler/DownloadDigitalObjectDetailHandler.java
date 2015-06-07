@@ -35,6 +35,8 @@ import cz.mzk.editor.server.util.ServerUtils;
 import cz.mzk.editor.shared.rpc.action.DownloadDigitalObjectDetailAction;
 import cz.mzk.editor.shared.rpc.action.DownloadDigitalObjectDetailResult;
 
+import javax.inject.Inject;
+
 /**
  * @author Matous Jobanek
  * @version $Id$
@@ -47,6 +49,9 @@ public class DownloadDigitalObjectDetailHandler
     private static final Logger LOGGER = Logger.getLogger(DownloadDigitalObjectDetailHandler.class
             .getPackage().toString());
 
+    @Inject
+    ServerUtils serverUtils;
+
     /**
      * {@inheritDoc}
      */
@@ -56,7 +61,7 @@ public class DownloadDigitalObjectDetailHandler
                                                      ExecutionContext context) throws ActionException {
 
         LOGGER.debug("Processing action: DownloadDigitalObjectDetailAction " + action.getDetail().getUuid());
-        ServerUtils.checkExpiredSession();
+        serverUtils.checkExpiredSession();
 
         if (action == null || action.getDetail() == null) throw new NullPointerException("getDetail()");
 

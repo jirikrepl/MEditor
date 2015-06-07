@@ -71,6 +71,9 @@ public class LogoutHandler
     @Inject
     private UserDAO userDAO;
 
+    @Inject
+    ServerUtils serverUtils;
+
     /**
      * Instantiates a new put recently modified handler.
      * 
@@ -94,9 +97,9 @@ public class LogoutHandler
             throws ActionException {
 
         LOGGER.debug("Processing action: LogoutAction");
-        ServerUtils.checkExpiredSession();
+        serverUtils.checkExpiredSession();
 
-        EditorUserAuthentication authentication = ServerUtils.getEditorUserAuthentication();
+        EditorUserAuthentication authentication = serverUtils.getEditorUserAuthentication();
 
         try {
             ACCESS_LOGGER.info("LOG OUT: [" + FORMATTER.format(new Date()) + "] User " + userDAO.getName()

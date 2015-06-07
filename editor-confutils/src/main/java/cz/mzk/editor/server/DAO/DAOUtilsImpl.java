@@ -36,6 +36,7 @@ import cz.mzk.editor.client.util.Constants;
 import cz.mzk.editor.client.util.Constants.CRUD_ACTION_TYPES;
 import cz.mzk.editor.client.util.Constants.EDITOR_RIGHTS;
 import cz.mzk.editor.client.util.Constants.REQUESTS_TO_ADMIN_TYPES;
+import org.springframework.stereotype.Component;
 
 /**
  * @author Matous Jobanek

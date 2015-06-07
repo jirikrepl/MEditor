@@ -56,6 +56,9 @@ public class CheckRightsHandler
     /** The Constant LOGGER. */
     private static final Logger LOGGER = Logger.getLogger(CheckRightsHandler.class.getPackage().toString());
 
+    @Inject
+    ServerUtils serverUtils;
+
     /**
      * {@inheritDoc}
      */
@@ -64,7 +67,7 @@ public class CheckRightsHandler
             throws ActionException {
 
         LOGGER.debug("Processing action: CheckRightsAction");
-        ServerUtils.checkExpiredSession();
+        serverUtils.checkExpiredSession();
 
         Map<String, List<String>> rightsRefByRole = null;
         Map<String, List<String>> rightsRefByUser = null;

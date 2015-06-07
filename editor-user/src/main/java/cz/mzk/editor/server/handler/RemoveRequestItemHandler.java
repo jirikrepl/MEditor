@@ -53,6 +53,9 @@ public class RemoveRequestItemHandler
     private static final Logger LOGGER = Logger.getLogger(RemoveRequestItemHandler.class.getPackage()
             .toString());
 
+    @Inject
+    ServerUtils serverUtils;
+
     /** The recently modified dao. */
     @Inject
     private RequestDAO requestDAO;
@@ -76,9 +79,9 @@ public class RemoveRequestItemHandler
                                            final ExecutionContext context) throws ActionException {
 
         LOGGER.debug("Processing action: RemoveRequestItemAction " + action.getId());
-        ServerUtils.checkExpiredSession();
+        serverUtils.checkExpiredSession();
 
-        if (!ServerUtils.checkUserRightOrAll(EDITOR_RIGHTS.EDIT_USERS)) {
+        if (!serverUtils.checkUserRightOrAll(EDITOR_RIGHTS.EDIT_USERS)) {
             LOGGER.warn("Bad authorization in " + this.getClass().toString());
             throw new ActionException("Bad authorization in " + this.getClass().toString());
         }

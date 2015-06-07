@@ -68,6 +68,9 @@ public class GetObjectsToSortHandler
     /** The fedora access. */
     private final FedoraAccess fedoraAccess;
 
+    @Inject
+    ServerUtils serverUtils;
+
     /**
      * Instantiates a new gets the objects to sort handler.
      * 
@@ -95,7 +98,7 @@ public class GetObjectsToSortHandler
             throws ActionException {
 
         LOGGER.debug("Processing action: GetObjectsToSortResult " + action.getUuid());
-        ServerUtils.checkExpiredSession();
+        serverUtils.checkExpiredSession();
 
         DigitalObjectRelationships digObjRel = new DigitalObjectRelationships(action.getUuid());
         getChildren(digObjRel);

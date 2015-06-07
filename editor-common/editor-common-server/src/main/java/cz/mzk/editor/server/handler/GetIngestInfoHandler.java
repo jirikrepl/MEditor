@@ -51,6 +51,9 @@ public class GetIngestInfoHandler
 
     private static final Logger LOGGER = Logger.getLogger(GetIngestInfoHandler.class.getPackage().toString());
 
+    @Inject
+    ServerUtils serverUtils;
+
     /**
      * {@inheritDoc}
      */
@@ -60,7 +63,7 @@ public class GetIngestInfoHandler
             throws ActionException {
 
         LOGGER.debug("Processing action: GetIngestInfoAction " + action.getPath());
-        ServerUtils.checkExpiredSession();
+        serverUtils.checkExpiredSession();
 
         try {
             return new GetIngestInfoResult(inputQueueDAO.getIngestInfo(action.getPath()));

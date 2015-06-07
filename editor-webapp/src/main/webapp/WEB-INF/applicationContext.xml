@@ -34,7 +34,13 @@
     <context:annotation-config />
 
 	<context:component-scan base-package="com.gwtplatform.dispatch.server.spring, cz.mzk.editor.shared.rpc,
-		cz.mzk.editor.server.handler, cz.mzk.editor.server.fedora, cz.mzk.editor.server.fedora, cz.mzk.editor.server.api, cz.mzk.editor.server.jooq.DAO" />
+		cz.mzk.editor.server.handler, cz.mzk.editor.server.fedora, cz.mzk.editor.server.fedora, cz.mzk.editor.server.api,
+		cz.mzk.editor.server.jooq.DAO, cz.mzk.editor.server.util" />
+
+	<!--WORKAROUND for error "No qualifying bean of type [com.gwtplatform.dispatch.server.spring.actionvalidator.DefaultActionValidator] is defined"-->
+	<b:bean class="com.gwtplatform.dispatch.server.spring.actionvalidator.DefaultActionValidator" />
+
+	<b:bean class="cz.mzk.editor.server.UserProvider" />
 
 
     <b:bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"/>

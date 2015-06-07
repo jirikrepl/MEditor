@@ -63,6 +63,9 @@ public class GetAllLockItemsHandler
     @Inject
     private DAOUtils daoUtils;
 
+    @Inject
+    ServerUtils serverUtils;
+
     /**
      * {@inheritDoc}
      */
@@ -71,13 +74,13 @@ public class GetAllLockItemsHandler
             throws ActionException {
 
         LOGGER.debug("Processing action: GetAllLockItemsAction");
-        ServerUtils.checkExpiredSession();
+        serverUtils.checkExpiredSession();
 
         List<ActiveLockItem> items = null;
 
         try {
             if (action.getUserId() != null
-                    && !ServerUtils.checkUserRightOrAll(EDITOR_RIGHTS.SHOW_ALL_STORED_AND_LOCKS)
+                    && !serverUtils.checkUserRightOrAll(EDITOR_RIGHTS.SHOW_ALL_STORED_AND_LOCKS)
                     && daoUtils.getUserId(true) != action.getUserId()) {
                 LOGGER.warn("Bad authorization in " + this.getClass().toString());
                 throw new ActionException("Bad authorization in " + this.getClass().toString());

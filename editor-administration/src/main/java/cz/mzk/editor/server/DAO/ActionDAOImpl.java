@@ -51,6 +51,8 @@ import cz.mzk.editor.shared.rpc.HistoryItem;
 import cz.mzk.editor.shared.rpc.HistoryItemInfo;
 import cz.mzk.editor.shared.rpc.IntervalStatisticData;
 
+import javax.inject.Inject;
+
 /**
  * @author Matous Jobanek
  * @version Oct 30, 2012
@@ -61,6 +63,9 @@ public class ActionDAOImpl
 
     /** The Constant LOGGER. */
     private static final Logger LOGGER = Logger.getLogger(ActionDAOImpl.class.getPackage().toString());
+
+    @Inject
+    ServerUtils serverUtils;
 
     public static final String SELECT_USER_ACTIONS_TIMESTAMP = "SELECT timestamp FROM "
             + Constants.TABLE_ACTION + " WHERE editor_user_id = (?)";
@@ -433,7 +438,7 @@ public class ActionDAOImpl
                                            List<HistoryItem> historyItems) throws DatabaseException,
             SQLException {
 
-        final boolean showUsers = ServerUtils.checkUserRightOrAll(EDITOR_RIGHTS.SHOW_DO_HISTORY_USERS);
+        final boolean showUsers = serverUtils.checkUserRightOrAll(EDITOR_RIGHTS.SHOW_DO_HISTORY_USERS);
         final Long userId = getUserId(true);
 
         new ActionDAOHandler(null, uuid, lowerLimit, upperLimit, SELECT_DO_ACTION, historyItems) {

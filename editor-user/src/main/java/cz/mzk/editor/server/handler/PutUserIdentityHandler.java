@@ -58,6 +58,9 @@ public class PutUserIdentityHandler
     @Inject
     private UserDAO userDAO;
 
+    @Inject
+    ServerUtils serverUtils;
+
     /**
      * Instantiates a new put recently modified handler.
      * 
@@ -83,9 +86,9 @@ public class PutUserIdentityHandler
             throws ActionException {
 
         LOGGER.debug("Processing action: PutUserIdentityAction " + action.getIdentity());
-        ServerUtils.checkExpiredSession();
+        serverUtils.checkExpiredSession();
 
-        if (!ServerUtils.checkUserRightOrAll(EDITOR_RIGHTS.EDIT_USERS)) {
+        if (!serverUtils.checkUserRightOrAll(EDITOR_RIGHTS.EDIT_USERS)) {
             LOGGER.warn("Bad authorization in " + this.getClass().toString());
             throw new ActionException("Bad authorization in " + this.getClass().toString());
         }

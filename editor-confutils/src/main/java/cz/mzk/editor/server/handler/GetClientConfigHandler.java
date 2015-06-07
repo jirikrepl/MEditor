@@ -42,11 +42,13 @@ import cz.mzk.editor.client.config.EditorClientConfiguration;
 import cz.mzk.editor.server.config.EditorConfiguration;
 import cz.mzk.editor.shared.rpc.action.GetClientConfigAction;
 import cz.mzk.editor.shared.rpc.action.GetClientConfigResult;
+import org.springframework.stereotype.Service;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class GetClientConfigHandler.
  */
+@Service
 public class GetClientConfigHandler
         implements ActionHandler<GetClientConfigAction, GetClientConfigResult> {
 
@@ -55,18 +57,9 @@ public class GetClientConfigHandler
             .toString());
 
     /** The configuration. */
-    private final EditorConfiguration configuration;
-
-    /**
-     * Instantiates a new gets the client config handler.
-     * 
-     * @param configuration
-     *        the configuration
-     */
     @Inject
-    public GetClientConfigHandler(final EditorConfiguration configuration) {
-        this.configuration = configuration;
-    }
+    private EditorConfiguration configuration;
+
 
     /*
      * (non-Javadoc)

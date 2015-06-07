@@ -41,6 +41,11 @@ import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.server.actionhandler.ActionHandler;
 import com.gwtplatform.dispatch.shared.ActionException;
 
+import cz.mzk.editor.client.util.Constants;
+import cz.mzk.editor.server.DAO.SecurityUserDAO;
+import cz.mzk.editor.server.EditorUserAuthentication;
+import cz.mzk.editor.server.URLS;
+import cz.mzk.editor.server.UserProvider;
 import org.apache.log4j.Logger;
 
 import cz.mzk.editor.server.DAO.DAOUtils;
@@ -53,11 +58,14 @@ import cz.mzk.editor.shared.rpc.RecentlyModifiedItem;
 import cz.mzk.editor.shared.rpc.action.GetLockInformationAction;
 import cz.mzk.editor.shared.rpc.action.GetRecentlyModifiedAction;
 import cz.mzk.editor.shared.rpc.action.GetRecentlyModifiedResult;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.stereotype.Service;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class GetRecentlyModifiedHandler.
  */
+@Service
 public class GetRecentlyModifiedHandler
         implements ActionHandler<GetRecentlyModifiedAction, GetRecentlyModifiedResult> {
 
@@ -69,18 +77,25 @@ public class GetRecentlyModifiedHandler
     private final EditorConfiguration configuration;
 
     /** The recently modified dao. */
-    private final RecentlyModifiedItemDAO recentlyModifiedDAO;
+    @Inject
+    private RecentlyModifiedItemDAO recentlyModifiedDAO;
 
     /** The http session provider. */
     @Inject
-    private Provider<HttpSession> httpSessionProvider;
+    private HttpSession session;
+
+    @Inject
+    private UserProvider userProvider;
 
     /** The GetLockInformationHandler handler */
-    private final GetLockInformationHandler getLockInformationHandler;
+//    private final GetLockInformationHandler getLockInformationHandler;
 
     /** The dao utils. */
+//    @Inject
+//    private DAOUtils daoUtils;
+
     @Inject
-    private DAOUtils daoUtils;
+    ServerUtils serverUtils;
 
     /**
      * Instantiates a new gets the recently modified handler.
@@ -95,7 +110,7 @@ public class GetRecentlyModifiedHandler
                                       final RecentlyModifiedItemDAO recentlyModifiedDAO) {
         this.configuration = configuration;
         this.recentlyModifiedDAO = recentlyModifiedDAO;
-        this.getLockInformationHandler = new GetLockInformationHandler();
+        //this.getLockInformationHandler = new GetLockInformationHandler();
     }
 
     /*
@@ -109,11 +124,10 @@ public class GetRecentlyModifiedHandler
     public GetRecentlyModifiedResult execute(final GetRecentlyModifiedAction action,
                                              final ExecutionContext context) throws ActionException {
         LOGGER.debug("Processing action: GetRecentlyModified");
-        ServerUtils.checkExpiredSession();
+        serverUtils.checkExpiredSession();
 
-        HttpSession session = httpSessionProvider.get();
-        Injector injector = (Injector) session.getServletContext().getAttribute(Injector.class.getName());
-        injector.injectMembers(getLockInformationHandler);
+//        Injector injector = (Injector) session.getServletContext().getAttribute(Injector.class.getName());
+//        injector.injectMembers(getLockInformationHandler);
 
         try {
 
@@ -123,15 +137,15 @@ public class GetRecentlyModifiedHandler
             } else {
                 recItems =
                         recentlyModifiedDAO.getItems(configuration.getRecentlyModifiedNumber(),
-                                                     daoUtils.getUserId(true));
+                                                     getUserId(true));
             }
 
-            for (RecentlyModifiedItem item : recItems) {
-                LockInfo lockInfo =
-                        getLockInformationHandler.execute(new GetLockInformationAction(item.getUuid()),
-                                                          context).getLockInfo();
-                item.setLockInfo(lockInfo);
-            }
+//            for (RecentlyModifiedItem item : recItems) {
+//                LockInfo lockInfo =
+//                        getLockInformationHandler.execute(new GetLockInformationAction(item.getUuid()),
+//                                context).getLockInfo();
+//                item.setLockInfo(lockInfo);
+//            }
             return new GetRecentlyModifiedResult(recItems);
         } catch (DatabaseException e) {
             LOGGER.error(e.getMessage());
@@ -169,5 +183,18 @@ public class GetRecentlyModifiedHandler
                      ExecutionContext context) throws ActionException {
         // TODO Auto-generated method stub
 
+    }
+
+    protected Long getUserId(boolean closeCon) throws DatabaseException, SQLException {
+        SecurityContext secContext =
+                (SecurityContext) session.getAttribute("SPRING_SECURITY_CONTEXT");
+        EditorUserAuthentication authentication = null;
+        if (secContext != null) authentication = (EditorUserAuthentication) secContext.getAuthentication();
+        if (authentication != null) {
+            return userProvider.getUserId();
+        } else {
+            throw new DatabaseException(Constants.SESSION_EXPIRED_FLAG + URLS.ROOT()
+                    + (URLS.LOCALHOST() ? URLS.LOGIN_LOCAL_PAGE : URLS.LOGIN_PAGE));
+        }
     }
 }

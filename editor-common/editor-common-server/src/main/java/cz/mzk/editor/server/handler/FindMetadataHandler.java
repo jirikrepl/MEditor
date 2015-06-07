@@ -82,6 +82,9 @@ public class FindMetadataHandler
 
     private final XServicesClient xServicesClient;
 
+    @Inject
+    ServerUtils serverUtils;
+
     /**
      * Instantiates a new put recently modified handler.
      * 
@@ -113,9 +116,9 @@ public class FindMetadataHandler
             LOGGER.debug("Processing action: FindMetadataAction: for id (" + action.getSearchType() + ") "
                     + action.getId());
         }
-        ServerUtils.checkExpiredSession();
+        serverUtils.checkExpiredSession();
 
-        if (!ServerUtils.checkUserRightOrAll(EDITOR_RIGHTS.FIND_METADATA)) {
+        if (!serverUtils.checkUserRightOrAll(EDITOR_RIGHTS.FIND_METADATA)) {
             LOGGER.warn("Bad authorization in " + this.getClass().toString());
             throw new ActionException("Bad authorization in " + this.getClass().toString());
         }

@@ -56,6 +56,9 @@ public class PutRecentlyModifiedHandler
     @Inject
     private RecentlyModifiedItemDAO recentlyModifiedDAO;
 
+    @Inject
+    ServerUtils serverUtils;
+
     /**
      * Instantiates a new put recently modified handler.
      */
@@ -76,7 +79,7 @@ public class PutRecentlyModifiedHandler
                                              final ExecutionContext context) throws ActionException {
 
         LOGGER.debug("Processing action: PutRecentlyModifiedAction " + action.getItem().getUuid());
-        ServerUtils.checkExpiredSession();
+        serverUtils.checkExpiredSession();
 
         if (action.getItem() == null) throw new NullPointerException("getItem()");
         if (action.getItem().getUuid() == null || "".equals(action.getItem().getUuid()))

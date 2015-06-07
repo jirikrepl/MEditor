@@ -32,6 +32,7 @@ import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
@@ -172,6 +173,9 @@ public final class BiblioModsUtils {
 
     /** The Constant factory. */
     private static final ObjectFactory factory = new ObjectFactory();
+
+    @Inject
+    ServerUtils serverUtils;
 
     /**
      * Gets the page number.
@@ -1597,7 +1601,8 @@ public final class BiblioModsUtils {
                 modsList.add(toMods(modsTypeClient));
             }
         }
-        return ServerUtils.collapseStructure(mods);
+        ServerUtils serverUtils = new ServerUtils();
+        return serverUtils.collapseStructure(mods);
     }
 
     /**

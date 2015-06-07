@@ -55,6 +55,9 @@ public class GetAllRolesHandler
     /** The recently modified dao. */
     private final UserDAO userDAO;
 
+    @Inject
+    ServerUtils serverUtils;
+
     /**
      * Instantiates a new gets the recently modified handler.
      * 
@@ -82,7 +85,7 @@ public class GetAllRolesHandler
             throws ActionException {
 
         LOGGER.debug("Processing action: GetAllRolesResult");
-        ServerUtils.checkExpiredSession();
+        serverUtils.checkExpiredSession();
 
         try {
             return new GetAllRolesResult(userDAO.getRoles());

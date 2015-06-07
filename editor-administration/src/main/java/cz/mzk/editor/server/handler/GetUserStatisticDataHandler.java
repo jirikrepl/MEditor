@@ -69,6 +69,9 @@ public class GetUserStatisticDataHandler
     @Inject
     private DAOUtils daoUtils;
 
+    @Inject
+    ServerUtils serverUtils;
+
     /**
      * {@inheritDoc}
      */
@@ -77,13 +80,13 @@ public class GetUserStatisticDataHandler
             throws ActionException {
 
         LOGGER.debug("Processing action: GetUserStatisticDataAction");
-        ServerUtils.checkExpiredSession();
+        serverUtils.checkExpiredSession();
 
         long userId = Long.parseLong(action.getUserId());
 
         try {
             if (daoUtils.getUserId(true) != userId
-                    && !ServerUtils.checkUserRightOrAll(EDITOR_RIGHTS.SHOW_ALL_STATISTICS)) {
+                    && !serverUtils.checkUserRightOrAll(EDITOR_RIGHTS.SHOW_ALL_STATISTICS)) {
                 LOGGER.warn("Bad authorization in " + this.getClass().toString());
                 throw new ActionException("Bad authorization in " + this.getClass().toString());
             }

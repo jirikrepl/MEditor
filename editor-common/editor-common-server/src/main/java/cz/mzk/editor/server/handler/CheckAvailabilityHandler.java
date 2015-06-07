@@ -40,11 +40,13 @@ import cz.mzk.editor.server.util.ServerUtils;
 import cz.mzk.editor.shared.rpc.action.CheckAvailability;
 import cz.mzk.editor.shared.rpc.action.CheckAvailabilityAction;
 import cz.mzk.editor.shared.rpc.action.CheckAvailabilityResult;
+import org.springframework.stereotype.Service;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class PutRecentlyModifiedHandler.
  */
+@Service
 public class CheckAvailabilityHandler
         implements ActionHandler<CheckAvailabilityAction, CheckAvailabilityResult> {
 
@@ -56,6 +58,9 @@ public class CheckAvailabilityHandler
 
     /** The configuration. */
     private final EditorConfiguration configuration;
+
+    @Inject
+    ServerUtils serverUtils;
 
     /**
      * Instantiates a new put recently modified handler.
@@ -87,7 +92,7 @@ public class CheckAvailabilityHandler
             }
             LOGGER.debug("Processing action: CheckAvailability: " + serverName);
         }
-        ServerUtils.checkExpiredSession();
+        serverUtils.checkExpiredSession();
 
         String url = null;
         String usr = "";
@@ -102,7 +107,7 @@ public class CheckAvailabilityHandler
             throw new ActionException("Unknown server id");
         }
 
-        return new CheckAvailabilityResult(ServerUtils.checkAvailability(url, usr, pass), url);
+        return new CheckAvailabilityResult(serverUtils.checkAvailability(url, usr, pass), url);
     }
 
     /*
