@@ -42,4 +42,13 @@ public class UserProvider {
             throw new DatabaseException(e.toString());
         }
     }
+
+    public boolean checkUserRightOrAll(Constants.EDITOR_RIGHTS right) {
+
+        return checkUserRight(Constants.EDITOR_RIGHTS.ALL) || checkUserRight(right);
+    }
+
+    private boolean checkUserRight(Constants.EDITOR_RIGHTS right) {
+        return false;
+    }
 }

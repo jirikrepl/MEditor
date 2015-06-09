@@ -61,11 +61,13 @@ import cz.mzk.editor.shared.rpc.LockInfo;
 import cz.mzk.editor.shared.rpc.action.GetDigitalObjectDetailAction;
 import cz.mzk.editor.shared.rpc.action.GetDigitalObjectDetailResult;
 import cz.mzk.editor.shared.rpc.action.GetLockInformationAction;
+import org.springframework.stereotype.Service;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class GetDigitalObjectDetailHandler.
  */
+@Service
 public class GetDigitalObjectDetailHandler
         implements ActionHandler<GetDigitalObjectDetailAction, GetDigitalObjectDetailResult> {
 
@@ -84,7 +86,7 @@ public class GetDigitalObjectDetailHandler
 
     /** The http session provider. */
     @Inject
-    private Provider<HttpSession> httpSessionProvider;
+    private HttpSession httpSession;
 
     /** The GetLockInformationHandler handler */
     private final GetLockInformationHandler getLockInformationHandler;
@@ -153,8 +155,7 @@ public class GetDigitalObjectDetailHandler
                     return new GetDigitalObjectDetailResult(null, null, null);
             }
 
-            HttpSession ses = httpSessionProvider.get();
-            Injector injector = (Injector) ses.getServletContext().getAttribute(Injector.class.getName());
+            Injector injector = (Injector) httpSession.getServletContext().getAttribute(Injector.class.getName());
             injector.injectMembers(descritptionHandler);
             injector.injectMembers(getLockInformationHandler);
 

@@ -43,7 +43,6 @@ import org.springframework.stereotype.Repository;
  * @author Matous Jobanek
  * @version Oct 24, 2012
  */
-@Repository
 public class ConversionDAOImpl
         extends AbstractDAO
         implements ConversionDAO {

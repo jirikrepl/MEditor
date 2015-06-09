@@ -184,7 +184,7 @@ public class ServerModule
         bindHandler(ScanInputQueueAction.class, ScanInputQueueHandler.class);
 //        bindHandler(ScanFolderAction.class, ScanFolderHandler.class);
         bindHandler(GetClientConfigAction.class, GetClientConfigHandler.class);
-//        bindHandler(GetDigitalObjectDetailAction.class, GetDigitalObjectDetailHandler.class);
+        bindHandler(GetDigitalObjectDetailAction.class, GetDigitalObjectDetailHandler.class);
 //        bindHandler(PutDigitalObjectDetailAction.class, PutDigitalObjectDetailHandler.class);
         bindHandler(GetRecentlyModifiedAction.class, GetRecentlyModifiedHandler.class);
 //        bindHandler(PutRecentlyModifiedAction.class, PutRecentlyModifiedHandler.class);

@@ -46,7 +46,6 @@ import org.springframework.stereotype.Repository;
 /**
  * The Class InputQueueItemDAOImpl.
  */
-@Repository
 public class InputQueueItemDAOImpl implements InputQueueItemDAO {
 
     //    input_queue_item (id, path, barcode, ingested) -> input_queue_item (path, barcode, ingested)

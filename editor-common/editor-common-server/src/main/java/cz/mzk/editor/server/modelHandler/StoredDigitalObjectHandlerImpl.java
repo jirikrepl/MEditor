@@ -32,6 +32,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Named;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpression;
@@ -39,11 +40,11 @@ import javax.xml.xpath.XPathExpressionException;
 
 import javax.inject.Inject;
 
-import com.google.inject.name.Named;
 import com.gwtplatform.dispatch.shared.ActionException;
 
 import org.apache.log4j.Logger;
 
+import org.springframework.stereotype.Component;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -67,25 +68,20 @@ import cz.mzk.editor.shared.rpc.Foxml;
  * @author Matous Jobanek
  * @version $Id$
  */
-
+@Component
 public class StoredDigitalObjectHandlerImpl
         extends DigitalObjectHandler
         implements StoredDigitalObjectHandler {
 
     /** The fedora access. */
-    private final FedoraAccess fedoraAccess;
+
+    @Inject
+    @Named("securedFedoraAccess")
+    private FedoraAccess fedoraAccess;
+
+
     private static final Logger LOGGER = Logger.getLogger(StoredDigitalObjectHandlerImpl.class);
 
-    /**
-     * Instantiates a new fedora digital object handler.
-     * 
-     * @param fedoraAccess
-     *        the fedora access
-     */
-    @Inject
-    public StoredDigitalObjectHandlerImpl(@Named("securedFedoraAccess") FedoraAccess fedoraAccess) {
-        this.fedoraAccess = fedoraAccess;
-    }
 
     /**
      * {@inheritDoc}
@@ -149,7 +145,7 @@ public class StoredDigitalObjectHandlerImpl
     }
 
     public List<List<DigitalObjectDetail>> getDigitalObjectItems(String uuid,
-                                                                 org.w3c.dom.Document foxmlDocument,
+                                                                 Document foxmlDocument,
                                                                  DigitalObjectModel parentModel) {
 
         List<DigitalObjectModel> childrenModel = NamedGraphModel.getChildren(parentModel);
@@ -172,7 +168,7 @@ public class StoredDigitalObjectHandlerImpl
      */
 
     private List<DigitalObjectDetail> getChildren(String uuid,
-                                                  org.w3c.dom.Document foxmlDocument,
+                                                  Document foxmlDocument,
                                                   FedoraRelationship relation,
                                                   DigitalObjectModel childModel) {
         List<DigitalObjectDetail> children = new ArrayList<DigitalObjectDetail>(0);
@@ -209,7 +205,7 @@ public class StoredDigitalObjectHandlerImpl
      * @throws ActionException
      */
 
-    private String getOCR(org.w3c.dom.Document foxmlDocument, String filePath, String uuid)
+    private String getOCR(Document foxmlDocument, String filePath, String uuid)
             throws ActionException {
 
         String streamXPath =
@@ -240,7 +236,7 @@ public class StoredDigitalObjectHandlerImpl
      * @throws ActionException
      */
 
-    private ModsCollectionClient getModsStrean(org.w3c.dom.Document foxmlDocument, String filePath)
+    private ModsCollectionClient getModsStrean(Document foxmlDocument, String filePath)
             throws ActionException {
 
         String streamXPath =
@@ -269,7 +265,7 @@ public class StoredDigitalObjectHandlerImpl
      * @throws ActionException
      */
 
-    private DublinCore getDcStream(org.w3c.dom.Document foxmlDocument, String uuid, String filePath)
+    private DublinCore getDcStream(Document foxmlDocument, String uuid, String filePath)
             throws ActionException {
 
         String streamXPath =
@@ -288,7 +284,7 @@ public class StoredDigitalObjectHandlerImpl
         }
     }
 
-    private Foxml getFoxml(String uuid, org.w3c.dom.Document foxmlDocument) {
+    private Foxml getFoxml(String uuid, Document foxmlDocument) {
         Foxml foxml = handleFoxml(uuid, getFedoraAccess());
         foxml.setLabel(FoxmlUtils.getLabel(foxmlDocument));
         return foxml;
@@ -313,7 +309,7 @@ public class StoredDigitalObjectHandlerImpl
      * @return the dublin core
      */
     private DublinCore getDc(String uuid, boolean onlyTitleAndUuid) {
-        org.w3c.dom.Document dcDocument = null;
+        Document dcDocument = null;
         try {
             dcDocument = getFedoraAccess().getDC(uuid);
         } catch (IOException e) {

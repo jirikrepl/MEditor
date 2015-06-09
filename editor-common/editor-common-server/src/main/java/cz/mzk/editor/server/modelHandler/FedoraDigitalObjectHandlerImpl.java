@@ -33,11 +33,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
-import com.google.inject.name.Named;
 
 import org.apache.log4j.Logger;
 
+import org.springframework.stereotype.Component;
 import org.w3c.dom.Document;
 
 import cz.mzk.editor.client.mods.ModsCollectionClient;
@@ -51,24 +52,16 @@ import cz.mzk.editor.shared.rpc.Foxml;
 /**
  * The Class IDigitalObjectHandler.
  */
+@Component
 public class FedoraDigitalObjectHandlerImpl
         extends DigitalObjectHandler
         implements FedoraDigitalObjectHandler {
 
     /** The fedora access. */
-    private final FedoraAccess fedoraAccess;
-    private static final Logger LOGGER = Logger.getLogger(FedoraDigitalObjectHandlerImpl.class);
+    @Named("securedFedoraAccess")
+    private FedoraAccess fedoraAccess;
 
-    /**
-     * Instantiates a new fedora digital object handler.
-     * 
-     * @param fedoraAccess
-     *        the fedora access
-     */
-    @Inject
-    public FedoraDigitalObjectHandlerImpl(@Named("securedFedoraAccess") FedoraAccess fedoraAccess) {
-        this.fedoraAccess = fedoraAccess;
-    }
+    private static final Logger LOGGER = Logger.getLogger(FedoraDigitalObjectHandlerImpl.class);
 
     /*
      * (non-Javadoc)
