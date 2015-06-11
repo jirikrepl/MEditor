@@ -265,13 +265,13 @@
 										<include>viewer/viewer.html</include>
 									</includes>
 								</resource>
-								<resource>
-									<directory>${basedir}/../editor-security/src/main/security</directory>
-									<includes>
-										<include>applicationContext.xml</include>
-									</includes>
-									<targetPath>WEB-INF</targetPath>
-								</resource>
+								<!--<resource>-->
+									<!--<directory>${basedir}/../editor-security/src/main/security</directory>-->
+									<!--<includes>-->
+										<!--<include>applicationContext.xml</include>-->
+									<!--</includes>-->
+									<!--<targetPath>WEB-INF</targetPath>-->
+								<!--</resource>-->
 							</webResources>
 							<webXml>${basedir}/../editor-webapp/src/main/webapp/WEB-INF/web.xml</webXml>
 						</configuration>

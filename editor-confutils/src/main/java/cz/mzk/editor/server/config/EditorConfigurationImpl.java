@@ -46,12 +46,13 @@ import org.apache.commons.configuration.reloading.FileChangedReloadingStrategy;
 import org.apache.log4j.Logger;
 
 import cz.mzk.editor.client.config.EditorClientConfiguration;
+import org.springframework.stereotype.Component;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class EditorConfigurationImpl.
  */
-@Singleton
+@Component
 public class EditorConfigurationImpl
         extends EditorConfiguration {
 

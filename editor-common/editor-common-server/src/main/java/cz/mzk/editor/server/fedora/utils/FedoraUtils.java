@@ -43,6 +43,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.inject.Named;
 import javax.xml.namespace.NamespaceContext;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
@@ -58,12 +59,12 @@ import javax.xml.xpath.XPathFactory;
 
 import javax.inject.Inject;
 
-import com.google.inject.name.Named;
 import com.gwtplatform.dispatch.shared.ActionException;
 
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.log4j.Logger;
 
+import org.springframework.stereotype.Component;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -101,6 +102,7 @@ import static cz.mzk.editor.shared.domain.FedoraNamespaces.RELS_EXT_NAMESPACE_UR
 /**
  * The Class FedoraUtils.
  */
+@Component
 public class FedoraUtils {
 
     /** The Constant LOGGER. */
@@ -116,7 +118,6 @@ public class FedoraUtils {
     public static final String IMG_FULL_STREAM = "IMG_FULL";
 
     /** The configuration. */
-    @Inject
     private static EditorConfiguration configuration;
 
     private static final String RELS_EXT_PART_KRAM = "kramerius:";
@@ -148,16 +149,31 @@ public class FedoraUtils {
                     + "<mods version=\"3.4\">\n" + "</mods>\n" + "</modsCollection>";
 
     /** The fedora access. */
-    @Inject
-    @Named("securedFedoraAccess")
     private static FedoraAccess fedoraAccess;
 
     /** The ns context. */
-    @Inject
     private static NamespaceContext nsContext;
 
     /** The xpfactory. */
     private static XPathFactory xpfactory;
+
+
+    // workaround for inject to static fields, but these fields are evil
+    @Inject
+    public void setNsContext(NamespaceContext nsContext) {
+        FedoraUtils.nsContext = nsContext;
+    }
+
+    @Inject
+    @Named("securedFedoraAccess")
+    public void setFedoraAccess(FedoraAccess fedoraAccess) {
+        FedoraUtils.fedoraAccess = fedoraAccess;
+    }
+
+    @Inject
+    public void setConfiguration(EditorConfiguration configuration) {
+        FedoraUtils.configuration = configuration;
+    }
 
     /**
      * Gets the rdf pids.

@@ -40,11 +40,13 @@ import cz.mzk.editor.server.cz.mzk.server.editor.api.DescriptionDAO;
 import cz.mzk.editor.server.util.ServerUtils;
 import cz.mzk.editor.shared.rpc.action.GetDescriptionAction;
 import cz.mzk.editor.shared.rpc.action.GetDescriptionResult;
+import org.springframework.stereotype.Service;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class PutRecentlyModifiedHandler.
  */
+@Service
 public class GetDescriptionHandler
         implements ActionHandler<GetDescriptionAction, GetDescriptionResult> {
 
@@ -57,14 +59,14 @@ public class GetDescriptionHandler
     private DescriptionDAO descriptionDAO;
 
     @Inject
-    ServerUtils serverUtils;
+    private ServerUtils serverUtils;
 
-    /**
-     * Instantiates a new put recently modified handler.
-     */
-    @Inject
-    public GetDescriptionHandler() {
-    }
+//    /**
+//     * Instantiates a new put recently modified handler.
+//     */
+//    @Inject
+//    public GetDescriptionHandler() {
+//    }
 
     /*
      * (non-Javadoc)

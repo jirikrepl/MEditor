@@ -46,7 +46,6 @@ import cz.mzk.editor.shared.rpc.action.GetClientConfigResult;
  * The Class EditorClientConfigurationImpl.
  */
 @SuppressWarnings("deprecation")
-@Singleton
 public class EditorClientConfigurationImpl
         extends EditorClientConfiguration
         implements HasHandlers {

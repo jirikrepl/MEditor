@@ -188,7 +188,7 @@ public class ServerModule
 //        bindHandler(PutDigitalObjectDetailAction.class, PutDigitalObjectDetailHandler.class);
         bindHandler(GetRecentlyModifiedAction.class, GetRecentlyModifiedHandler.class);
 //        bindHandler(PutRecentlyModifiedAction.class, PutRecentlyModifiedHandler.class);
-//        bindHandler(GetDescriptionAction.class, GetDescriptionHandler.class);
+        bindHandler(GetDescriptionAction.class, GetDescriptionHandler.class);
 //        bindHandler(PutDescriptionAction.class, PutDescriptionHandler.class);
         bindHandler(CheckAvailabilityAction.class, CheckAvailabilityHandler.class);
 //        bindHandler(FindMetadataAction.class, FindMetadataHandler.class);

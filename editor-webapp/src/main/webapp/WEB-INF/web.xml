@@ -28,21 +28,36 @@
 		<!--<listener-class>cz.mzk.editor.server.guice.MyGuiceServletConfig</listener-class>-->
 	<!--</listener>-->
 
-	<listener>
-		<listener-class>cz.mzk.editor.server.SessionListener</listener-class>
-	</listener>
+	<!--<listener>-->
+		<!--<listener-class>cz.mzk.editor.server.SessionListener</listener-class>-->
+	<!--</listener>-->
+
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>/WEB-INF/applicationContext.xml</param-value>
+	</context-param>
 
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
 
-    <listener>
-        <listener-class>cz.mzk.editor.server.FlywayListener</listener-class>
-    </listener>
+    <!--<listener>-->
+        <!--<listener-class>cz.mzk.editor.server.FlywayListener</listener-class>-->
+    <!--</listener>-->
 
 	<listener>
 		<listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
 	</listener>
+
+	<servlet>
+		<servlet-name>HtmlServletImpl</servlet-name>
+		<servlet-class>org.springframework.web.context.support.HttpRequestHandlerServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>HtmlServletImpl</servlet-name>
+		<url-pattern>/html/login.html</url-pattern>
+	</servlet-mapping>
+
 
 	<servlet>
 		<servlet-name>dispatch</servlet-name>
@@ -53,6 +68,7 @@
 		<servlet-name>dispatch</servlet-name>
 		<url-pattern>/dispatch/*</url-pattern>
 	</servlet-mapping>
+
 
 
 	<!-- request 4 adding servlet -->
@@ -124,15 +140,6 @@
     <servlet-mapping>
         <servlet-name>AudioServiceImpl</servlet-name>
         <url-pattern>/audio/*</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>HtmlServletImpl</servlet-name>
-        <servlet-class>cz.mzk.editor.server.HtmlServletImpl</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>HtmlServletImpl</servlet-name>
-        <url-pattern>/html/login.html</url-pattern>
     </servlet-mapping>
 
 	<!-- Servlet for images of scans -->

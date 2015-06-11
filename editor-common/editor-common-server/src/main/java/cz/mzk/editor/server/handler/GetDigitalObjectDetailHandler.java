@@ -43,6 +43,7 @@ import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.server.actionhandler.ActionHandler;
 import com.gwtplatform.dispatch.shared.ActionException;
 
+import cz.mzk.editor.server.UserProvider;
 import org.apache.log4j.Logger;
 
 import cz.mzk.editor.client.ConnectionException;
@@ -76,20 +77,23 @@ public class GetDigitalObjectDetailHandler
             .toString());
 
     /** The Fedora digitalObject handler. */
-    private final FedoraDigitalObjectHandler fedoraObjectHandler;
+    @Inject
+    private FedoraDigitalObjectHandler fedoraObjectHandler;
 
     /** The Stored digitalObject handler. */
-    private final StoredDigitalObjectHandler storedObjectHandler;
+    @Inject
+    private StoredDigitalObjectHandler storedObjectHandler;
 
     /** The GetDescriptionHandler handler. */
-    private final GetDescriptionHandler descritptionHandler;
+    @Inject
+    private GetDescriptionHandler getDescriptionHandler;
 
     /** The http session provider. */
     @Inject
     private HttpSession httpSession;
 
-    /** The GetLockInformationHandler handler */
-    private final GetLockInformationHandler getLockInformationHandler;
+//    /** The GetLockInformationHandler handler */
+//    private final GetLockInformationHandler getLockInformationHandler;
 
     /** The description dao. */
     @Inject
@@ -99,22 +103,25 @@ public class GetDigitalObjectDetailHandler
     private DigitalObjectDAO digObjDAO;
 
     @Inject
-    ServerUtils serverUtils;
+    private UserProvider userProvider;
 
-    /**
-     * Instantiates a new gets the digital object detail handler.
-     * 
-     * @param handler
-     *        the handler
-     */
     @Inject
-    public GetDigitalObjectDetailHandler(final FedoraDigitalObjectHandler fedoraObjectHandler,
-                                         final StoredDigitalObjectHandler storedObjectHandler) {
-        this.fedoraObjectHandler = fedoraObjectHandler;
-        this.storedObjectHandler = storedObjectHandler;
-        this.descritptionHandler = new GetDescriptionHandler();
-        this.getLockInformationHandler = new GetLockInformationHandler();
-    }
+    private ServerUtils serverUtils;
+
+//    /**
+//     * Instantiates a new gets the digital object detail handler.
+//     *
+//     * @param handler
+//     *        the handler
+//     */
+//    @Inject
+//    public GetDigitalObjectDetailHandler(final FedoraDigitalObjectHandler fedoraObjectHandler,
+//                                         final StoredDigitalObjectHandler storedObjectHandler) {
+//        this.fedoraObjectHandler = fedoraObjectHandler;
+//        this.storedObjectHandler = storedObjectHandler;
+//        this.getDescriptionHandler = new GetDescriptionHandler();
+//       // this.getLockInformationHandler = new GetLockInformationHandler();
+//    }
 
     /*
      * (non-Javadoc)
@@ -130,7 +137,7 @@ public class GetDigitalObjectDetailHandler
         LOGGER.debug("Processing action: GetDigitalObjectDetailAction " + action.getUuid());
         serverUtils.checkExpiredSession();
 
-        if (!serverUtils.checkUserRightOrAll(EDITOR_RIGHTS.OPEN_OBJECT)) {
+        if (!userProvider.checkUserRightOrAll(EDITOR_RIGHTS.OPEN_OBJECT)) {
             LOGGER.warn("Bad authorization in " + this.getClass().toString());
             throw new ActionException("Bad authorization in " + this.getClass().toString());
         }
@@ -155,9 +162,9 @@ public class GetDigitalObjectDetailHandler
                     return new GetDigitalObjectDetailResult(null, null, null);
             }
 
-            Injector injector = (Injector) httpSession.getServletContext().getAttribute(Injector.class.getName());
-            injector.injectMembers(descritptionHandler);
-            injector.injectMembers(getLockInformationHandler);
+//            Injector injector = (Injector) httpSession.getServletContext().getAttribute(Injector.class.getName());
+//            injector.injectMembers(getDescriptionHandler);
+//            injector.injectMembers(getLockInformationHandler);
 
             DigitalObjectDetail obj = null;
             if (storedFOXMLFilePath == null) {
@@ -185,7 +192,7 @@ public class GetDigitalObjectDetailHandler
 
             //TODO storedFOXMLFilePath != null------------------------------------------------------
             //            GetDescriptionResult result =
-            //                    descritptionHandler.execute(new GetDescriptionAction(uuid), context);
+            //                    getDescriptionHandler.execute(new GetDescriptionAction(uuid), context);
             //
             //            String description = result.getUserDescription();
             //            Date modified = result.getModified();
@@ -199,10 +206,10 @@ public class GetDigitalObjectDetailHandler
             } catch (DatabaseException e) {
                 throw new ActionException(e);
             }
-            LockInfo lockInfo =
-                    getLockInformationHandler.execute(new GetLockInformationAction(uuid), context)
-                            .getLockInfo();
-            obj.setLockInfo(lockInfo);
+//            LockInfo lockInfo =
+//                    getLockInformationHandler.execute(new GetLockInformationAction(uuid), context)
+//                            .getLockInfo();
+//            obj.setLockInfo(lockInfo);
 
             return new GetDigitalObjectDetailResult(obj,
                                                     description == null ? "" : description,

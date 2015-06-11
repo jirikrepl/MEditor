@@ -58,6 +58,7 @@ public class FedoraDigitalObjectHandlerImpl
         implements FedoraDigitalObjectHandler {
 
     /** The fedora access. */
+    @Inject
     @Named("securedFedoraAccess")
     private FedoraAccess fedoraAccess;
 
@@ -74,10 +75,10 @@ public class FedoraDigitalObjectHandlerImpl
         DigitalObjectDetail detail = new DigitalObjectDetail(model, FedoraUtils.getRelated(uuid));
         detail.setDc(getDc(uuid, false));
         detail.setMods(getMods(uuid));
-        Foxml foxml = handleFoxml(uuid, getFedoraAccess());
+        Foxml foxml = handleFoxml(uuid, fedoraAccess);
         detail.setFoxmlString(foxml.getFoxml());
         detail.setLabel(foxml.getLabel());
-        detail.setOcr(handleOCR(uuid, getFedoraAccess()));
+        detail.setOcr(handleOCR(uuid, fedoraAccess));
         detail.setFirstPageURL(FedoraUtils.findFirstPagePid(uuid));
         detail.setPdf(foxml.isPdf());
         return detail;
@@ -103,14 +104,6 @@ public class FedoraDigitalObjectHandlerImpl
         return detail;
     }
 
-    /**
-     * Gets the fedora access.
-     * 
-     * @return the fedora access
-     */
-    private FedoraAccess getFedoraAccess() {
-        return fedoraAccess;
-    }
 
     /**
      * Gets dc.
@@ -124,7 +117,7 @@ public class FedoraDigitalObjectHandlerImpl
     private DublinCore getDc(String uuid, boolean onlyTitleAndUuid) {
         Document dcDocument = null;
         try {
-            dcDocument = getFedoraAccess().getDC(uuid);
+            dcDocument = fedoraAccess.getDC(uuid);
         } catch (IOException e) {
             LOGGER.error("Unable to get DC metadata for " + uuid + "[" + e.getMessage() + "]", e);
         }
@@ -144,7 +137,7 @@ public class FedoraDigitalObjectHandlerImpl
     private ModsCollectionClient getMods(String uuid) {
         Document modsDocument = null;
         try {
-            modsDocument = getFedoraAccess().getBiblioMods(uuid);
+            modsDocument = fedoraAccess.getBiblioMods(uuid);
         } catch (IOException e) {
             LOGGER.error("Unable to get MODS metadata for " + uuid + "[" + e.getMessage() + "]", e);
         } catch (Exception e) {

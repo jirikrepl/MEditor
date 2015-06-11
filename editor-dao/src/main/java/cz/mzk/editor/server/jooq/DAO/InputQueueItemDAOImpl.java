@@ -54,7 +54,7 @@ public class InputQueueItemDAOImpl implements InputQueueItemDAO {
                     .join(InputQueue.INPUT_QUEUE);
         }
 
-        return null;
+        return retList;
 
     }
 

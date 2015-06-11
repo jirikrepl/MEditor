@@ -48,7 +48,8 @@ public class UserProvider {
         return checkUserRight(Constants.EDITOR_RIGHTS.ALL) || checkUserRight(right);
     }
 
+    //TODO-MR: implement!
     private boolean checkUserRight(Constants.EDITOR_RIGHTS right) {
-        return false;
+        return true;
     }
 }

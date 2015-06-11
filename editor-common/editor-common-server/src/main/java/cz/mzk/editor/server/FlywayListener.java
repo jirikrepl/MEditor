@@ -4,6 +4,8 @@ import com.google.inject.Injector;
 import com.googlecode.flyway.core.Flyway;
 import cz.mzk.editor.server.config.EditorConfiguration;
 import org.apache.log4j.Logger;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import javax.inject.Inject;
@@ -23,23 +25,19 @@ public class FlywayListener implements ServletContextListener {
 
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {
-            WebApplicationContextUtils
-                    .getRequiredWebApplicationContext(servletContextEvent.getServletContext())
-                    .getAutowireCapableBeanFactory()
-                    .autowireBean(this);
-
-
-        Flyway flyway = new Flyway();
-        String login = configuration.getDBLogin();
-        String password = configuration.getDBPassword();
-        String host = configuration.getDBHost();
-        String port = configuration.getDBPort();
-        String name = configuration.getDBName();
-        flyway.setDataSource("jdbc:postgresql://" + host + ":" + port + "/" + name, login, password);
-        flyway.setInitOnMigrate(true);
-        flyway.migrate();
-
-        LOGGER.info("DB schema has been updated to version: " + flyway.getTarget().toString());
+//        SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this, servletContextEvent.getServletContext());
+//
+//        Flyway flyway = new Flyway();
+//        String login = configuration.getDBLogin();
+//        String password = configuration.getDBPassword();
+//        String host = configuration.getDBHost();
+//        String port = configuration.getDBPort();
+//        String name = configuration.getDBName();
+//        flyway.setDataSource("jdbc:postgresql://" + host + ":" + port + "/" + name, login, password);
+//        flyway.setInitOnMigrate(true);
+//        flyway.migrate();
+//
+//        LOGGER.info("DB schema has been updated to version: " + flyway.getTarget().toString());
 
     }
 
