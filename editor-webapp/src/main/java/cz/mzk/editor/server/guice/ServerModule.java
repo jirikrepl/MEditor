@@ -200,7 +200,7 @@ public class ServerModule
 //        bindHandler(GetDOModelAction.class, GetDOModelHandler.class);
 //        bindHandler(GetLockInformationAction.class, GetLockInformationHandler.class);
 //        bindHandler(InsertNewDigitalObjectAction.class, InsertNewDigitalObjectHandler.class);
-//        bindHandler(GetRelationshipsAction.class, GetRelationshipsHandler.class);
+        bindHandler(GetRelationshipsAction.class, GetRelationshipsHandler.class);
 //        bindHandler(GetObjectsToSortAction.class, GetObjectsToSortHandler.class);
 //        bindHandler(RemoveDigitalObjectAction.class, RemoveDigitalObjectHandler.class);
 //        bindHandler(GetIngestInfoAction.class, GetIngestInfoHandler.class);
@@ -213,7 +213,7 @@ public class ServerModule
 //        bindHandler(InitializeConversionAction.class, InitializeConversionHandler.class);
 //        bindHandler(GetOcrFromPdfAction.class, GetOcrFromPdfHandler.class);
 //        bindHandler(QuartzConvertImagesAction.class, QuartzConvertImagesHandler.class);
-//        bindHandler(QuartzAddOcrAction.class, QuartzAddOcrHandler.class);
+        bindHandler(QuartzAddOcrAction.class, QuartzAddOcrHandler.class);
 //        bindHandler(QuartzScheduleJobsAction.class, QuartzScheduleJobsHandler.class);
 //        //bind(EditorConfiguration.class).to(EditorConfigurationImpl.class).asEagerSingleton();
 //

@@ -7,10 +7,14 @@ import cz.mzk.editor.server.jooq.tables.InputQueue;
 import cz.mzk.editor.shared.rpc.IngestInfo;
 import cz.mzk.editor.shared.rpc.InputQueueItem;
 import org.jooq.DSLContext;
+import static org.jooq.impl.DSL.*;
+import org.jooq.Record4;
+import org.jooq.Result;
 import org.springframework.stereotype.Repository;
-
 import javax.inject.Inject;
 import java.io.File;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +25,7 @@ import java.util.List;
 public class InputQueueItemDAOImpl implements InputQueueItemDAO {
 
     @Inject
-    private DSLContext create;
+    private DSLContext dsl;
 
     public static final String FIND_ITEMS_ON_TOP_LVL_STATEMENT =
             "SELECT p.path, p.barcode, p.ingested, n.name FROM " + Constants.TABLE_INPUT_QUEUE_ITEM
@@ -36,6 +40,31 @@ public class InputQueueItemDAOImpl implements InputQueueItemDAO {
 
     @Override
     public void updateItems(List<InputQueueItem> toUpdate) throws DatabaseException {
+        if (toUpdate == null) throw new NullPointerException("toUpdate");
+
+
+//        ResultSet rs = selectCount.executeQuery();
+//        SELECT count(path) FROM "
+//                + Constants.TABLE_INPUT_QUEUE_ITEM
+
+
+        cz.mzk.editor.server.jooq.tables.InputQueueItem inputQueueItemTable = cz.mzk.editor.server.jooq.tables.InputQueueItem.INPUT_QUEUE_ITEM;
+        int totalBefore = dsl.select(count(inputQueueItemTable.PATH)).from(inputQueueItemTable).fetchOne().value1();
+
+        int deleted = dsl.delete(inputQueueItemTable).execute();
+
+        int updated = 0;
+        for (InputQueueItem item : toUpdate) {
+            updated += dsl.insertInto(inputQueueItemTable, inputQueueItemTable.PATH, inputQueueItemTable.BARCODE, inputQueueItemTable.INGESTED)
+                    .values(item.getPath(), item.getBarcode(), item.getIngestInfo()).execute();
+
+            //updated += getItemInsertStatement(item).executeUpdate();
+        }
+        if (totalBefore == deleted && updated == toUpdate.size()) {
+            //TODO-MR
+        } else {
+            //TODO-MR error, rollback
+        }
 
     }
 
@@ -47,11 +76,15 @@ public class InputQueueItemDAOImpl implements InputQueueItemDAO {
 
         // FIND_ITEMS_ON_TOP_LVL_STATEMENT_ORDERED
         if (top) {
-            create.select(cz.mzk.editor.server.jooq.tables.InputQueueItem.INPUT_QUEUE_ITEM.PATH,
+            Result<Record4<String, String, Boolean, String>> results = dsl.select(cz.mzk.editor.server.jooq.tables.InputQueueItem.INPUT_QUEUE_ITEM.PATH,
                     cz.mzk.editor.server.jooq.tables.InputQueueItem.INPUT_QUEUE_ITEM.BARCODE,
                     cz.mzk.editor.server.jooq.tables.InputQueueItem.INPUT_QUEUE_ITEM.INGESTED,
                     InputQueue.INPUT_QUEUE.NAME).from(cz.mzk.editor.server.jooq.tables.InputQueueItem.INPUT_QUEUE_ITEM)
-                    .join(InputQueue.INPUT_QUEUE);
+                    .join(InputQueue.INPUT_QUEUE)
+                    .on(cz.mzk.editor.server.jooq.tables.InputQueueItem.INPUT_QUEUE_ITEM.PATH.eq(InputQueue.INPUT_QUEUE.DIRECTORY_PATH)).fetch();
+            for (Record4<String, String, Boolean, String> r : results) {
+                retList.add(new InputQueueItem(r.value1(), r.value2(), r.value3(), r.value4()));
+            }
         }
 
         return retList;

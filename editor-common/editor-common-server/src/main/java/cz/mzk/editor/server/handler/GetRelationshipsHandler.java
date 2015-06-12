@@ -31,7 +31,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.google.inject.name.Named;
 import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.server.actionhandler.ActionHandler;
 import com.gwtplatform.dispatch.shared.ActionException;
@@ -48,15 +47,17 @@ import cz.mzk.editor.shared.domain.FedoraNamespaces;
 import cz.mzk.editor.shared.rpc.DigitalObjectRelationships;
 import cz.mzk.editor.shared.rpc.action.GetRelationshipsAction;
 import cz.mzk.editor.shared.rpc.action.GetRelationshipsResult;
+import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 /**
  * @author Matous Jobanek
  * @version $Id$
  */
-
+@Service
 public class GetRelationshipsHandler
         implements ActionHandler<GetRelationshipsAction, GetRelationshipsResult> {
 
@@ -68,15 +69,12 @@ public class GetRelationshipsHandler
     private List<String> uuidNotToRemove;
     private GetRelationshipsAction action;
 
-    private static FedoraAccess fedoraAccess;
+    @Named("securedFedoraAccess")
+    @Inject
+    private FedoraAccess fedoraAccess;
 
     @Inject
-    ServerUtils serverUtils;
-
-    @Inject
-    public GetRelationshipsHandler(@Named("securedFedoraAccess") FedoraAccess fedoraAccess) {
-        this.fedoraAccess = fedoraAccess;
-    }
+    private ServerUtils serverUtils;
 
     /**
      * {@inheritDoc}
