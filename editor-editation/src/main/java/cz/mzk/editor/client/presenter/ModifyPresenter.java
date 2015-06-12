@@ -521,7 +521,7 @@ public class ModifyPresenter
                         DigitalObjectDetail detail = result.getDetail();
                         if (detail != null) {
                             EscKeyPressedEvent.fire(ModifyPresenter.this);
-                            if (null != detail.getLockInfo().getLockOwner()) {
+                            if (detail.getLockInfo() != null && detail.getLockInfo().getLockOwner() != null) {
                                 EditorSC.objectIsLock(lang, detail.getLockInfo());
                             }
 
@@ -534,13 +534,13 @@ public class ModifyPresenter
                                     (detail.getDc().getTitle() == null || detail.getDc().getTitle().size() == 0) ? "no title"
                                             : detail.getDc().getTitle().get(0);
                             DigitalObjectOpenedEvent.fire(ModifyPresenter.this,
-                                                          true,
-                                                          new RecentlyModifiedItem(uuid,
-                                                                                   title,
-                                                                                   result.getDescription(),
-                                                                                   detail.getModel(),
-                                                                                   result.getModified()),
-                                                          result.getDetail().getRelated());
+                                    true,
+                                    new RecentlyModifiedItem(uuid,
+                                            title,
+                                            result.getDescription(),
+                                            detail.getModel(),
+                                            result.getModified()),
+                                    result.getDetail().getRelated());
                         } else if (savedEditedObject != null) {
                             SC.ask(lang.operationFailed(), lang.storedNotFound(), new BooleanCallback() {
 

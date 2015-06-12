@@ -47,7 +47,7 @@ public abstract class InfoTab
         VStack layout = new VStack();
         layout.setPadding(15);
         DublinCore dc = detail.getDc();
-        final String lockOwner = detail.getLockInfo().getLockOwner();
+        final String lockOwner = (detail.getLockInfo() != null) ? detail.getLockInfo().getLockOwner() : null;
 
         if (lockOwner != null) {
             showLockInfoButton("".equals(lockOwner));
