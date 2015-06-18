@@ -25,6 +25,7 @@
 package cz.mzk.editor.server.handler;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.server.actionhandler.ActionHandler;
@@ -42,7 +43,6 @@ import cz.mzk.editor.shared.rpc.action.UnlockDigitalObjectResult;
  * @author Jiri Kremser
  * @version $Id$
  */
-
 public class UnlockDigitalObjectHandler
         implements ActionHandler<UnlockDigitalObjectAction, UnlockDigitalObjectResult> {
 
@@ -55,7 +55,7 @@ public class UnlockDigitalObjectHandler
     private StoredAndLocksDAO storedAndLocksDAO;
 
     @Inject
-    ServerUtils serverUtils;
+    private ServerUtils serverUtils;
 
     /** Instantiate a new unlock digital object handler **/
     @Inject

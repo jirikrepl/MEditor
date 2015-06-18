@@ -7,6 +7,7 @@ import cz.mzk.editor.server.util.IOUtils;
 import org.apache.log4j.Logger;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import java.io.File;
 import java.io.FileFilter;
 import java.util.ArrayList;
@@ -22,15 +23,13 @@ public class ScanFolderImpl implements ScanFolder {
     /** The logger. */
     private static final Logger LOGGER = Logger.getLogger(ScanFolder.class.getPackage().toString());
 
-    public interface ScanFolderFactory {
-        ScanFolder create(@Assisted("model") String model, @Assisted("code") String code);
-    }
+
 
     private final String path;
     public List<String> wrongNames = new ArrayList<String>();
     public List<String> fileNames;
 
-        EditorConfiguration configuration;
+    private EditorConfiguration configuration;
 
     /**
      * Scan directory structure, (lazy)
@@ -38,8 +37,7 @@ public class ScanFolderImpl implements ScanFolder {
      * @param code
      * @throws ActionException
      */
-    @Inject
-    public ScanFolderImpl(@Assisted("model") String model, @Assisted("code") String code, EditorConfiguration configuration) throws ActionException {
+    public ScanFolderImpl(String model, String code,  EditorConfiguration configuration) throws ActionException {
         this.configuration = configuration;
         final String base = configuration.getScanInputQueuePath();
 

@@ -41,6 +41,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Named;
 import javax.xml.namespace.NamespaceContext;
 import javax.xml.namespace.QName;
 import javax.xml.parsers.ParserConfigurationException;
@@ -55,6 +56,7 @@ import javax.inject.Inject;
 
 import org.apache.log4j.Logger;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
@@ -92,7 +94,7 @@ import static cz.mzk.editor.server.fedora.utils.FedoraUtils.getFedoraDatastreams
  * @see FedoraAccess
  * @author pavels
  */
-@Component("rawFedoraAccess")
+@Named("rawFedoraAccess")
 public class FedoraAccessImpl
         implements FedoraAccess {
 

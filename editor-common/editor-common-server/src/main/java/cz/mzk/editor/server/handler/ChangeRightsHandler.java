@@ -40,6 +40,7 @@ import com.gwtplatform.dispatch.shared.ActionException;
 
 import org.apache.log4j.Logger;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -61,8 +62,8 @@ public class ChangeRightsHandler
         implements ActionHandler<ChangeRightsAction, ChangeRightsResult> {
 
     @Inject
-    private @Named("securedFedoraAccess")
-    FedoraAccess fedoraAccess;
+    @Qualifier("securedFedoraAccess")
+    private FedoraAccess fedoraAccess;
 
     @Inject
     ServerUtils serverUtils;

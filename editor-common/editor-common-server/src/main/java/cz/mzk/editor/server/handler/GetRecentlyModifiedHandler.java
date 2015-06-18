@@ -31,6 +31,7 @@ import java.sql.SQLException;
 
 import java.util.ArrayList;
 
+import javax.inject.Named;
 import javax.servlet.http.HttpSession;
 
 import javax.inject.Inject;
@@ -65,7 +66,7 @@ import org.springframework.stereotype.Service;
 /**
  * The Class GetRecentlyModifiedHandler.
  */
-@Service
+@Named
 public class GetRecentlyModifiedHandler
         implements ActionHandler<GetRecentlyModifiedAction, GetRecentlyModifiedResult> {
 
@@ -95,7 +96,7 @@ public class GetRecentlyModifiedHandler
 //    private DAOUtils daoUtils;
 
     @Inject
-    ServerUtils serverUtils;
+    private ServerUtils serverUtils;
 
     /**
      * Instantiates a new gets the recently modified handler.

@@ -27,6 +27,7 @@ package cz.mzk.editor.server.handler;
 import java.sql.SQLException;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.server.actionhandler.ActionHandler;
@@ -47,7 +48,7 @@ import cz.mzk.editor.shared.rpc.action.GetLockInformationResult;
  * @author Matous Jobanek
  * @version $Id$
  */
-
+@Named
 public class GetLockInformationHandler
         implements ActionHandler<GetLockInformationAction, GetLockInformationResult> {
 
@@ -64,11 +65,10 @@ public class GetLockInformationHandler
     private LockDAO locksDAO;
 
     /** The dao utils. */
-    @Inject
     private DAOUtils daoUtils;
 
     @Inject
-    ServerUtils serverUtils;
+    private ServerUtils serverUtils;
 
     /**
      * {@inheritDoc}

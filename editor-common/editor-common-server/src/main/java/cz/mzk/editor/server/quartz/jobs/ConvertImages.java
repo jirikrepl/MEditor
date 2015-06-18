@@ -77,8 +77,12 @@ public class ConvertImages extends ProgressJob
         String model = dataMap.getString("model");
         String code = dataMap.getString("code");
 
-        ScanFolderImpl.ScanFolderFactory scanFolderFactory = guice.getInstance(ScanFolderImpl.ScanFolderFactory.class);
-        ScanFolder scanFolder = scanFolderFactory.create(model, code);
+        ScanFolder scanFolder = null;
+        try {
+            scanFolder = new ScanFolderImpl(model, code, configuration);
+        } catch (ActionException e) {
+            e.printStackTrace();
+        }
         final List<String> fileNames = scanFolder.getFileNames();
 
         Collections.sort(fileNames);

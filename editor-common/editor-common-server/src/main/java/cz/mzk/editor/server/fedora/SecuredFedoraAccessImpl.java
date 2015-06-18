@@ -33,6 +33,7 @@ import java.io.InputStream;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.inject.Named;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpression;
@@ -41,7 +42,6 @@ import javax.xml.xpath.XPathFactory;
 
 import javax.inject.Inject;
 
-import com.google.inject.name.Named;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -69,7 +69,7 @@ import cz.mzk.editor.shared.domain.DigitalObjectModel;
  * @see FedoraAccess#getImageFULLMimeType(String)
  * @author xkremser
  */
-@Component("securedFedoraAccess")
+@Named("securedFedoraAccess")
 public class SecuredFedoraAccessImpl
         implements FedoraAccess {
 
@@ -86,7 +86,7 @@ public class SecuredFedoraAccessImpl
      *        the raw access
      */
     @Inject
-    public SecuredFedoraAccessImpl(@Qualifier("rawFedoraAccess") FedoraAccess rawAccess) {
+    public SecuredFedoraAccessImpl(@Named("rawFedoraAccess") FedoraAccess rawAccess) {
         super();
         this.rawAccess = rawAccess;
     }

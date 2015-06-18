@@ -25,6 +25,7 @@
 package cz.mzk.editor.server.handler;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.server.actionhandler.ActionHandler;
@@ -42,7 +43,7 @@ import cz.mzk.editor.shared.rpc.action.GetIngestInfoResult;
  * @author Matous Jobanek
  * @version $Id$
  */
-
+@Named
 public class GetIngestInfoHandler
         implements ActionHandler<GetIngestInfoAction, GetIngestInfoResult> {
 
@@ -52,7 +53,7 @@ public class GetIngestInfoHandler
     private static final Logger LOGGER = Logger.getLogger(GetIngestInfoHandler.class.getPackage().toString());
 
     @Inject
-    ServerUtils serverUtils;
+    private ServerUtils serverUtils;
 
     /**
      * {@inheritDoc}

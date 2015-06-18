@@ -66,7 +66,6 @@ public class GetUserStatisticDataHandler
     @Inject
     private ActionDAO actionDAO;
 
-    @Inject
     private DAOUtils daoUtils;
 
     @Inject

@@ -30,8 +30,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
-import com.google.inject.name.Named;
 import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.server.actionhandler.ActionHandler;
 import com.gwtplatform.dispatch.shared.ActionException;
@@ -58,6 +58,7 @@ import cz.mzk.editor.shared.rpc.action.GetObjectsToSortResult;
  * @author Matous Jobanek
  * @version Jan 30, 2013
  */
+@Named
 public class GetObjectsToSortHandler
         implements ActionHandler<GetObjectsToSortAction, GetObjectsToSortResult> {
 
@@ -69,7 +70,7 @@ public class GetObjectsToSortHandler
     private final FedoraAccess fedoraAccess;
 
     @Inject
-    ServerUtils serverUtils;
+    private ServerUtils serverUtils;
 
     /**
      * Instantiates a new gets the objects to sort handler.

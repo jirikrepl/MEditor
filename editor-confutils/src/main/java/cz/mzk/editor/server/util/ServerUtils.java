@@ -44,6 +44,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import javax.inject.Named;
 import javax.servlet.http.HttpSession;
 
 import javax.xml.bind.JAXBElement;
@@ -71,7 +72,7 @@ import org.springframework.stereotype.Service;
 /**
  * The Class ServerUtils.
  */
-@Component
+@Named
 public class ServerUtils {
 
     /** The Constant LOGGER. */
@@ -146,6 +147,7 @@ public class ServerUtils {
         checkExpiredSession(httpSession);
     }
 
+    @Deprecated
     public boolean checkUserRightOrAll(EDITOR_RIGHTS right) {
 
         return checkUserRight(EDITOR_RIGHTS.ALL) || checkUserRight(right);

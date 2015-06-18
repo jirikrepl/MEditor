@@ -29,6 +29,7 @@ package cz.mzk.editor.server.handler;
 
 import java.io.IOException;
 
+import javax.inject.Named;
 import javax.xml.transform.TransformerException;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpression;
@@ -36,13 +37,13 @@ import javax.xml.xpath.XPathExpressionException;
 
 import javax.inject.Inject;
 
-import com.google.inject.name.Named;
 import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.server.actionhandler.ActionHandler;
 import com.gwtplatform.dispatch.shared.ActionException;
 
 import org.apache.log4j.Logger;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -64,6 +65,7 @@ import cz.mzk.editor.shared.rpc.action.PutDigitalObjectDetailResult;
 /**
  * The Class GetDigitalObjectDetailHandler.
  */
+@Named
 public class PutDigitalObjectDetailHandler
         implements ActionHandler<PutDigitalObjectDetailAction, PutDigitalObjectDetailResult> {
 
@@ -76,7 +78,7 @@ public class PutDigitalObjectDetailHandler
 
     private final FedoraAccess fedoraAccess;
 
-    @Inject
+    private @Inject
     ServerUtils serverUtils;
 
     // /** The injector. */

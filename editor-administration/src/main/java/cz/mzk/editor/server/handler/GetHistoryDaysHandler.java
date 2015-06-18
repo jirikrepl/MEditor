@@ -58,7 +58,6 @@ public class GetHistoryDaysHandler
     /** The Constant LOGGER. */
     private static final Logger LOGGER = Logger.getLogger(GetHistoryDaysHandler.class);
 
-    @Inject
     private DAOUtils daoUtils;
 
     @Inject

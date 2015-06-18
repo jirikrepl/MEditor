@@ -61,7 +61,6 @@ public class GetAllStoredTreeStructureHandler
     @Inject
     private StoredAndLocksDAO storedAndLocksDAO;
 
-    @Inject
     private DAOUtils daoUtils;
 
     @Inject

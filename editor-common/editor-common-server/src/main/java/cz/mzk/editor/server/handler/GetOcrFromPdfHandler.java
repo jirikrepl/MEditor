@@ -28,6 +28,7 @@ import java.io.File;
 import java.io.FileInputStream;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.server.actionhandler.ActionHandler;
@@ -50,7 +51,7 @@ import cz.mzk.editor.shared.rpc.action.GetOcrFromPdfResult;
  * @author Matous Jobanek
  * @version $Id$
  */
-
+@Named
 public class GetOcrFromPdfHandler
         implements ActionHandler<GetOcrFromPdfAction, GetOcrFromPdfResult> {
 
@@ -58,7 +59,7 @@ public class GetOcrFromPdfHandler
     private EditorConfiguration conf;
 
     @Inject
-    ServerUtils serverUtils;
+    private ServerUtils serverUtils;
 
     private static final Logger LOGGER = Logger.getLogger(GetOcrFromPdfHandler.class);
 

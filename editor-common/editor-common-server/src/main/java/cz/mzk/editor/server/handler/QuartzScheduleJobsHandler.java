@@ -47,6 +47,7 @@ import cz.mzk.editor.shared.rpc.action.QuartzScheduleJobsAction;
 import cz.mzk.editor.shared.rpc.action.QuartzScheduleJobsResult;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 /**
  * @author Martin Rumanek

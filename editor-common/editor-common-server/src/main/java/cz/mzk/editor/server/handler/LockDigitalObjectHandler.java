@@ -24,6 +24,7 @@
 
 package cz.mzk.editor.server.handler;
 
+import javax.inject.Named;
 import javax.servlet.http.HttpSession;
 
 import javax.inject.Inject;
@@ -48,7 +49,6 @@ import cz.mzk.editor.shared.rpc.action.LockDigitalObjectResult;
  * @author Jiri Kremser
  * @version $Id$
  */
-
 public class LockDigitalObjectHandler
         implements ActionHandler<LockDigitalObjectAction, LockDigitalObjectResult> {
 
@@ -61,20 +61,15 @@ public class LockDigitalObjectHandler
     private LockDAO locksDAO;
 
     /** The GetLockInformationHandler handler */
-    private final GetLockInformationHandler getLockInformationHandler;
+    private final GetLockInformationHandler getLockInformationHandler = new GetLockInformationHandler();
 
     /** The http session provider. */
     @Inject
     private Provider<HttpSession> httpSessionProvider;
 
-    /** Instantiate a new lock digital object handler **/
-    @Inject
-    public LockDigitalObjectHandler() {
-        this.getLockInformationHandler = new GetLockInformationHandler();
-    }
 
     @Inject
-    ServerUtils serverUtils;
+    private ServerUtils serverUtils;
 
     /**
      * {@inheritDoc}

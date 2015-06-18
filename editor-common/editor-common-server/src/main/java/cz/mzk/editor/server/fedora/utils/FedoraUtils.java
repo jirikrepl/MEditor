@@ -64,6 +64,7 @@ import com.gwtplatform.dispatch.shared.ActionException;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.log4j.Logger;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -165,7 +166,7 @@ public class FedoraUtils {
     }
 
     @Inject
-    @Named("securedFedoraAccess")
+    @Qualifier("securedFedoraAccess")
     public void setFedoraAccess(FedoraAccess fedoraAccess) {
         FedoraUtils.fedoraAccess = fedoraAccess;
     }

@@ -26,6 +26,7 @@ package cz.mzk.editor.server.handler;
 
 import java.io.IOException;
 
+import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 
 import javax.inject.Inject;
@@ -48,7 +49,7 @@ import cz.mzk.editor.shared.rpc.action.GetFullImgMetadataResult;
  * @author Matous Jobanek
  * @version $Id$
  */
-
+@Named
 public class GetFullImgMetadataHandler
         implements ActionHandler<GetFullImgMetadataAction, GetFullImgMetadataResult> {
 
@@ -58,14 +59,14 @@ public class GetFullImgMetadataHandler
 
     /** The http session provider. */
     @Inject
-    private Provider<HttpServletRequest> requestProvider;
+    private HttpServletRequest httpServletRequest;
 
     /** The configuration. */
     @Inject
     private EditorConfiguration config;
 
     @Inject
-    ServerUtils serverUtils;
+    private ServerUtils serverUtils;
 
     /**
      * {@inheritDoc}
@@ -78,7 +79,6 @@ public class GetFullImgMetadataHandler
         LOGGER.debug("Processing action: GetFullImgMetadataAction " + action.getUuid());
         serverUtils.checkExpiredSession();
 
-        HttpServletRequest httpServletRequest = requestProvider.get();
 
         StringBuffer baseUrl = new StringBuffer();
         baseUrl.append("http");

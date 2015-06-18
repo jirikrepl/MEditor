@@ -11,7 +11,7 @@ import java.util.ArrayList;
  * Created by rumanekm on 6/7/15.
  */
 @Repository
-public class RecentlyModifiedItemDaoImpl implements RecentlyModifiedItemDAO {
+public class RecentlyModifiedItemDAOImpl implements RecentlyModifiedItemDAO {
     @Override
     public boolean put(RecentlyModifiedItem toPut) throws DatabaseException {
         return false;

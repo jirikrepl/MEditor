@@ -28,6 +28,7 @@
 package cz.mzk.editor.server.handler;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.server.actionhandler.ActionHandler;
@@ -45,6 +46,7 @@ import cz.mzk.editor.shared.rpc.action.PutRecentlyModifiedResult;
 /**
  * The Class PutRecentlyModifiedHandler.
  */
+@Named
 public class PutRecentlyModifiedHandler
         implements ActionHandler<PutRecentlyModifiedAction, PutRecentlyModifiedResult> {
 
@@ -57,15 +59,7 @@ public class PutRecentlyModifiedHandler
     private RecentlyModifiedItemDAO recentlyModifiedDAO;
 
     @Inject
-    ServerUtils serverUtils;
-
-    /**
-     * Instantiates a new put recently modified handler.
-     */
-    @Inject
-    public PutRecentlyModifiedHandler() {
-
-    }
+    private ServerUtils serverUtils;
 
     /*
      * (non-Javadoc)

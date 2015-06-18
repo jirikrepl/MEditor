@@ -35,6 +35,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
+import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 
 import javax.inject.Inject;
@@ -70,6 +71,7 @@ import cz.mzk.editor.shared.rpc.action.ScanFolderResult;
 /**
  * The Class ScanFolderHandler.
  */
+@Named
 public class ScanFolderHandler
         implements ActionHandler<ScanFolderAction, ScanFolderResult> {
 
@@ -83,9 +85,6 @@ public class ScanFolderHandler
     @Inject
     private ImageResolverDAO imageResolverDAO;
 
-    @Inject
-    private Provider<HttpServletRequest> requestProvider;
-
     /** The input queue dao. */
     @Inject
     private InputQueueItemDAO inputQueueDAO;
@@ -94,13 +93,11 @@ public class ScanFolderHandler
     private ConversionDAO conversionDAO;
 
     @Inject
-    private ScanFolderImpl.ScanFolderFactory scanFolderFactory;
-
-    @Inject
     private UserProvider userProvider;
 
     @Inject
-    ServerUtils serverUtils;
+    private ServerUtils serverUtils;
+
 
     /**
      * Instantiates a new scan input queue handler.
@@ -127,9 +124,7 @@ public class ScanFolderHandler
         LOGGER.debug("Processing action: ScanFolderAction " + action.getModel() + " - " + action.getCode());
         serverUtils.checkExpiredSession();
 
-        scanFolderFactory.create(action.getModel(), action.getCode());
-
-        if (!serverUtils.checkUserRightOrAll(EDITOR_RIGHTS.SCAN_FOLDER_TO_CONVERT)) {
+        if (!userProvider.checkUserRightOrAll(EDITOR_RIGHTS.SCAN_FOLDER_TO_CONVERT)) {
             LOGGER.warn("Bad authorization in " + this.getClass().toString());
             throw new ActionException("Bad authorization in " + this.getClass().toString());
         }
@@ -141,7 +136,7 @@ public class ScanFolderHandler
             return null;
         }
 
-        ScanFolder scanFolder = scanFolderFactory.create(model, code);
+        ScanFolder scanFolder = new ScanFolderImpl(model, code, configuration);
         List<String> wrongNames = scanFolder.getWrongNames();
         List<String> imgFileNames = scanFolder.getFileNames();
         if (imgFileNames == null || imgFileNames.isEmpty()) {

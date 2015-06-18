@@ -60,6 +60,7 @@ import cz.mzk.editor.server.fedora.KrameriusImageSupport;
 import cz.mzk.editor.server.fedora.utils.FedoraUtils;
 import cz.mzk.editor.server.util.IOUtils;
 import cz.mzk.editor.server.util.RESTHelper;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -79,7 +80,7 @@ public class FullImgServiceImpl
 
     /** The fedora access. */
     @Inject
-    @Named("securedFedoraAccess")
+    @Qualifier("securedFedoraAccess")
     private FedoraAccess fedoraAccess;
 
     /*

@@ -44,6 +44,7 @@ import com.gwtplatform.dispatch.shared.ActionException;
 
 import org.apache.log4j.Logger;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -68,7 +69,7 @@ import cz.mzk.editor.shared.rpc.Foxml;
  * @author Matous Jobanek
  * @version $Id$
  */
-@Component
+@Named
 public class StoredDigitalObjectHandlerImpl
         extends DigitalObjectHandler
         implements StoredDigitalObjectHandler {
@@ -76,7 +77,7 @@ public class StoredDigitalObjectHandlerImpl
     /** The fedora access. */
 
     @Inject
-    @Named("securedFedoraAccess")
+    @Qualifier("securedFedoraAccess")
     private FedoraAccess fedoraAccess;
 
 

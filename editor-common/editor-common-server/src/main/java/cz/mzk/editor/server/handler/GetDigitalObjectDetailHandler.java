@@ -33,12 +33,11 @@ import java.io.IOException;
 
 import java.util.Date;
 
+import javax.inject.Named;
 import javax.servlet.http.HttpSession;
 
 import javax.inject.Inject;
 
-import com.google.inject.Injector;
-import com.google.inject.Provider;
 import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.server.actionhandler.ActionHandler;
 import com.gwtplatform.dispatch.shared.ActionException;
@@ -68,7 +67,7 @@ import org.springframework.stereotype.Service;
 /**
  * The Class GetDigitalObjectDetailHandler.
  */
-@Service
+@Named
 public class GetDigitalObjectDetailHandler
         implements ActionHandler<GetDigitalObjectDetailAction, GetDigitalObjectDetailResult> {
 

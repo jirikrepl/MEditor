@@ -27,6 +27,7 @@
 
 package cz.mzk.editor.server.handler;
 
+import javax.inject.Named;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 
@@ -48,6 +49,7 @@ import cz.mzk.editor.shared.rpc.action.InitializeConversionResult;
  * @author Jiri Kremser
  * @version 27.4.2012
  */
+@Named
 public class InitializeConversionHandler
         implements ActionHandler<InitializeConversionAction, InitializeConversionResult> {
 
@@ -64,7 +66,7 @@ public class InitializeConversionHandler
 
     /** The http session provider. */
     @Inject
-    private Provider<HttpSession> httpSessionProvider;
+    private HttpSession session;
 
     /**
      * Instantiates a new scan input queue handler.
@@ -99,7 +101,6 @@ public class InitializeConversionHandler
         if (!configuration.getAkkaOn()) {
             return new InitializeConversionResult(true);
         }
-        HttpSession session = httpSessionProvider.get();
         ServletContext context = session.getServletContext();
         Long startTime = (Long) context.getAttribute(CONVERSION_START_TIME);
         boolean running = converter.isRunning() && startTime != null;

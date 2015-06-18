@@ -36,12 +36,13 @@ import cz.mzk.editor.shared.rpc.action.DownloadDigitalObjectDetailAction;
 import cz.mzk.editor.shared.rpc.action.DownloadDigitalObjectDetailResult;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 /**
  * @author Matous Jobanek
  * @version $Id$
  */
-
+@Named
 public class DownloadDigitalObjectDetailHandler
         implements ActionHandler<DownloadDigitalObjectDetailAction, DownloadDigitalObjectDetailResult> {
 
@@ -50,7 +51,7 @@ public class DownloadDigitalObjectDetailHandler
             .getPackage().toString());
 
     @Inject
-    ServerUtils serverUtils;
+    private ServerUtils serverUtils;
 
     /**
      * {@inheritDoc}

@@ -17,6 +17,7 @@ import org.dom4j.Namespace;
 import org.dom4j.Visitor;
 import org.xml.sax.SAXException;
 
+import javax.inject.Named;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.xml.parsers.ParserConfigurationException;
@@ -33,6 +34,7 @@ import java.util.Map;
 /**
  * Created by rumanekm on 27.8.14.
  */
+@Named
 public class XServicesClientImpl implements XServicesClient {
 
 

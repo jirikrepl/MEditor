@@ -24,7 +24,6 @@
 
 package cz.mzk.editor.server.handler;
 
-import com.google.inject.Inject;
 import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.server.actionhandler.ActionHandler;
 import com.gwtplatform.dispatch.shared.ActionException;
@@ -43,6 +42,9 @@ import cz.mzk.editor.shared.rpc.action.QuartzConvertImagesAction;
 import cz.mzk.editor.shared.rpc.action.QuartzConvertImagesResult;
 import cz.mzk.editor.shared.rpc.action.ScanFolderAction;
 import cz.mzk.editor.shared.rpc.action.ScanFolderResult;
+
+import javax.inject.Inject;
+import javax.inject.Named;
 
 /**
  * @author Martin Rumanek

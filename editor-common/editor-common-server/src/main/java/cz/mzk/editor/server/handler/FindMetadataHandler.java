@@ -35,12 +35,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.server.actionhandler.ActionHandler;
 import com.gwtplatform.dispatch.shared.ActionException;
 
 import cz.mzk.editor.client.util.Constants;
+import cz.mzk.editor.server.UserProvider;
 import cz.mzk.editor.server.metadataDownloader.XServicesClient;
 import cz.mzk.editor.server.util.StringUtils;
 import org.apache.log4j.Logger;
@@ -67,6 +69,7 @@ import cz.mzk.editor.shared.rpc.action.FindMetadataResult;
 /**
  * The Class PutRecentlyModifiedHandler.
  */
+@Named
 public class FindMetadataHandler
         implements ActionHandler<FindMetadataAction, FindMetadataResult> {
 
@@ -83,7 +86,10 @@ public class FindMetadataHandler
     private final XServicesClient xServicesClient;
 
     @Inject
-    ServerUtils serverUtils;
+    private ServerUtils serverUtils;
+
+    @Inject
+    private UserProvider userProvider;
 
     /**
      * Instantiates a new put recently modified handler.
@@ -118,7 +124,7 @@ public class FindMetadataHandler
         }
         serverUtils.checkExpiredSession();
 
-        if (!serverUtils.checkUserRightOrAll(EDITOR_RIGHTS.FIND_METADATA)) {
+        if (!userProvider.checkUserRightOrAll(EDITOR_RIGHTS.FIND_METADATA)) {
             LOGGER.warn("Bad authorization in " + this.getClass().toString());
             throw new ActionException("Bad authorization in " + this.getClass().toString());
         }

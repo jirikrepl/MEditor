@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.server.actionhandler.ActionHandler;
@@ -51,7 +52,7 @@ import cz.mzk.editor.shared.rpc.action.FindAltoOcrFilesResult;
  * @author Matous Jobanek
  * @version $Id$
  */
-
+@Named
 public class FindAltoOcrFilesHandler
         implements ActionHandler<FindAltoOcrFilesAction, FindAltoOcrFilesResult> {
 
@@ -67,7 +68,7 @@ public class FindAltoOcrFilesHandler
     private static final String TXT = "txt";
 
     @Inject
-    ServerUtils serverUtils;
+    private ServerUtils serverUtils;
 
     /**
      * {@inheritDoc}

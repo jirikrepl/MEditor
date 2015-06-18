@@ -36,11 +36,14 @@ import java.util.Comparator;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.inject.Named;
+import javax.inject.Qualifier;
 
 import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.server.actionhandler.ActionHandler;
 import com.gwtplatform.dispatch.shared.ActionException;
 
+import com.sun.tracing.dtrace.NameAttributes;
 import org.apache.log4j.Logger;
 
 import cz.mzk.editor.client.util.Constants;
@@ -56,14 +59,12 @@ import cz.mzk.editor.shared.rpc.InputQueueItem;
 import cz.mzk.editor.shared.rpc.ServerActionResult;
 import cz.mzk.editor.shared.rpc.action.ScanInputQueueAction;
 import cz.mzk.editor.shared.rpc.action.ScanInputQueueResult;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class ScanInputQueueHandler.
  */
-@Service
+@Named
 public class ScanInputQueueHandler
         implements ActionHandler<ScanInputQueueAction, ScanInputQueueResult> {
 
@@ -78,7 +79,7 @@ public class ScanInputQueueHandler
 
     /** The fedora access. */
     @Inject
-    @Qualifier("securedFedoraAccess")
+    @Named("securedFedoraAccess")
     private FedoraAccess fedoraAccess;
 
     /** The input queue dao. */
@@ -89,7 +90,7 @@ public class ScanInputQueueHandler
     private ConversionDAO conversionDAO;
 
     @Inject
-    ServerUtils serverUtils;
+    private ServerUtils serverUtils;
 
     /**
      * Instantiates a new scan input queue handler.

@@ -34,6 +34,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import javax.inject.Named;
 import javax.xml.parsers.ParserConfigurationException;
 
 import javax.inject.Inject;
@@ -67,6 +68,7 @@ import cz.mzk.editor.shared.rpc.MetadataBundle;
  * @author Jiri Kremser
  * @version 12.11.2011
  */
+@Named
 public class OAIPMHClientImpl
         implements OAIPMHClient {
 

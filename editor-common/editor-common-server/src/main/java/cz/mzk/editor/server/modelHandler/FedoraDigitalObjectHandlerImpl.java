@@ -38,6 +38,7 @@ import javax.inject.Named;
 
 import org.apache.log4j.Logger;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.w3c.dom.Document;
 
@@ -52,14 +53,14 @@ import cz.mzk.editor.shared.rpc.Foxml;
 /**
  * The Class IDigitalObjectHandler.
  */
-@Component
+@Named
 public class FedoraDigitalObjectHandlerImpl
         extends DigitalObjectHandler
         implements FedoraDigitalObjectHandler {
 
     /** The fedora access. */
     @Inject
-    @Named("securedFedoraAccess")
+    @Qualifier("securedFedoraAccess")
     private FedoraAccess fedoraAccess;
 
     private static final Logger LOGGER = Logger.getLogger(FedoraDigitalObjectHandlerImpl.class);

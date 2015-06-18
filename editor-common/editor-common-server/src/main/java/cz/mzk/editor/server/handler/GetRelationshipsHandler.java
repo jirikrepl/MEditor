@@ -47,6 +47,7 @@ import cz.mzk.editor.shared.domain.FedoraNamespaces;
 import cz.mzk.editor.shared.rpc.DigitalObjectRelationships;
 import cz.mzk.editor.shared.rpc.action.GetRelationshipsAction;
 import cz.mzk.editor.shared.rpc.action.GetRelationshipsResult;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 
@@ -57,7 +58,7 @@ import javax.inject.Named;
  * @author Matous Jobanek
  * @version $Id$
  */
-@Service
+@Named
 public class GetRelationshipsHandler
         implements ActionHandler<GetRelationshipsAction, GetRelationshipsResult> {
 
@@ -69,8 +70,8 @@ public class GetRelationshipsHandler
     private List<String> uuidNotToRemove;
     private GetRelationshipsAction action;
 
-    @Named("securedFedoraAccess")
     @Inject
+    @Named("securedFedoraAccess")
     private FedoraAccess fedoraAccess;
 
     @Inject

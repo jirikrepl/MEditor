@@ -33,18 +33,19 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Named;
 import javax.xml.transform.TransformerException;
 import javax.xml.xpath.XPathException;
 
 import javax.inject.Inject;
 
-import com.google.inject.name.Named;
 import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.server.actionhandler.ActionHandler;
 import com.gwtplatform.dispatch.shared.ActionException;
 
 import org.apache.log4j.Logger;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.w3c.dom.Document;
 
 import cz.mzk.editor.client.util.Constants;
@@ -67,6 +68,7 @@ import cz.mzk.editor.shared.rpc.action.RemoveDigitalObjectResult;
 /**
  * The Class PutRecentlyModifiedHandler.
  */
+@Named
 public class RemoveDigitalObjectHandler
         implements ActionHandler<RemoveDigitalObjectAction, RemoveDigitalObjectResult> {
 

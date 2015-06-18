@@ -30,6 +30,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.server.actionhandler.ActionHandler;
@@ -47,6 +48,7 @@ import cz.mzk.editor.shared.rpc.action.FindAltoOcrFilesBatchResult;
  * @author Martin Rumanek
  * @version Aug 20, 2012
  */
+@Named
 public class FindAltoOcrFilesBatchHandler
         implements ActionHandler<FindAltoOcrFilesBatchAction, FindAltoOcrFilesBatchResult> {
 
@@ -65,7 +67,7 @@ public class FindAltoOcrFilesBatchHandler
     private static final String TXTsuffix = ".txt";
 
     @Inject
-    ServerUtils serverUtils;
+    private ServerUtils serverUtils;
 
     /**
      * {@inheritDoc}

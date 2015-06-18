@@ -28,6 +28,7 @@
 package cz.mzk.editor.server.handler;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.server.actionhandler.ActionHandler;
@@ -47,6 +48,7 @@ import cz.mzk.editor.shared.rpc.action.PutDescriptionResult;
 /**
  * The Class PutRecentlyModifiedHandler.
  */
+@Named
 public class PutDescriptionHandler
         implements ActionHandler<PutDescriptionAction, PutDescriptionResult> {
 
@@ -60,17 +62,11 @@ public class PutDescriptionHandler
 
     /** The user dao. */
     @Inject
-    UserDAO userDAO;
+    private UserDAO userDAO;
 
-    /**
-     * Instantiates a new put recently modified handler.
-     */
-    @Inject
-    public PutDescriptionHandler() {
-    }
 
     @Inject
-    ServerUtils serverUtils;
+    private ServerUtils serverUtils;
 
     /*
      * (non-Javadoc)

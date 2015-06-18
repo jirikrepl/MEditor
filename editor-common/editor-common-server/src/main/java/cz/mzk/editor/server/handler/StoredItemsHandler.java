@@ -34,6 +34,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.server.actionhandler.ActionHandler;
@@ -57,7 +58,7 @@ import cz.mzk.editor.shared.rpc.action.StoredItemsResult;
  * @author Matous Jobanek
  * @version $Id$
  */
-
+@Named
 public class StoredItemsHandler
         implements ActionHandler<StoredItemsAction, StoredItemsResult> {
 
@@ -66,7 +67,6 @@ public class StoredItemsHandler
     private StoredItemsDAO storeDao;
 
     /** The dao utils. */
-    @Inject
     private DAOUtils daoUtils;
 
     /** The configuration. */
@@ -76,7 +76,7 @@ public class StoredItemsHandler
     private static final Logger LOGGER = Logger.getLogger(StoredDigitalObjectHandlerImpl.class);
 
     @Inject
-    ServerUtils serverUtils;
+    private ServerUtils serverUtils;
 
     @Inject
     public StoredItemsHandler(EditorConfiguration configuration) {

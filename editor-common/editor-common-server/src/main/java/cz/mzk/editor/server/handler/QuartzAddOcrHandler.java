@@ -1,6 +1,5 @@
 package cz.mzk.editor.server.handler;
 
-import com.google.inject.Inject;
 import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.server.actionhandler.ActionHandler;
 import com.gwtplatform.dispatch.shared.ActionException;
@@ -16,6 +15,9 @@ import org.quartz.SchedulerException;
 import org.quartz.Trigger;
 import org.quartz.TriggerBuilder;
 
+import javax.inject.Inject;
+import javax.inject.Named;
+
 /**
  * @author: Martin Rumanek
  * @version: 19.2.13
@@ -25,7 +27,7 @@ public class QuartzAddOcrHandler implements ActionHandler<QuartzAddOcrAction, Qu
     private static final Logger LOGGER = Logger.getLogger(QuartzConvertImagesHandler.class.getPackage()
             .toString());
     @Inject
-    Quartz quartz;
+    private Quartz quartz;
 
     @Override
     public QuartzAddOcrResult execute(QuartzAddOcrAction action, ExecutionContext context) throws ActionException {

@@ -60,7 +60,6 @@ public class GetAllLockItemsHandler
     @Inject
     private StoredAndLocksDAO storedAndLocksDAO;
 
-    @Inject
     private DAOUtils daoUtils;
 
     @Inject

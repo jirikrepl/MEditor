@@ -30,13 +30,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import cz.mzk.editor.server.util.StringUtils;
 import org.apache.log4j.Logger;
 import org.jboss.errai.bus.client.api.base.MessageBuilder;
 
 
-import com.google.inject.name.Named;
 import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.server.actionhandler.ActionHandler;
 import com.gwtplatform.dispatch.shared.ActionException;
@@ -58,12 +58,14 @@ import cz.mzk.editor.shared.rpc.NewDigitalObject;
 import cz.mzk.editor.shared.rpc.action.InsertNewDigitalObjectAction;
 import cz.mzk.editor.shared.rpc.action.InsertNewDigitalObjectResult;
 import org.jboss.errai.bus.client.api.messaging.RequestDispatcher;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 
 /**
  * @author Jiri Kremser
  * @version 14.11.2011
  */
+@Named
 public class InsertNewDigitalObjectHandler
         implements ActionHandler<InsertNewDigitalObjectAction, InsertNewDigitalObjectResult> {
 
@@ -83,7 +85,6 @@ public class InsertNewDigitalObjectHandler
     private DigitalObjectDAO digitalObjectDAO;
 
     /** The dao utils. */
-    @Inject
     private DAOUtils daoUtils;
 
     @Inject
@@ -94,7 +95,7 @@ public class InsertNewDigitalObjectHandler
     private ImageResolverDAO imageResolverDAO;
 
     @Inject
-    ServerUtils serverUtils;
+    private ServerUtils serverUtils;
 
     private static RequestDispatcher erraiDispatcher;
 

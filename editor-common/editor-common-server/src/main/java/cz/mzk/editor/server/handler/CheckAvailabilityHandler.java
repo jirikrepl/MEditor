@@ -28,6 +28,7 @@
 package cz.mzk.editor.server.handler;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.server.actionhandler.ActionHandler;
@@ -46,7 +47,7 @@ import org.springframework.stereotype.Service;
 /**
  * The Class PutRecentlyModifiedHandler.
  */
-@Service
+@Named
 public class CheckAvailabilityHandler
         implements ActionHandler<CheckAvailabilityAction, CheckAvailabilityResult> {
 
@@ -60,7 +61,7 @@ public class CheckAvailabilityHandler
     private final EditorConfiguration configuration;
 
     @Inject
-    ServerUtils serverUtils;
+    private ServerUtils serverUtils;
 
     /**
      * Instantiates a new put recently modified handler.

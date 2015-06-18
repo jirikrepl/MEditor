@@ -42,11 +42,13 @@ import cz.mzk.editor.shared.rpc.action.GetDOModelAction;
 import cz.mzk.editor.shared.rpc.action.GetDOModelResult;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 /**
  * @author Jiri Kremser
  * @version 13.11.2011
  */
+@Named
 public class GetDOModelHandler
         implements ActionHandler<GetDOModelAction, GetDOModelResult> {
 
@@ -54,7 +56,7 @@ public class GetDOModelHandler
     private static final Logger LOGGER = Logger.getLogger(GetDOModelHandler.class.getPackage().toString());
 
     @Inject
-    ServerUtils serverUtils;
+    private ServerUtils serverUtils;
 
     /*
      * (non-Javadoc)

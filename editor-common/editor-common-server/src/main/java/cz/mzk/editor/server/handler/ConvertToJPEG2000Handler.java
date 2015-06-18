@@ -33,6 +33,7 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.server.actionhandler.ActionHandler;
@@ -55,6 +56,7 @@ import cz.mzk.editor.shared.rpc.action.ConvertToJPEG2000Result;
 /**
  * The Class ScanFolderHandler.
  */
+@Named
 public class ConvertToJPEG2000Handler
         implements ActionHandler<ConvertToJPEG2000Action, ConvertToJPEG2000Result> {
 
@@ -70,7 +72,7 @@ public class ConvertToJPEG2000Handler
     private String djatokaHome = null;
 
     @Inject
-    ServerUtils serverUtils;
+    private ServerUtils serverUtils;
 
     /**
      * Instantiates a new scan input queue handler.

@@ -37,6 +37,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.server.actionhandler.ActionHandler;
@@ -58,6 +59,7 @@ import cz.mzk.editor.shared.rpc.action.StoreTreeStructureResult;
 /**
  * The Class PutRecentlyModifiedHandler.
  */
+@Named
 public class StoreTreeStructureHandler
         implements ActionHandler<StoreTreeStructureAction, StoreTreeStructureResult> {
 
@@ -73,15 +75,10 @@ public class StoreTreeStructureHandler
     private UserDAO userDAO;
 
     /** The dao utils. */
-    @Inject
     private DAOUtils daoUtils;
 
     @Inject
     ServerUtils serverUtils;
-
-    @Inject
-    public StoreTreeStructureHandler() {
-    }
 
     /*
      * (non-Javadoc)

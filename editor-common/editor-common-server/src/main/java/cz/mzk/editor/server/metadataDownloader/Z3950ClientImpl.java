@@ -56,6 +56,7 @@ import java.util.List;
 import java.util.Properties;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import com.k_int.IR.IRQuery;
 import com.k_int.IR.InformationFragment;
@@ -78,6 +79,7 @@ import cz.mzk.editor.shared.rpc.MetadataBundle;
  * @author Jiri Kremser
  */
 @SuppressWarnings({"rawtypes", "unused", "unchecked"})
+@Named
 public class Z3950ClientImpl
         implements Z3950Client {
 

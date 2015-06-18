@@ -8,6 +8,7 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.inject.Provider;
 import javax.servlet.http.HttpSession;
 import java.sql.SQLException;
@@ -15,7 +16,7 @@ import java.sql.SQLException;
 /**
  * Created by rumanekm on 28.3.14.
  */
-@Component
+@Named
 public class UserProvider {
 
     /** The http session provider. */
