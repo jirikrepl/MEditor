@@ -42,6 +42,7 @@ import org.apache.log4j.Logger;
 
 import cz.mzk.editor.client.util.Constants;
 import cz.mzk.editor.shared.rpc.ImageItem;
+import org.springframework.stereotype.Repository;
 
 // TODO: Auto-generated Javadoc
 /**

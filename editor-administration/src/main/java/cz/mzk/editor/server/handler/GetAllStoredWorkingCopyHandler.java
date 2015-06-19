@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.server.actionhandler.ActionHandler;
@@ -50,6 +51,7 @@ import cz.mzk.editor.shared.rpc.action.GetAllStoredWorkingCopyItemsResult;
  * @author Matous Jobanek
  * @version Dec 3, 2012
  */
+@Named
 public class GetAllStoredWorkingCopyHandler
         implements ActionHandler<GetAllStoredWorkingCopyItemsAction, GetAllStoredWorkingCopyItemsResult> {
 
@@ -64,7 +66,7 @@ public class GetAllStoredWorkingCopyHandler
     private DAOUtils daoUtils;
 
     @Inject
-    ServerUtils serverUtils;
+    private ServerUtils serverUtils;
 
     /**
      * {@inheritDoc}

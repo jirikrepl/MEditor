@@ -31,6 +31,7 @@ package cz.mzk.editor.server.handler;
 import java.util.ArrayList;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.server.actionhandler.ActionHandler;
@@ -51,6 +52,7 @@ import cz.mzk.editor.shared.rpc.action.GetUsersInfoResult;
 /**
  * The Class GetRecentlyModifiedHandler.
  */
+@Named
 public class GetUsersInfoHandler
         implements ActionHandler<GetUsersInfoAction, GetUsersInfoResult> {
 
@@ -65,7 +67,7 @@ public class GetUsersInfoHandler
     private final UserDAO userDAO;
 
     @Inject
-    ServerUtils serverUtils;
+    private ServerUtils serverUtils;
 
     /**
      * Instantiates a new gets the recently modified handler.

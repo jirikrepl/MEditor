@@ -29,6 +29,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.server.actionhandler.ActionHandler;
@@ -49,6 +50,7 @@ import cz.mzk.editor.shared.rpc.action.GetHistoryDaysResult;
  * @author Matous Jobanek
  * @version Oct 30, 2012
  */
+@Named
 public class GetHistoryDaysHandler
         implements ActionHandler<GetHistoryDaysAction, GetHistoryDaysResult> {
 
@@ -61,7 +63,7 @@ public class GetHistoryDaysHandler
     private DAOUtils daoUtils;
 
     @Inject
-    ServerUtils serverUtils;
+    private ServerUtils serverUtils;
 
     /**
      * {@inheritDoc}

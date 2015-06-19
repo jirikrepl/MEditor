@@ -25,6 +25,7 @@
 package cz.mzk.editor.server.handler;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.server.actionhandler.ActionHandler;
@@ -42,6 +43,7 @@ import cz.mzk.editor.shared.rpc.action.RemoveStoredTreeStructureItemsResult;
  * @author Matous Jobanek
  * @version Dec 3, 2012
  */
+@Named
 public class RemoveStoredTreeStructureHandler
         implements ActionHandler<RemoveStoredTreeStructureItemsAction, RemoveStoredTreeStructureItemsResult> {
 
@@ -54,7 +56,7 @@ public class RemoveStoredTreeStructureHandler
     private StoredAndLocksDAO storedAndLocksDAO;
 
     @Inject
-    ServerUtils serverUtils;
+    private ServerUtils serverUtils;
 
     /**
      * {@inheritDoc}

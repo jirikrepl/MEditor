@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.server.actionhandler.ActionHandler;
@@ -49,6 +50,7 @@ import cz.mzk.editor.shared.rpc.action.PutRemoveRolesResult;
  * @author Matous Jobanek
  * @version Nov 27, 2012
  */
+@Named
 public class PutRemoveRolesHandler
         implements ActionHandler<PutRemoveRolesAction, PutRemoveRolesResult> {
 
@@ -61,7 +63,7 @@ public class PutRemoveRolesHandler
     private UserDAO userDAO;
 
     @Inject
-    ServerUtils serverUtils;
+    private ServerUtils serverUtils;
 
     /**
      * {@inheritDoc}

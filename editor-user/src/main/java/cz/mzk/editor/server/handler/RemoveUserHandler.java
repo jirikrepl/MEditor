@@ -28,6 +28,7 @@
 package cz.mzk.editor.server.handler;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.server.actionhandler.ActionHandler;
@@ -46,6 +47,7 @@ import cz.mzk.editor.shared.rpc.action.RemoveUserResult;
 /**
  * The Class PutRecentlyModifiedHandler.
  */
+@Named
 public class RemoveUserHandler
         implements ActionHandler<RemoveUserAction, RemoveUserResult> {
 
@@ -57,20 +59,7 @@ public class RemoveUserHandler
     private UserDAO userDAO;
 
     @Inject
-    ServerUtils serverUtils;
-
-    /**
-     * Instantiates a new put recently modified handler.
-     * 
-     * @param logger
-     *        the logger
-     * @param configuration
-     *        the configuration
-     */
-    @Inject
-    public RemoveUserHandler() {
-
-    }
+    private ServerUtils serverUtils;
 
     /*
      * (non-Javadoc)

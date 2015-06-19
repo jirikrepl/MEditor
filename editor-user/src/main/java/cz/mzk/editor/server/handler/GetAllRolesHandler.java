@@ -28,6 +28,7 @@
 package cz.mzk.editor.server.handler;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.server.actionhandler.ActionHandler;
@@ -46,6 +47,7 @@ import cz.mzk.editor.shared.rpc.action.GetAllRolesResult;
 /**
  * The Class GetRecentlyModifiedHandler.
  */
+@Named
 public class GetAllRolesHandler
         implements ActionHandler<GetAllRolesAction, GetAllRolesResult> {
 
@@ -56,7 +58,7 @@ public class GetAllRolesHandler
     private final UserDAO userDAO;
 
     @Inject
-    ServerUtils serverUtils;
+    private ServerUtils serverUtils;
 
     /**
      * Instantiates a new gets the recently modified handler.

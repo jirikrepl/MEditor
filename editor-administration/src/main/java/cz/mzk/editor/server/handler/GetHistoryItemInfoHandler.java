@@ -24,7 +24,6 @@
 
 package cz.mzk.editor.server.handler;
 
-import com.google.inject.Inject;
 import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.server.actionhandler.ActionHandler;
 import com.gwtplatform.dispatch.shared.ActionException;
@@ -38,10 +37,14 @@ import cz.mzk.editor.shared.rpc.HistoryItemInfo;
 import cz.mzk.editor.shared.rpc.action.GetHistoryItemInfoAction;
 import cz.mzk.editor.shared.rpc.action.GetHistoryItemInfoResult;
 
+import javax.inject.Inject;
+import javax.inject.Named;
+
 /**
  * @author Matous Jobanek
  * @version Nov 7, 2012
  */
+@Named
 public class GetHistoryItemInfoHandler
         implements ActionHandler<GetHistoryItemInfoAction, GetHistoryItemInfoResult> {
 
@@ -52,8 +55,8 @@ public class GetHistoryItemInfoHandler
     @Inject
     private ActionDAO actionDAO;
 
-    @javax.inject.Inject
-    ServerUtils serverUtils;
+    @Inject
+    private ServerUtils serverUtils;
 
     /**
      * {@inheritDoc}

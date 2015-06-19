@@ -63,7 +63,6 @@ public class ConversionDAOImpl
                     + " WHERE input_queue_directory_path = (?) GROUP BY timestamp ORDER BY timestamp DESC LIMIT '1') c";
 
     /** The dao utils. */
-    @Inject
     private DAOUtils daoUtils;
 
     /**

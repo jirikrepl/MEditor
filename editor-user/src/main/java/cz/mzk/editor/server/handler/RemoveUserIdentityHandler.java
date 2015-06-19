@@ -32,11 +32,13 @@ import java.util.List;
 
 import javax.activation.UnsupportedDataTypeException;
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.server.actionhandler.ActionHandler;
 import com.gwtplatform.dispatch.shared.ActionException;
 
+import cz.mzk.editor.server.UserProvider;
 import org.apache.log4j.Logger;
 
 import cz.mzk.editor.client.util.Constants;
@@ -56,6 +58,7 @@ import cz.mzk.editor.shared.rpc.action.RemoveUserIdentityResult;
 /**
  * The Class PutRecentlyModifiedHandler.
  */
+@Named
 public class RemoveUserIdentityHandler
         implements ActionHandler<RemoveUserIdentityAction, RemoveUserIdentityResult> {
 
@@ -72,7 +75,10 @@ public class RemoveUserIdentityHandler
     private EditorConfiguration configuration;
 
     @Inject
-    ServerUtils serverUtils;
+    private ServerUtils serverUtils;
+
+    @Inject
+    private UserProvider userProvider;
 
     /*
      * (non-Javadoc)
@@ -88,7 +94,7 @@ public class RemoveUserIdentityHandler
         LOGGER.debug("Processing action: RemoveUserIdentityAction " + action.getUserIdentity());
         serverUtils.checkExpiredSession();
 
-        if (!serverUtils.checkUserRightOrAll(EDITOR_RIGHTS.EDIT_USERS)) {
+        if (!userProvider.checkUserRightOrAll(EDITOR_RIGHTS.EDIT_USERS)) {
             LOGGER.warn("Bad authorization in " + this.getClass().toString());
             throw new ActionException("Bad authorization in " + this.getClass().toString());
         }

@@ -27,6 +27,7 @@
 
 package cz.mzk.editor.server.cz.mzk.server.editor.api;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 

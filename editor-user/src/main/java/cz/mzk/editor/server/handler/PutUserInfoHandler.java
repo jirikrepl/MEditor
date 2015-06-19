@@ -28,6 +28,7 @@
 package cz.mzk.editor.server.handler;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.server.actionhandler.ActionHandler;
@@ -46,6 +47,7 @@ import cz.mzk.editor.shared.rpc.action.PutUserInfoResult;
 /**
  * The Class PutRecentlyModifiedHandler.
  */
+@Named
 public class PutUserInfoHandler
         implements ActionHandler<PutUserInfoAction, PutUserInfoResult> {
 
@@ -56,7 +58,7 @@ public class PutUserInfoHandler
     private UserDAO userDAO;
 
     @Inject
-    ServerUtils serverUtils;
+    private ServerUtils serverUtils;
 
     /*
      * (non-Javadoc)

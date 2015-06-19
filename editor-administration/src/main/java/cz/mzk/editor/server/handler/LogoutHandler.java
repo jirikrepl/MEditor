@@ -31,6 +31,7 @@ import java.text.SimpleDateFormat;
 
 import java.util.Date;
 
+import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -58,6 +59,7 @@ import cz.mzk.editor.shared.rpc.action.LogoutResult;
 /**
  * The Class PutRecentlyModifiedHandler.
  */
+@Named
 public class LogoutHandler
         implements ActionHandler<LogoutAction, LogoutResult> {
 
@@ -66,24 +68,16 @@ public class LogoutHandler
     private static final Logger ACCESS_LOGGER = Logger.getLogger(ServerConstants.ACCESS_LOG_ID);
     private static final SimpleDateFormat FORMATTER = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
 
-    private final Provider<HttpServletRequest> reqProvider;
+    @Inject
+    private HttpServletRequest request;
 
     @Inject
     private UserDAO userDAO;
 
     @Inject
-    ServerUtils serverUtils;
+    private ServerUtils serverUtils;
 
-    /**
-     * Instantiates a new put recently modified handler.
-     * 
-     * @param httpSessionProvider
-     *        the http session provider
-     */
-    @Inject
-    public LogoutHandler(Provider<HttpServletRequest> reqProvider) {
-        this.reqProvider = reqProvider;
-    }
+
 
     /*
      * (non-Javadoc)
@@ -104,14 +98,14 @@ public class LogoutHandler
         try {
             ACCESS_LOGGER.info("LOG OUT: [" + FORMATTER.format(new Date()) + "] User " + userDAO.getName()
                     + " with " + authentication.getIdentityType().toString() + " identifier "
-                    + authentication.getPrincipal() + " and IP " + reqProvider.get().getRemoteAddr());
+                    + authentication.getPrincipal() + " and IP " + request.getRemoteAddr());
         } catch (DatabaseException e) {
             LOGGER.error(e.getMessage());
             e.printStackTrace();
         }
 
         SecurityContextHolder.clearContext();
-        HttpSession session = reqProvider.get().getSession(false);
+        HttpSession session = request.getSession(false);
         if (session != null) {
             session.invalidate();
         }

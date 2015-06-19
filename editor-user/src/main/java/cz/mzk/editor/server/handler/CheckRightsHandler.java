@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.server.actionhandler.ActionHandler;
@@ -47,6 +48,7 @@ import cz.mzk.editor.shared.rpc.action.CheckRightsResult;
  * @author Matous Jobanek
  * @version Nov 27, 2012
  */
+@Named
 public class CheckRightsHandler
         implements ActionHandler<CheckRightsAction, CheckRightsResult> {
 
@@ -57,7 +59,7 @@ public class CheckRightsHandler
     private static final Logger LOGGER = Logger.getLogger(CheckRightsHandler.class.getPackage().toString());
 
     @Inject
-    ServerUtils serverUtils;
+    private ServerUtils serverUtils;
 
     /**
      * {@inheritDoc}

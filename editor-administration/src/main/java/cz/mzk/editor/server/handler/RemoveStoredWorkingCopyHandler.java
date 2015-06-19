@@ -27,6 +27,7 @@ package cz.mzk.editor.server.handler;
 import java.io.File;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.server.actionhandler.ActionHandler;
@@ -45,6 +46,7 @@ import cz.mzk.editor.shared.rpc.action.RemoveStoredWorkingCopyItemsResult;
  * @author Matous Jobanek
  * @version Dec 3, 2012
  */
+@Named
 public class RemoveStoredWorkingCopyHandler
         implements ActionHandler<RemoveStoredWorkingCopyItemsAction, RemoveStoredWorkingCopyItemsResult> {
 
@@ -57,7 +59,7 @@ public class RemoveStoredWorkingCopyHandler
     private StoredAndLocksDAO storedAndLocksDAO;
 
     @Inject
-    ServerUtils serverUtils;
+    private ServerUtils serverUtils;
 
     /**
      * {@inheritDoc}

@@ -1,6 +1,7 @@
 package cz.mzk.editor.server.jooq.DAO;
 
 import cz.mzk.editor.client.util.Constants;
+import cz.mzk.editor.server.DAO.DAOUtilsImpl;
 import cz.mzk.editor.server.DAO.DatabaseException;
 import cz.mzk.editor.server.cz.mzk.server.editor.api.InputQueueItemDAO;
 import cz.mzk.editor.server.jooq.tables.InputQueue;
@@ -15,6 +16,7 @@ import javax.inject.Inject;
 import java.io.File;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -109,5 +111,47 @@ public class InputQueueItemDAOImpl implements InputQueueItemDAO {
     @Override
     public void setIngested(String path) throws DatabaseException {
 
+    }
+
+
+    @Override
+    public boolean checkInputQueue(String directory_path, String name)
+            throws DatabaseException {
+        PreparedStatement selSt = null;
+        boolean successful = false;
+        String dirPath = DAOUtilsImpl.directoryPathToRightFormat(directory_path);
+
+//        try {
+//
+//            //SELECT name FROM "
+//            //        + Constants.TABLE_INPUT_QUEUE + " WHERE directory_path=(?)
+//
+//
+//            selSt.setString(1, dirPath);
+//            ResultSet rs = selSt.executeQuery();
+//
+//            if (rs.next()) {
+//                if (name != null && !name.equals(rs.getString("name"))) {
+//                    successful = updateInputQueue(dirPath, name, closeCon);
+//                } else {
+//                    successful = true;
+//                }
+//
+//            } else {
+//                successful = insertInputQueue(dirPath, name != null ? name : "", closeCon);
+//            }
+//
+//        } catch (SQLException ex) {
+//            LOGGER.error("Could not get select item statement " + selSt, ex);
+//            if (closeCon) {
+//                ex.printStackTrace();
+//            } else {
+//                throw new SQLException(ex);
+//            }
+//        } finally {
+//            if (closeCon) closeConnection();
+//        }
+//        return successful;
+        return true;
     }
 }

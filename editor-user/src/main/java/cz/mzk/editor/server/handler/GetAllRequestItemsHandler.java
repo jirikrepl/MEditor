@@ -28,6 +28,7 @@
 package cz.mzk.editor.server.handler;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.server.actionhandler.ActionHandler;
@@ -47,6 +48,7 @@ import cz.mzk.editor.shared.rpc.action.GetAllRequestItemsResult;
 /**
  * The Class GetRecentlyModifiedHandler.
  */
+@Named
 public class GetAllRequestItemsHandler
         implements ActionHandler<GetAllRequestItemsAction, GetAllRequestItemsResult> {
 
@@ -62,7 +64,7 @@ public class GetAllRequestItemsHandler
     private final RequestDAO requestDAO;
 
     @Inject
-    ServerUtils serverUtils;
+    private ServerUtils serverUtils;
 
     /**
      * Instantiates a new gets the recently modified handler.

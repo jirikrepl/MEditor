@@ -28,6 +28,7 @@ import java.util.List;
 
 import javax.activation.UnsupportedDataTypeException;
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.server.actionhandler.ActionHandler;
@@ -49,6 +50,7 @@ import cz.mzk.editor.shared.rpc.action.PutRemoveUserRightsResult;
  * @author Matous Jobanek
  * @version Nov 27, 2012
  */
+@Named
 public class PutRemoveUserRightsHandler
         implements ActionHandler<PutRemoveUserRightsAction, PutRemoveUserRightsResult> {
 
@@ -64,7 +66,7 @@ public class PutRemoveUserRightsHandler
     private EditorConfiguration configuration;
 
     @Inject
-    ServerUtils serverUtils;
+    private ServerUtils serverUtils;
 
     /**
      * {@inheritDoc}

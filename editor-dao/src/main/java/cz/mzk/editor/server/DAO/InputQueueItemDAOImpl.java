@@ -39,6 +39,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import cz.mzk.editor.server.cz.mzk.server.editor.api.InputQueueItemDAO;
+import org.apache.commons.lang.NotImplementedException;
 import org.apache.log4j.Logger;
 
 import cz.mzk.editor.client.util.Constants;
@@ -242,6 +243,11 @@ public class InputQueueItemDAOImpl
         } catch (SQLException e) {
             LOGGER.error(e);
         }
+    }
+
+    @Override
+    public boolean checkInputQueue(String directory_path, String name) throws DatabaseException {
+        throw new NotImplementedException();
     }
 
     /**

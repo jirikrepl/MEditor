@@ -28,6 +28,7 @@
 package cz.mzk.editor.server.handler;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.server.actionhandler.ActionHandler;
@@ -46,6 +47,7 @@ import cz.mzk.editor.shared.rpc.action.RemoveRequestItemResult;
 /**
  * The Class PutRecentlyModifiedHandler.
  */
+@Named
 public class RemoveRequestItemHandler
         implements ActionHandler<RemoveRequestItemAction, RemoveRequestItemResult> {
 
@@ -54,18 +56,11 @@ public class RemoveRequestItemHandler
             .toString());
 
     @Inject
-    ServerUtils serverUtils;
+    private ServerUtils serverUtils;
 
     /** The recently modified dao. */
     @Inject
     private RequestDAO requestDAO;
-
-    /**
-     * Instantiates a new put recently modified handler.
-     */
-    @Inject
-    public RemoveRequestItemHandler() {
-    }
 
     /*
      * (non-Javadoc)

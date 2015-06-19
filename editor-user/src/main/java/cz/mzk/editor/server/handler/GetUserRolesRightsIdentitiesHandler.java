@@ -32,6 +32,7 @@ import java.util.List;
 
 import javax.activation.UnsupportedDataTypeException;
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.server.actionhandler.ActionHandler;
@@ -54,6 +55,7 @@ import cz.mzk.editor.shared.rpc.action.GetUserRolesRightsIdentitiesResult;
 /**
  * The Class GetRecentlyModifiedHandler.
  */
+@Named
 public class GetUserRolesRightsIdentitiesHandler
         implements ActionHandler<GetUserRolesRightsIdentitiesAction, GetUserRolesRightsIdentitiesResult> {
 
@@ -68,7 +70,7 @@ public class GetUserRolesRightsIdentitiesHandler
     private final UserDAO userDAO;
 
     @Inject
-    ServerUtils serverUtils;
+    private ServerUtils serverUtils;
 
     /**
      * Instantiates a new gets the recently modified handler.

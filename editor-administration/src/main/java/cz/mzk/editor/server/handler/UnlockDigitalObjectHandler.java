@@ -43,6 +43,7 @@ import cz.mzk.editor.shared.rpc.action.UnlockDigitalObjectResult;
  * @author Jiri Kremser
  * @version $Id$
  */
+@Named
 public class UnlockDigitalObjectHandler
         implements ActionHandler<UnlockDigitalObjectAction, UnlockDigitalObjectResult> {
 
@@ -56,11 +57,6 @@ public class UnlockDigitalObjectHandler
 
     @Inject
     private ServerUtils serverUtils;
-
-    /** Instantiate a new unlock digital object handler **/
-    @Inject
-    public UnlockDigitalObjectHandler() {
-    }
 
     /**
      * {@inheritDoc}

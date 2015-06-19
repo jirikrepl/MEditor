@@ -27,6 +27,7 @@
 
 package cz.mzk.editor.server.cz.mzk.server.editor.api;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -97,4 +98,21 @@ public interface InputQueueItemDAO {
     boolean hasBeenIngested(String path) throws DatabaseException;
 
     public void setIngested(String path) throws DatabaseException;
+
+    /**
+     * Check input queue.
+     *
+     * @param directory_path
+     *        the directory_path
+     * @param name
+     *        the name
+     * @param closeCon
+     *        the close con
+     * @return true, if successful
+     * @throws DatabaseException
+     *         the database exception
+     * @throws SQLException
+     *         the sQL exception
+     */
+    boolean checkInputQueue(String directory_path, String name) throws DatabaseException;
 }

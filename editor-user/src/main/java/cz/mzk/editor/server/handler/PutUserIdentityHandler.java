@@ -29,6 +29,7 @@ package cz.mzk.editor.server.handler;
 
 import javax.activation.UnsupportedDataTypeException;
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.server.actionhandler.ActionHandler;
@@ -47,6 +48,7 @@ import cz.mzk.editor.shared.rpc.action.PutUserIdentityResult;
 /**
  * The Class PutRecentlyModifiedHandler.
  */
+@Named
 public class PutUserIdentityHandler
         implements ActionHandler<PutUserIdentityAction, PutUserIdentityResult> {
 
@@ -59,20 +61,7 @@ public class PutUserIdentityHandler
     private UserDAO userDAO;
 
     @Inject
-    ServerUtils serverUtils;
-
-    /**
-     * Instantiates a new put recently modified handler.
-     * 
-     * @param logger
-     *        the logger
-     * @param configuration
-     *        the configuration
-     */
-    @Inject
-    public PutUserIdentityHandler() {
-
-    }
+    private ServerUtils serverUtils;
 
     /*
      * (non-Javadoc)

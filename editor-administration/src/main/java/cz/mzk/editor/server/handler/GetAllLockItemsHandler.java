@@ -29,6 +29,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.server.actionhandler.ActionHandler;
@@ -49,6 +50,7 @@ import cz.mzk.editor.shared.rpc.action.GetAllLockItemsResult;
  * @author Matous Jobanek
  * @version Dec 4, 2012
  */
+@Named
 public class GetAllLockItemsHandler
         implements ActionHandler<GetAllLockItemsAction, GetAllLockItemsResult> {
 
@@ -63,7 +65,7 @@ public class GetAllLockItemsHandler
     private DAOUtils daoUtils;
 
     @Inject
-    ServerUtils serverUtils;
+    private ServerUtils serverUtils;
 
     /**
      * {@inheritDoc}

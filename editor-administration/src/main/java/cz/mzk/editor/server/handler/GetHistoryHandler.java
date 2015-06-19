@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.server.actionhandler.ActionHandler;
@@ -53,6 +54,7 @@ import cz.mzk.editor.shared.rpc.action.GetHistoryResult;
  * @author Matous Jobanek
  * @version Nov 1, 2012
  */
+@Named
 public class GetHistoryHandler
         implements ActionHandler<GetHistoryAction, GetHistoryResult> {
 
@@ -66,7 +68,7 @@ public class GetHistoryHandler
     private DAOUtils daoUtils;
 
     @Inject
-    ServerUtils serverUtils;
+    private ServerUtils serverUtils;
 
     /**
      * Execute.

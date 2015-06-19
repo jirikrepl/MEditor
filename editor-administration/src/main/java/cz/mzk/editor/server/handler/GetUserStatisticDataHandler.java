@@ -33,6 +33,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.server.actionhandler.ActionHandler;
@@ -57,6 +58,7 @@ import cz.mzk.editor.shared.rpc.action.GetUserStatisticDataResult;
  * @author Matous Jobanek
  * @version Dec 18, 2012
  */
+@Named
 public class GetUserStatisticDataHandler
         implements ActionHandler<GetUserStatisticDataAction, GetUserStatisticDataResult> {
 
@@ -69,7 +71,7 @@ public class GetUserStatisticDataHandler
     private DAOUtils daoUtils;
 
     @Inject
-    ServerUtils serverUtils;
+    private ServerUtils serverUtils;
 
     /**
      * {@inheritDoc}

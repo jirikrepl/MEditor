@@ -30,6 +30,7 @@ package cz.mzk.editor.server.handler;
 import java.sql.SQLException;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.server.actionhandler.ActionHandler;
@@ -50,17 +51,15 @@ import org.springframework.stereotype.Service;
 /**
  * The Class GetRecentlyModifiedHandler.
  */
-@Service
+@Named
 public class GetLoggedUserHandler
         implements ActionHandler<GetLoggedUserAction, GetLoggedUserResult> {
 
     /** The logger. */
     private static final Logger LOGGER = Logger.getLogger(GetLoggedUserHandler.class.getPackage().toString());
 
-    private
-
     @Inject
-    ServerUtils serverUtils;
+    private ServerUtils serverUtils;
 
     @Inject
     private UserProvider userProvider;
