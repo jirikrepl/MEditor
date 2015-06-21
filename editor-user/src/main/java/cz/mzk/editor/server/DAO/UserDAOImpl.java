@@ -184,7 +184,6 @@ public class UserDAOImpl
     /**
      * {@inheritDoc}
      */
-    @Override
     public int isSupported(String identifier) throws DatabaseException {
 
         long userId = -1;
@@ -1161,7 +1160,7 @@ public class UserDAOImpl
     /**
      * {@inheritDoc}
      */
-    @Override
+    @Deprecated
     public String getName() throws DatabaseException {
         try {
             return daoUtils.getName(getUserId(true));

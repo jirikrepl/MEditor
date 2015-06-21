@@ -43,6 +43,7 @@ import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.server.actionhandler.ActionHandler;
 import com.gwtplatform.dispatch.shared.ActionException;
 
+import cz.mzk.editor.server.UserProvider;
 import org.apache.log4j.Logger;
 
 import cz.mzk.editor.server.DAO.DAOUtils;
@@ -78,7 +79,10 @@ public class StoreTreeStructureHandler
     private DAOUtils daoUtils;
 
     @Inject
-    ServerUtils serverUtils;
+    private UserProvider userProvider;
+
+    @Inject
+    private ServerUtils serverUtils;
 
     /*
      * (non-Javadoc)
@@ -91,7 +95,7 @@ public class StoreTreeStructureHandler
     public StoreTreeStructureResult execute(final StoreTreeStructureAction action,
                                             final ExecutionContext context) throws ActionException {
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Processing action: StoreTreeStructureResult role:"
+            LOGGER.debug("Processing action: StoreTreeStructureResult role: "
                     + action
                     + ((action.getId() == null && action.getBundle() != null) ? (" for object: " + action
                             .getBundle().getInfo().getInputPath()) : ""));
@@ -119,12 +123,8 @@ public class StoreTreeStructureHandler
 
         long userId = 0;
         try {
-            userId = daoUtils.getUserId(true);
+            userId = userProvider.getUserId();
         } catch (DatabaseException e) {
-            LOGGER.error(e.getMessage());
-            e.printStackTrace();
-            throw new ActionException(e);
-        } catch (SQLException e) {
             LOGGER.error(e.getMessage());
             e.printStackTrace();
             throw new ActionException(e);

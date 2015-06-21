@@ -42,6 +42,7 @@ import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.server.actionhandler.ActionHandler;
 import com.gwtplatform.dispatch.shared.ActionException;
 
+import cz.mzk.editor.server.UserProvider;
 import org.apache.log4j.Logger;
 
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -75,6 +76,9 @@ public class LogoutHandler
     private UserDAO userDAO;
 
     @Inject
+    private UserProvider userProvider;
+
+    @Inject
     private ServerUtils serverUtils;
 
 
@@ -96,7 +100,7 @@ public class LogoutHandler
         EditorUserAuthentication authentication = serverUtils.getEditorUserAuthentication();
 
         try {
-            ACCESS_LOGGER.info("LOG OUT: [" + FORMATTER.format(new Date()) + "] User " + userDAO.getName()
+            ACCESS_LOGGER.info("LOG OUT: [" + FORMATTER.format(new Date()) + "] User " + userDAO.getName(userProvider.getUserId())
                     + " with " + authentication.getIdentityType().toString() + " identifier "
                     + authentication.getPrincipal() + " and IP " + request.getRemoteAddr());
         } catch (DatabaseException e) {

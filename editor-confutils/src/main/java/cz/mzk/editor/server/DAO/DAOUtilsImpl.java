@@ -853,6 +853,7 @@ public class DAOUtilsImpl
      * {@inheritDoc}
      */
     @Override
+    @Deprecated
     public String getName(Long key) throws DatabaseException {
         PreparedStatement selectSt = null;
         String name = "unknown";

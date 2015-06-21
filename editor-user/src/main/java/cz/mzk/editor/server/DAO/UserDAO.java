@@ -67,17 +67,6 @@ public interface UserDAO {
     public static final String CAN_PUBLISH_STRING = "can_publish";
 
     /**
-     * Checks if is supported.
-     * 
-     * @param identifier
-     *        the identifier
-     * @return the int
-     * @throws DatabaseException
-     *         the database exception
-     */
-    int isSupported(String identifier) throws DatabaseException;
-
-    /**
      * Checks for role.
      * 
      * @param role
@@ -101,14 +90,6 @@ public interface UserDAO {
      */
     String getName(Long key) throws DatabaseException;
 
-    /**
-     * Gets the name.
-     * 
-     * @return the name
-     * @throws DatabaseException
-     *         the database exception
-     */
-    String getName() throws DatabaseException;
 
     /**
      * Adds the remove user identity.
