@@ -41,85 +41,94 @@ public class TreeStructureDAOImpl implements TreeStructureDAO {
      */
     private static enum DISCRIMINATOR {
 
-        /** The ALL. */
+        /**
+         * The ALL.
+         */
         ALL,
-        /** The AL l_ o f_ user. */
+        /**
+         * The AL l_ o f_ user.
+         */
         ALL_OF_USER,
-        /** The BARCOD e_ o f_ user. */
+        /**
+         * The BARCOD e_ o f_ user.
+         */
         BARCODE_OF_USER
     }
 
-    @Override
-    public ArrayList<TreeStructureInfo> getAllSavedStructuresOfUser(long userId) throws DatabaseException {
-        return getSavedStructures(DISCRIMINATOR.ALL_OF_USER, userId, null);
+    private static final class TreeMapper implements RecordMapper<Record8<String, Integer, Timestamp, String, String, String, String, String>, TreeStructureInfo> {
+        @Override
+        public TreeStructureInfo map(Record8<String, Integer, Timestamp, String, String, String, String, String> record) {
+            long id = record.value2();
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+            String created = formatter.format(record.value3());
+            String description = record.value4();
+            String barcode = record.value5();
+            String name = record.value6();
+            String owner = record.value1();
+            String inputPath = record.value7();
+            String model = record.value8();
+
+            return new TreeStructureInfo(id, created, description, barcode, name, owner, inputPath, model);
+        }
     }
 
-    /**
-     * Gets the saved structures.
-     *
-     * @param what
-     *        the what
-     * @param userId
-     *        the user id
-     * @param code
-     *        the code
-     * @return the saved structures
-     * @throws DatabaseException
-     *         the database exception
-     */
-    private ArrayList<TreeStructureInfo> getSavedStructures(DISCRIMINATOR what, long userId, String code)
-            throws DatabaseException {
+    private static final TreeStructure treeStructure = TreeStructure.TREE_STRUCTURE;
+    private static final CrudTreeStructureAction structureActionTable = CrudTreeStructureAction.CRUD_TREE_STRUCTURE_ACTION;
+    private static final EditorUser userTable = EditorUser.EDITOR_USER;
 
-        return null;
+
+    private SelectConditionStep selectInfosQuery() {
+        return dsl.select(
+                concat(userTable.SURNAME, val(", "), userTable.NAME),
+                structureActionTable.ID,
+                structureActionTable.TIMESTAMP,
+                treeStructure.DESCRIPTION,
+                treeStructure.BARCODE,
+                treeStructure.NAME,
+                treeStructure.INPUT_QUEUE_DIRECTORY_PATH,
+                treeStructure.MODEL
+        ).
+                from(treeStructure)
+                .join(structureActionTable).on(treeStructure.ID.eq(structureActionTable.TREE_STRUCTURE_ID))
+                .leftOuterJoin(userTable).on(structureActionTable.EDITOR_USER_ID.eq(userTable.ID))
+                .where(structureActionTable.TYPE.eq("c"), userTable.STATE.eq(true));
+    }
+
+
+
+    @Override
+    public ArrayList<TreeStructureInfo> getAllSavedStructuresOfUser(long userId) throws DatabaseException {
+        List<TreeStructureInfo> retList;
+        retList = selectInfosQuery().and(structureActionTable.EDITOR_USER_ID.eq(new Long(userId).intValue())) .fetch().map(new TreeMapper());
+
+        return new ArrayList<>(retList);
     }
 
     @Override
     public ArrayList<TreeStructureInfo> getSavedStructuresOfUser(long userId, String code) throws DatabaseException {
-        return null;
+        List<TreeStructureInfo> retList;
+
+        retList = selectInfosQuery().and(treeStructure.BARCODE.eq(code)).and(structureActionTable.EDITOR_USER_ID.eq(new Long(userId).intValue())).
+                fetch().map(new TreeMapper());
+
+        return new ArrayList<>(retList);
+
     }
 
     @Override
     public ArrayList<TreeStructureInfo> getAllSavedStructures(String code) throws DatabaseException {
-                if (code != null) {
-                    TreeStructure treeStructure = TreeStructure.TREE_STRUCTURE;
-                    CrudTreeStructureAction structureActionTable = CrudTreeStructureAction.CRUD_TREE_STRUCTURE_ACTION;
-                    EditorUser userTable = EditorUser.EDITOR_USER;
-                    List<TreeStructureInfo>  retList =dsl.select(
-                            concat(userTable.SURNAME, val(", "), userTable.NAME),
-                            structureActionTable.ID,
-                            structureActionTable.TIMESTAMP,
-                            treeStructure.DESCRIPTION,
-                            treeStructure.BARCODE,
-                            treeStructure.NAME,
-                            treeStructure.INPUT_QUEUE_DIRECTORY_PATH,
-                            treeStructure.MODEL
-                    ).
-                            from(treeStructure)
-                            .join(structureActionTable).on(treeStructure.ID.eq(structureActionTable.TREE_STRUCTURE_ID))
-                            .leftOuterJoin(userTable).on(structureActionTable.EDITOR_USER_ID.eq(userTable.ID))
-                            .where(structureActionTable.TYPE.eq("c"), userTable.STATE.eq(true))
-                            .fetch().map(new RecordMapper<Record8<String, Integer, Timestamp, String, String, String, String, String>, TreeStructureInfo>() {
-                        @Override
-                        public TreeStructureInfo map(Record8<String, Integer, Timestamp, String, String, String, String, String> record) {
-                            long id = record.value2();
-                            SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-                            String created = formatter.format(record.value3());
-                            String description = record.value4();
-                            String barcode = record.value5();
-                            String name = record.value6();
-                            String owner = record.value1();
-                            String inputPath = record.value7();
-                            String model = record.value8();
+        List<TreeStructureInfo> retList;
+        if (code != null) {
+            retList = selectInfosQuery().and(treeStructure.BARCODE.eq(code)).fetch().map(new TreeMapper());
 
-                            return new TreeStructureInfo(id, created, description, barcode, name, owner, inputPath, model);
-                        }
-                    });
-                    return new ArrayList<>(retList);
-                } else {
-                    return null;
-                }
+        } else {
+            retList = selectInfosQuery().fetch().map(new TreeMapper());
+        }
 
+        return new ArrayList<>(retList);
     }
+
+
 
     @Override
     public boolean removeSavedStructure(long id) throws DatabaseException {

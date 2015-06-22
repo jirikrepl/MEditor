@@ -58,6 +58,16 @@
 		<url-pattern>/html/login.html</url-pattern>
 	</servlet-mapping>
 
+	<!-- Servlet for images of scans -->
+	<servlet>
+		<servlet-name>scanImgServiceImpl</servlet-name>
+		<servlet-class>org.springframework.web.context.support.HttpRequestHandlerServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>scanImgServiceImpl</servlet-name>
+		<url-pattern>/images/scan/*</url-pattern>
+	</servlet-mapping>
+
 
 	<servlet>
 		<servlet-name>dispatch</servlet-name>
@@ -142,15 +152,6 @@
         <url-pattern>/audio/*</url-pattern>
     </servlet-mapping>
 
-	<!-- Servlet for images of scans -->
-	<servlet>
-		<servlet-name>ScanImgService</servlet-name>
-		<servlet-class>cz.mzk.editor.server.ScanImgServiceImpl</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>ScanImgService</servlet-name>
-		<url-pattern>/images/scan/*</url-pattern>
-	</servlet-mapping>
 
     <!--<servlet>-->
         <!--<servlet-name>ErraiServlet</servlet-name>-->

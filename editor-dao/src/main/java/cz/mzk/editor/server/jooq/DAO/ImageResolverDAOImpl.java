@@ -8,15 +8,12 @@ import cz.mzk.editor.shared.rpc.ImageItem;
 import org.jooq.DSLContext;
 import static org.jooq.impl.DSL.*;
 import org.jooq.Record2;
+import org.jooq.impl.DSL;
 import org.springframework.stereotype.Repository;
-
+import static org.jooq.impl.DSL.currentTimestamp;
 import javax.inject.Inject;
-import javax.inject.Named;
 import java.io.File;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,20 +28,26 @@ public class ImageResolverDAOImpl implements ImageResolverDAO {
 
     @Override
     public void insertItems(List<ImageItem> toInsert) throws DatabaseException {
+        if (toInsert == null) throw new NullPointerException("toInsert");
 
+        for (ImageItem item : toInsert) {
+            Image imageTable = Image.IMAGE;
+            dsl.delete(imageTable).where(imageTable.IDENTIFIER.eq(item.getIdentifier())).execute();
+            dsl.insertInto(imageTable)
+                    .set(imageTable.IDENTIFIER, item.getIdentifier())
+                    .set(imageTable.IMAGEFILE, item.getJpeg2000FsPath())
+                    .set(imageTable.OLD_FS_PATH, item.getJpgFsPath())
+                    .set(imageTable.SHOWN, currentTimestamp()).execute();
+        }
     }
 
     @Override
     public ArrayList<String> resolveItems(List<String> oldJpgFsPaths) throws DatabaseException {
         if (oldJpgFsPaths == null) throw new NullPointerException("oldJpgFsPaths");
         ArrayList<String> ret = new ArrayList<String>(oldJpgFsPaths.size());
-
         if (!oldJpgFsPaths.isEmpty()) {
-
             for (String oldJpgFsPath : oldJpgFsPaths) {
-
                 ret.add(resolveItem(oldJpgFsPath));
-
             }
         }
 
@@ -54,7 +57,7 @@ public class ImageResolverDAOImpl implements ImageResolverDAO {
     private String resolveItem(String oldJpgFsPath) {
         if (oldJpgFsPath == null || "".equals(oldJpgFsPath)) throw new NullPointerException("oldJpgFsPath");
 
-        Record2<String, String> rs = dsl.select(Image.IMAGE.IDENTIFIER, Image.IMAGE.OLD_FS_PATH)
+        Record2<String, String> rs = dsl.select(Image.IMAGE.IDENTIFIER, Image.IMAGE.IMAGEFILE)
                 .from(Image.IMAGE).where(Image.IMAGE.OLD_FS_PATH.eq(oldJpgFsPath)).fetchOne();
 
         String identifier = null;

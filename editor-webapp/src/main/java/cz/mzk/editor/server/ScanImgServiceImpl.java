@@ -33,6 +33,7 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
 
+import javax.inject.Named;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -50,13 +51,15 @@ import cz.mzk.editor.client.util.ClientUtils;
 import cz.mzk.editor.client.util.Constants;
 import cz.mzk.editor.server.config.EditorConfiguration;
 import cz.mzk.editor.server.util.RESTHelper;
+import org.springframework.web.HttpRequestHandler;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class ScanImgServiceImpl.
  */
+@Named
 public class ScanImgServiceImpl
-        extends HttpServlet {
+        implements HttpRequestHandler {
 
     private static final long serialVersionUID = -6110151482519362291L;
 
@@ -81,22 +84,8 @@ public class ScanImgServiceImpl
     public static final String DJATOKA_URL_GET_METADATA =
             "/djatoka/resolver?url_ver=Z39.88-2004&svc_id=info:lanl-repo/svc/getMetadata&rft_id=";
 
-    //    /** The config. */
-    //    @Inject
-    //    private EditorConfiguration config;
-
-    //    private boolean baseOk;
-    //
-    //    private String base;
-
-    /*
-     * (non-Javadoc)
-     * @see
-     * javax.servlet.http.HttpServlet#doGet(javax.servlet.http.HttpServletRequest
-     * , javax.servlet.http.HttpServletResponse)
-     */
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException,
+    public void handleRequest(HttpServletRequest req, HttpServletResponse resp) throws ServletException,
             IOException {
 
         resp.addDateHeader("Last-Modified", new Date().getTime());
@@ -118,6 +107,7 @@ public class ScanImgServiceImpl
         baseUrl.append("http://");
         if (!URLS.LOCALHOST()) {
             baseUrl.append(req.getServerName());
+            baseUrl.append(":" + req.getServerPort());
         } else {
             String hostname = config.getHostname();
             if (hostname.contains("://")) {
@@ -126,6 +116,9 @@ public class ScanImgServiceImpl
                 baseUrl.append(hostname);
             }
         }
+
+
+
         StringBuffer sb = new StringBuffer();
         if (topSpace != null) {
             String metadata = IOUtils.toString(new URL(baseUrl + DJATOKA_URL_GET_METADATA + uuid), StandardCharsets.UTF_8);
@@ -153,39 +146,6 @@ public class ScanImgServiceImpl
         }
         resp.setContentType("image/jpeg");
         resp.sendRedirect(resp.encodeRedirectURL(sb.toString()));
-    }
-
-    /*
-     * (non-Javadoc)
-     * @see javax.servlet.GenericServlet#init()
-     */
-    @Override
-    public void init() throws ServletException {
-        super.init();
-        Injector injector = getInjector();
-        injector.injectMembers(this);
-        //        base = config.getScanInputQueuePath();
-        //        baseOk = base != null && !"".equals(base);
-    }
-
-    /*
-     * (non-Javadoc)
-     * @see javax.servlet.GenericServlet#init(javax.servlet.ServletConfig)
-     */
-    @Override
-    public void init(ServletConfig config) throws ServletException {
-        super.init(config);
-        Injector injector = getInjector();
-        injector.injectMembers(this);
-    }
-
-    /**
-     * Gets the injector.
-     * 
-     * @return the injector
-     */
-    protected Injector getInjector() {
-        return (Injector) getServletContext().getAttribute(Injector.class.getName());
     }
 
 }
