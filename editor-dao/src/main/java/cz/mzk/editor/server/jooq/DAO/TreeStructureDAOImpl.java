@@ -7,6 +7,7 @@ import cz.mzk.editor.server.cz.mzk.server.editor.api.TreeStructureDAO;
 import cz.mzk.editor.server.jooq.tables.CrudTreeStructureAction;
 import cz.mzk.editor.server.jooq.tables.EditorUser;
 import cz.mzk.editor.server.jooq.tables.TreeStructure;
+import cz.mzk.editor.server.jooq.tables.TreeStructureNode;
 import cz.mzk.editor.shared.rpc.TreeStructureBundle;
 import cz.mzk.editor.shared.rpc.TreeStructureInfo;
 import org.jooq.*;
@@ -80,7 +81,7 @@ public class TreeStructureDAOImpl implements TreeStructureDAO {
     private SelectConditionStep selectInfosQuery() {
         return dsl.select(
                 concat(userTable.SURNAME, val(", "), userTable.NAME),
-                structureActionTable.ID,
+                treeStructure.ID,
                 structureActionTable.TIMESTAMP,
                 treeStructure.DESCRIPTION,
                 treeStructure.BARCODE,
@@ -91,7 +92,7 @@ public class TreeStructureDAOImpl implements TreeStructureDAO {
                 from(treeStructure)
                 .join(structureActionTable).on(treeStructure.ID.eq(structureActionTable.TREE_STRUCTURE_ID))
                 .leftOuterJoin(userTable).on(structureActionTable.EDITOR_USER_ID.eq(userTable.ID))
-                .where(structureActionTable.TYPE.eq("c"), userTable.STATE.eq(true));
+                .where(structureActionTable.TYPE.eq("c"), treeStructure .STATE.eq(true));
     }
 
 
@@ -137,7 +138,28 @@ public class TreeStructureDAOImpl implements TreeStructureDAO {
 
     @Override
     public ArrayList<TreeStructureBundle.TreeStructureNode> loadStructure(long structureId) throws DatabaseException {
-        return null;
+        List<TreeStructureBundle.TreeStructureNode> retList = dsl.select().from(TreeStructureNode.TREE_STRUCTURE_NODE)
+                .where(TreeStructureNode.TREE_STRUCTURE_NODE.TREE_STRUCTURE_ID.eq(new Long(structureId).intValue()))
+                .orderBy(TreeStructureNode.TREE_STRUCTURE_NODE.ID).fetch().map(new RecordMapper<Record, TreeStructureBundle.TreeStructureNode>() {
+                    @Override
+                    public TreeStructureBundle.TreeStructureNode map(Record rs) {
+                        return new TreeStructureBundle.TreeStructureNode((String) rs.getValue("prop_id"),
+                                (String) rs.getValue("prop_parent"),
+                                (String) rs.getValue("prop_name"),
+                                (String) rs.getValue("prop_picture_or_uuid"),
+                                (String) rs.getValue("prop_model_id"),
+                                (String) rs.getValue("prop_type"),
+                                (String) rs.getValue("prop_date_or_int_part_name"),
+                                (String) rs.getValue("prop_note_or_int_subtitle"),
+                                (String) rs.getValue("prop_part_number_or_alto"),
+                                (String) rs.getValue("prop_aditional_info_or_ocr"),
+                                (String) rs.getValue("prop_ocr_path"),
+                                (String) rs.getValue("prop_alto_path"),
+                                (Boolean) rs.getValue("prop_exist"));
+                    }
+                });
+
+        return new ArrayList<>(retList);
     }
 
     @Override

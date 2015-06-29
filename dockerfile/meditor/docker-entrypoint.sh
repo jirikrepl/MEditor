@@ -37,6 +37,11 @@ if [ ! -d /data/meditor/temp ]; then
   mkdir /data/meditor/temp
 fi
 
+if [ ! -d /data/meditor/import ]; then
+  mkdir /data/meditor/import
+fi
+
+
 ln -s /data/meditor/temp /root/output
 
 exec "$@"

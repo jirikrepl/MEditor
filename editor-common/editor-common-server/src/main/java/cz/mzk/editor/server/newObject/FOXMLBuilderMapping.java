@@ -31,6 +31,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import com.google.inject.Injector;
 
@@ -38,17 +39,20 @@ import org.apache.log4j.Logger;
 
 import cz.mzk.editor.shared.domain.DigitalObjectModel;
 import cz.mzk.editor.shared.rpc.NewDigitalObject;
+import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
+import org.springframework.context.ApplicationContext;
 
 /**
  * @author Jiri Kremser
  * @version 14.11.2011
  */
+@Named
 public class FOXMLBuilderMapping {
 
     private static final Logger LOGGER = Logger.getLogger(FOXMLBuilderMapping.class);
 
     @Inject
-    private static Injector injector;
+    private ApplicationContext ctx;
 
     private static final Map<DigitalObjectModel, Class<? extends FoxmlBuilder>> MAP =
             new HashMap<DigitalObjectModel, Class<? extends FoxmlBuilder>>(DigitalObjectModel.values().length);
@@ -71,7 +75,7 @@ public class FOXMLBuilderMapping {
     }
 
     @SuppressWarnings("unchecked")
-    public static FoxmlBuilder getBuilder(NewDigitalObject object) {
+    public FoxmlBuilder getBuilder(NewDigitalObject object) {
         try {
             Class<? extends FoxmlBuilder> clazz = MAP.get(object.getModel());
             if (clazz != null) {
@@ -81,7 +85,9 @@ public class FOXMLBuilderMapping {
                     return null;
                 } else {
                     FoxmlBuilder builder = constructors[0].newInstance(object);
-                    injector.injectMembers(builder);
+                    ctx.getAutowireCapableBeanFactory().autowireBeanProperties(
+                            builder,
+                            AutowireCapableBeanFactory.AUTOWIRE_BY_TYPE, false);
                     return builder;
                 }
             }

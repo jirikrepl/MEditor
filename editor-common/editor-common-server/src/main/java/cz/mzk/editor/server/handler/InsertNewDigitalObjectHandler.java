@@ -32,6 +32,7 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import cz.mzk.editor.server.UserProvider;
 import cz.mzk.editor.server.util.StringUtils;
 import org.apache.log4j.Logger;
 import org.jboss.errai.bus.client.api.base.MessageBuilder;
@@ -44,7 +45,6 @@ import com.gwtplatform.dispatch.shared.ActionException;
 import cz.mzk.editor.client.CreateObjectException;
 import cz.mzk.editor.client.util.Constants;
 import cz.mzk.editor.client.util.Constants.EDITOR_RIGHTS;
-import cz.mzk.editor.server.DAO.DAOUtils;
 import cz.mzk.editor.server.DAO.DatabaseException;
 import cz.mzk.editor.server.cz.mzk.server.editor.api.DigitalObjectDAO;
 import cz.mzk.editor.server.cz.mzk.server.editor.api.ImageResolverDAO;
@@ -84,9 +84,6 @@ public class InsertNewDigitalObjectHandler
     @Inject
     private DigitalObjectDAO digitalObjectDAO;
 
-    /** The dao utils. */
-    private DAOUtils daoUtils;
-
     @Inject
     private InputQueueItemDAO inputQueueItemDAO;
 
@@ -96,6 +93,12 @@ public class InsertNewDigitalObjectHandler
 
     @Inject
     private ServerUtils serverUtils;
+
+    @Inject
+    private UserProvider userProvider;
+
+    @Inject
+    private CreateObject createObject;
 
     private static RequestDispatcher erraiDispatcher;
 
@@ -113,7 +116,7 @@ public class InsertNewDigitalObjectHandler
         LOGGER.debug("Processing action: InsertNewDigitalObjectAction " + action.getObject().getUuid());
         serverUtils.checkExpiredSession();
 
-        if (!serverUtils.checkUserRightOrAll(EDITOR_RIGHTS.CREATE_NEW_OBJECTS)) {
+        if (!userProvider.checkUserRightOrAll(EDITOR_RIGHTS.CREATE_NEW_OBJECTS)) {
             LOGGER.warn("Bad authorization in " + this.getClass().toString());
             throw new ActionException("Bad authorization in " + this.getClass().toString());
         }
@@ -129,23 +132,14 @@ public class InsertNewDigitalObjectHandler
         String pid = null;
 
         try {
-            daoUtils.checkInputQueue(action.getInputPath(), object.getName(), true);
+            inputQueueItemDAO.checkInputQueue(action.getInputPath(), object.getName());
         } catch (DatabaseException e1) {
-            LOGGER.error(e1.getMessage());
-            e1.printStackTrace();
-        } catch (SQLException e1) {
             LOGGER.error(e1.getMessage());
             e1.printStackTrace();
         }
 
         try {
-            CreateObject createObject =
-                    new CreateObject(action.getInputPath(),
-                                     config,
-                                     digitalObjectDAO,
-                                     imageResolverDAO,
-                                     fedoraAccess);
-            ingestSuccess = createObject.insertAllTheStructureToFOXMLs(object);
+            ingestSuccess = createObject.insertAllTheStructureToFOXMLs(object, action.getInputPath());
 
             if (!createObject.getTopLevelUuid().equals(object.getUuid())) {
                 try {

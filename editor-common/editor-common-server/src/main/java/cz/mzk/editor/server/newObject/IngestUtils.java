@@ -25,6 +25,7 @@
 package cz.mzk.editor.server.newObject;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import org.apache.log4j.Logger;
 
@@ -38,17 +39,18 @@ import cz.mzk.editor.server.util.RESTHelper;
  * @author Matous Jobanek
  * @version Oct 23, 2012
  */
+@Named
 public class IngestUtils {
 
     public static final Logger LOGGER = Logger.getLogger(IngestUtils.class);
     private static final Logger INGEST_LOGGER = Logger.getLogger(ServerConstants.INGEST_LOG_ID);
 
     @Inject
-    private static EditorConfiguration config;
+    private EditorConfiguration config;
 
     /** The dao utils. */
     @Inject
-    private static DigitalObjectDAO digitalObjectDAO;
+    private DigitalObjectDAO digitalObjectDAO;
 
     /**
      * Ingest.
@@ -67,7 +69,7 @@ public class IngestUtils {
      *        the input dir path
      * @return true, if successful
      */
-    public static boolean ingest(String foxml,
+    public boolean ingest(String foxml,
                                  String label,
                                  String uuid,
                                  String model,

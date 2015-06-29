@@ -98,7 +98,12 @@ public class RemoveDigitalObjectHandler
     private DigitalObjectDAO digitalObjectDAO;
 
     @Inject
-    ServerUtils serverUtils;
+    private ServerUtils serverUtils;
+
+    @Inject
+    private IngestUtils ingestUtils;
+
+
 
     private static final class RemovedDigitalObject {
 
@@ -454,7 +459,7 @@ public class RemoveDigitalObjectHandler
             boolean successful = false;
             while (!successful && attempt++ < 3) {
                 successful =
-                        IngestUtils.ingest(removed.getFoxml().getNoCodedfoxml(), removed.getFoxml()
+                        ingestUtils.ingest(removed.getFoxml().getNoCodedfoxml(), removed.getFoxml()
                                 .getLabel(), removed.getUuid(), ROLLBACK_FLAG, null, null);
             }
 

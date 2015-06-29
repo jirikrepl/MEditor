@@ -37,8 +37,8 @@ import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
-import com.google.inject.name.Named;
 
 import org.apache.log4j.Logger;
 
@@ -73,6 +73,7 @@ import cz.mzk.editor.shared.rpc.NewDigitalObject;
  * @author Jiri Kremser
  * @version 29.10.2011
  */
+@Named
 public class CreateObject {
 
     /**
@@ -105,10 +106,6 @@ public class CreateObject {
      */
     private String topLevelUuid = null;
 
-    /**
-     * The input dir path.
-     */
-    private final String inputDirPath;
 
     /**
      * The processed pages.
@@ -135,6 +132,12 @@ public class CreateObject {
      */
     private DigitalObjectModel model;
 
+    @Inject
+    private FOXMLBuilderMapping foxmlBuilderMapping;
+
+    @Inject
+    private IngestUtils ingestUtils;
+
     /**
      * The ingested objects.
      */
@@ -143,19 +146,16 @@ public class CreateObject {
     /**
      * Instantiates a new creates the object.
      *
-     * @param inputDirPath     the input dir path
      * @param config           the config
      * @param digitalObjectDAO the digital object dao
      * @param imageResolverDAO the image resolver dao
      * @param fedoraAccess     the fedora access
      */
     @Inject
-    public CreateObject(String inputDirPath,
-                        final EditorConfiguration config,
+    public CreateObject(final EditorConfiguration config,
                         final DigitalObjectDAO digitalObjectDAO,
                         final ImageResolverDAO imageResolverDAO,
                         final @Named("securedFedoraAccess") FedoraAccess fedoraAccess) {
-        this.inputDirPath = inputDirPath;
         this.processedPages = new HashMap<String, String>();
         this.processedTracks = new HashMap<String, String>();
         this.ingestedObjects = new ArrayList<String>();
@@ -172,7 +172,7 @@ public class CreateObject {
      * @return true, if successful
      * @throws CreateObjectException the create object exception
      */
-    public boolean insertAllTheStructureToFOXMLs(NewDigitalObject node) throws CreateObjectException {
+    public boolean insertAllTheStructureToFOXMLs(NewDigitalObject node, String inputDirPath) throws CreateObjectException {
         String modsString = FedoraUtils.createNewModsPart(node.getBundle().getMods());
         String dcString = FedoraUtils.createNewDublinCorePart(node.getBundle().getDc());
         Document mods = null, dc = null;
@@ -205,7 +205,7 @@ public class CreateObject {
         }
 
         checkAccessRightsAndCreateDirectories(sysno, base, model);
-        insertFOXML(node, mods, dc);
+        insertFOXML(node, mods, dc, inputDirPath);
         return true;
     }
 
@@ -218,9 +218,9 @@ public class CreateObject {
      * @return the string
      * @throws CreateObjectException the create object exception
      */
-    private String insertFOXML(NewDigitalObject node, Document mods, Document dc)
+    private String insertFOXML(NewDigitalObject node, Document mods, Document dc, String inputDirPath)
             throws CreateObjectException {
-        return insertFOXML(node, mods, dc, Constants.MAX_NUMBER_OF_INGEST_ATTEMPTS);
+        return insertFOXML(node, mods, dc, inputDirPath, Constants.MAX_NUMBER_OF_INGEST_ATTEMPTS);
     }
 
     /**
@@ -233,7 +233,7 @@ public class CreateObject {
      * @return the string
      * @throws CreateObjectException the create object exception
      */
-    private String insertFOXML(NewDigitalObject node, Document mods, Document dc, int attempt)
+    private String insertFOXML(NewDigitalObject node, Document mods, Document dc, String inputDirPath, int attempt)
             throws CreateObjectException {
         if (attempt == 0) {
             throw new CreateObjectException("max number of attempts has been reached");
@@ -294,7 +294,7 @@ public class CreateObject {
             if (childrenToAdd != null && !childrenToAdd.isEmpty()) {
                 for (NewDigitalObject child : childrenToAdd) {
                     if (!child.getExist()) {
-                        String uuid = insertFOXML(child, mods, dc);
+                        String uuid = insertFOXML(child, mods, dc, inputDirPath);
                         child.setUuid(uuid);
                         append(node, child);
                     }
@@ -302,7 +302,7 @@ public class CreateObject {
             }
             return node.getUuid();
         }
-        FoxmlBuilder builder = FOXMLBuilderMapping.getBuilder(node);
+        FoxmlBuilder builder = foxmlBuilderMapping.getBuilder(node);
         if (builder == null) {
             throw new CreateObjectException("unknown type " + node.getModel());
         }
@@ -353,7 +353,7 @@ public class CreateObject {
             List<RelsExtRelation> relations = builder.getChildren();
             for (NewDigitalObject child : childrenToAdd) {
                 if (!child.getExist()) {
-                    String uuid = insertFOXML(child, mods, dc);
+                    String uuid = insertFOXML(child, mods, dc, inputDirPath);
                     child.setUuid(uuid);
                 }
                 relations.add(new RelsExtRelation(child.getUuid(), NamedGraphModel.getRelationship(node
@@ -449,7 +449,7 @@ public class CreateObject {
 
         String foxmlRepresentation = builder.getDocument(false);
         boolean success =
-                IngestUtils.ingest(foxmlRepresentation, node.getName(), node.getUuid(), node.getModel()
+                ingestUtils.ingest(foxmlRepresentation, node.getName(), node.getUuid(), node.getModel()
                         .getValue(), topLevelUuid, inputDirPath);
 
         if (success) ingestedObjects.add(node.getUuid());
@@ -530,7 +530,7 @@ public class CreateObject {
         }
 
         if (!success) {
-            insertFOXML(node, mods, dc, attempt - 1);
+            insertFOXML(node, mods, dc, inputDirPath, attempt - 1);
         } else if (isPdf) {
             handlePdf(node);
         }

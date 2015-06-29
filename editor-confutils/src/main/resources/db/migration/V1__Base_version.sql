@@ -184,15 +184,17 @@ CREATE TABLE long_running_process (
 
 CREATE TABLE crud_digital_object_action (
   id             INTEGER DEFAULT nextval('seq_action') NOT NULL,
+  digital_object_uuid CHARACTER VARYING(45) NOT NULL,
+  type                CHARACTER VARYING(1)  NOT NULL,
   editor_user_id INTEGER                               NOT NULL,
   timestamp      TIMESTAMP                             NOT NULL,
-  PRIMARY KEY (id),
-  digital_object_uuid CHARACTER VARYING(45) NOT NULL,
-  type                CHARACTER VARYING(1)  NOT NULL
+  PRIMARY KEY (id)
 );
 
 CREATE TABLE crud_do_action_with_top_object (
   id             INTEGER DEFAULT nextval('seq_action') NOT NULL,
+  digital_object_uuid CHARACTER VARYING(45) NOT NULL,
+  type                CHARACTER VARYING(1)  NOT NULL,
   editor_user_id INTEGER                               NOT NULL,
   timestamp      TIMESTAMP                             NOT NULL,
   PRIMARY KEY (id),

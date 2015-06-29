@@ -91,6 +91,8 @@ public class ImageResolverDAOImpl implements ImageResolverDAO {
 
     @Override
     public String getNewImageFilePath(String identifier) throws DatabaseException {
-        return null;
+        if (identifier == null || "".equals(identifier)) throw new NullPointerException("identifier");
+
+        return dsl.select(Image.IMAGE.IMAGEFILE).from(Image.IMAGE).where(Image.IMAGE.IDENTIFIER.eq(identifier)).fetchOne().value1();
     }
 }
