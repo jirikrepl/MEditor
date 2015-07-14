@@ -37,10 +37,13 @@ import cz.mzk.editor.server.fedora.utils.FoxmlUtils;
 import cz.mzk.editor.shared.domain.DigitalObjectModel;
 import cz.mzk.editor.shared.rpc.NewDigitalObject;
 
+import javax.inject.Named;
+
 /**
  * @author Jiri Kremser
  * @version 31.10.2011
  */
+@Named
 public class IntPartBuilder
         extends FoxmlBuilder {
 
@@ -48,9 +51,9 @@ public class IntPartBuilder
      * @param uuid
      * @param label
      */
-    public IntPartBuilder(NewDigitalObject object) {
-        super(object);
-    }
+//    public IntPartBuilder(NewDigitalObject object) {
+//        super(object);
+//    }
 
     /**
      * {@inheritDoc}

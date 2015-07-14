@@ -37,12 +37,11 @@ import javax.servlet.http.HttpSession;
 
 import javax.inject.Inject;
 
-import com.google.inject.Provider;
 import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.server.actionhandler.ActionHandler;
 import com.gwtplatform.dispatch.shared.ActionException;
 
-import cz.mzk.editor.server.UserProvider;
+import cz.mzk.editor.server.util.UserProvider;
 import org.apache.log4j.Logger;
 
 import org.springframework.security.core.context.SecurityContextHolder;

@@ -34,10 +34,13 @@ import cz.mzk.editor.server.fedora.utils.FoxmlUtils;
 import cz.mzk.editor.shared.domain.DigitalObjectModel;
 import cz.mzk.editor.shared.rpc.NewDigitalObject;
 
+import javax.inject.Named;
+
 /**
  * @author Jiri Kremser
  * @version 28.11.2011
  */
+@Named
 public class PeriodicalVolumeBuilder
         extends FoxmlBuilder {
 
@@ -45,9 +48,9 @@ public class PeriodicalVolumeBuilder
      * @param uuid
      * @param label
      */
-    public PeriodicalVolumeBuilder(NewDigitalObject object) {
-        super(object);
-    }
+//    public PeriodicalVolumeBuilder(NewDigitalObject object) {
+//        super(object);
+//    }
 
     /**
      * {@inheritDoc}

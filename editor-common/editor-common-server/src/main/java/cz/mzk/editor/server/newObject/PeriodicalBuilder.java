@@ -48,11 +48,14 @@ import cz.mzk.editor.shared.domain.FedoraNamespaces;
 import cz.mzk.editor.shared.rpc.MarcSpecificMetadata;
 import cz.mzk.editor.shared.rpc.NewDigitalObject;
 
+import javax.inject.Named;
+
 /**
  * @author Jiri Kremser
  * @version 17.11.2011
  */
 @SuppressWarnings("unused")
+@Named
 public class PeriodicalBuilder
         extends FoxmlBuilder {
 
@@ -70,9 +73,9 @@ public class PeriodicalBuilder
      * @throws DocumentException
      *         final case of error in loading xsl template
      */
-    public PeriodicalBuilder(NewDigitalObject object) {
-        super(object);
-    }
+//    public PeriodicalBuilder(NewDigitalObject object) {
+//        super(object);
+//    }
 
     @SuppressWarnings("unchecked")
     private void updateDcDoc(Document dcDoc,

@@ -35,6 +35,7 @@ import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.server.actionhandler.ActionHandler;
 import com.gwtplatform.dispatch.shared.ActionException;
 
+import cz.mzk.editor.server.util.UserProvider;
 import org.apache.log4j.Logger;
 
 import cz.mzk.editor.client.util.Constants.EDITOR_RIGHTS;
@@ -61,6 +62,9 @@ public class PutUserIdentityHandler
     private UserDAO userDAO;
 
     @Inject
+    private UserProvider userProvider;
+
+    @Inject
     private ServerUtils serverUtils;
 
     /*
@@ -77,7 +81,7 @@ public class PutUserIdentityHandler
         LOGGER.debug("Processing action: PutUserIdentityAction " + action.getIdentity());
         serverUtils.checkExpiredSession();
 
-        if (!serverUtils.checkUserRightOrAll(EDITOR_RIGHTS.EDIT_USERS)) {
+        if (!userProvider.checkUserRightOrAll(EDITOR_RIGHTS.EDIT_USERS)) {
             LOGGER.warn("Bad authorization in " + this.getClass().toString());
             throw new ActionException("Bad authorization in " + this.getClass().toString());
         }

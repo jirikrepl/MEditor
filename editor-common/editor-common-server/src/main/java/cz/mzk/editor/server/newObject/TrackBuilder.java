@@ -25,13 +25,12 @@ import java.util.List;
  */
 public class TrackBuilder extends FoxmlBuilder {
 
-    private final DigitalObjectModel model;
     private boolean wavProvided = false;
 
-    public TrackBuilder(NewDigitalObject object) {
-        super(object);
-        this.model = object.getModel();
-    }
+//    public TrackBuilder(NewDigitalObject object) {
+//        super(object);
+//        this.model = object.getModel();
+//    }
 
     @Override
     protected void decorateMODSStream() {
@@ -115,6 +114,6 @@ public class TrackBuilder extends FoxmlBuilder {
 
     @Override
     protected DigitalObjectModel getModel() {
-        return model;
+        return DigitalObjectModel.TRACK;
     }
 }

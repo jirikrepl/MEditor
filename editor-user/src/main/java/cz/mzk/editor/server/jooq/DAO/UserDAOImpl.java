@@ -15,6 +15,7 @@ import javax.inject.Inject;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -229,8 +230,32 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public UserIdentity getIdentities(String userId, Constants.USER_IDENTITY_TYPES type) throws DatabaseException, UnsupportedDataTypeException {
-        return null;
+    public UserIdentity getIdentities(String id, Constants.USER_IDENTITY_TYPES type) throws DatabaseException, UnsupportedDataTypeException {
+        Result<Record1<String>> result = null;
+        Integer userId = Integer.parseInt(id);
+        switch (type) {
+            case OPEN_ID:
+                result = dsl.select(OpenIdIdentity.OPEN_ID_IDENTITY.IDENTITY).from(OpenIdIdentity.OPEN_ID_IDENTITY)
+                        .where(OpenIdIdentity.OPEN_ID_IDENTITY.EDITOR_USER_ID.eq(userId)).fetch();
+                break;
+            case SHIBBOLETH:
+                result =dsl.select(ShibbolethIdentity.SHIBBOLETH_IDENTITY.IDENTITY).from(ShibbolethIdentity.SHIBBOLETH_IDENTITY)
+                        .where(ShibbolethIdentity.SHIBBOLETH_IDENTITY.EDITOR_USER_ID.eq(userId)).fetch();
+                break;
+            case LDAP:
+                result =dsl.select(LdapIdentity.LDAP_IDENTITY.IDENTITY).from(LdapIdentity.LDAP_IDENTITY)
+                        .where(LdapIdentity.LDAP_IDENTITY.EDITOR_USER_ID.eq(userId)).fetch();
+                break;
+            default:
+                throw new DatabaseException("Unknown type of identity");
+        }
+
+        ArrayList<String> idents = new ArrayList<String>();
+        for (Record1<String> r : result) {
+            idents.add(r.value1());
+        }
+
+        return new UserIdentity(idents, type, userId.longValue());
     }
 
     @Override
@@ -240,12 +265,29 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public Long insertUpdatetUser(UserInfoItem user) throws DatabaseException {
-        return null;
+        if (user.getId() == null) {
+            return dsl.insertInto(EditorUser.EDITOR_USER, EditorUser.EDITOR_USER.NAME, EditorUser.EDITOR_USER.SURNAME)
+                    .values(user.getName(), user.getSurname()).returning().fetchOne().value1().longValue();
+
+        } else {
+            return dsl.update(EditorUser.EDITOR_USER).set(EditorUser.EDITOR_USER.NAME, user.getName())
+                    .set(EditorUser.EDITOR_USER.SURNAME, user.getSurname())
+                    .where(EditorUser.EDITOR_USER.ID.eq(user.getId().intValue())).returning().fetchOne().value1().longValue();
+        }
     }
 
     @Override
     public ArrayList<UserInfoItem> getUsers() throws DatabaseException {
-        return null;
+        List<UserInfoItem> users = dsl.select(EditorUser.EDITOR_USER.ID, EditorUser.EDITOR_USER.NAME, EditorUser.EDITOR_USER.SURNAME)
+                .from(EditorUser.EDITOR_USER).where(EditorUser.EDITOR_USER.STATE.eq(true))
+                .orderBy(EditorUser.EDITOR_USER.SURNAME).fetch().map(new RecordMapper<Record3<Integer,String,String>, UserInfoItem>() {
+            @Override
+            public UserInfoItem map(Record3<Integer, String, String> record) {
+                return new UserInfoItem(record.value2(), record.value3(), record.value1().longValue());
+            }
+        });
+
+        return new ArrayList<UserInfoItem>(users);
     }
 
     @Override

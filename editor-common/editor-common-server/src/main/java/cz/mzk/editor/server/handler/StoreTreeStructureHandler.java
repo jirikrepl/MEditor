@@ -28,8 +28,6 @@
 
 package cz.mzk.editor.server.handler;
 
-import java.sql.SQLException;
-
 import java.text.DateFormat;
 
 import java.util.ArrayList;
@@ -43,7 +41,7 @@ import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.server.actionhandler.ActionHandler;
 import com.gwtplatform.dispatch.shared.ActionException;
 
-import cz.mzk.editor.server.UserProvider;
+import cz.mzk.editor.server.util.UserProvider;
 import org.apache.log4j.Logger;
 
 import cz.mzk.editor.server.DAO.DAOUtils;

@@ -42,7 +42,7 @@ import com.gwtplatform.dispatch.server.actionhandler.ActionHandler;
 import com.gwtplatform.dispatch.shared.ActionException;
 
 import cz.mzk.editor.client.util.Constants;
-import cz.mzk.editor.server.UserProvider;
+import cz.mzk.editor.server.util.UserProvider;
 import cz.mzk.editor.server.metadataDownloader.XServicesClient;
 import cz.mzk.editor.server.util.StringUtils;
 import org.apache.log4j.Logger;

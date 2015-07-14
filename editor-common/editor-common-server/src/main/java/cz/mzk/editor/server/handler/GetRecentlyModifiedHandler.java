@@ -36,31 +36,24 @@ import javax.servlet.http.HttpSession;
 
 import javax.inject.Inject;
 
-import com.google.inject.Injector;
-import com.google.inject.Provider;
 import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.server.actionhandler.ActionHandler;
 import com.gwtplatform.dispatch.shared.ActionException;
 
 import cz.mzk.editor.client.util.Constants;
-import cz.mzk.editor.server.DAO.SecurityUserDAO;
 import cz.mzk.editor.server.EditorUserAuthentication;
 import cz.mzk.editor.server.URLS;
-import cz.mzk.editor.server.UserProvider;
+import cz.mzk.editor.server.util.UserProvider;
 import org.apache.log4j.Logger;
 
-import cz.mzk.editor.server.DAO.DAOUtils;
 import cz.mzk.editor.server.DAO.DatabaseException;
 import cz.mzk.editor.server.cz.mzk.server.editor.api.RecentlyModifiedItemDAO;
 import cz.mzk.editor.server.config.EditorConfiguration;
 import cz.mzk.editor.server.util.ServerUtils;
-import cz.mzk.editor.shared.rpc.LockInfo;
 import cz.mzk.editor.shared.rpc.RecentlyModifiedItem;
-import cz.mzk.editor.shared.rpc.action.GetLockInformationAction;
 import cz.mzk.editor.shared.rpc.action.GetRecentlyModifiedAction;
 import cz.mzk.editor.shared.rpc.action.GetRecentlyModifiedResult;
 import org.springframework.security.core.context.SecurityContext;
-import org.springframework.stereotype.Service;
 
 // TODO: Auto-generated Javadoc
 /**

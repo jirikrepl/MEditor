@@ -48,11 +48,14 @@ import cz.mzk.editor.shared.domain.FedoraNamespaces;
 import cz.mzk.editor.shared.rpc.MarcSpecificMetadata;
 import cz.mzk.editor.shared.rpc.NewDigitalObject;
 
+import javax.inject.Named;
+
 /**
  * @author Jiri Kremser
  * @version 14.11.2011
  */
 @SuppressWarnings("unused")
+@Named
 public class MonographBuilder
         extends FoxmlBuilder {
 
@@ -64,19 +67,6 @@ public class MonographBuilder
     private final XPath copyInformationXpath = Dom4jUtils
             .createXPath("//mods:location/mods:holdingSimple/mods:copyInformation");
     private final XPath recordInfoXpath = Dom4jUtils.createXPath("//mods:recordInfo");
-
-    private final DigitalObjectModel model;
-
-    /**
-     * @throws FileNotFoundException
-     *         final if some xsl template file cannot be found
-     * @throws DocumentException
-     *         final case of error in loading xsl template
-     */
-    public MonographBuilder(NewDigitalObject object) {
-        super(object);
-        this.model = object.getModel();
-    }
 
     @SuppressWarnings("unchecked")
     private void updateDcDoc(Document dcDoc,
@@ -261,7 +251,7 @@ public class MonographBuilder
      */
     @Override
     protected DigitalObjectModel getModel() {
-        return model;
+        return super.getObject().getModel();
     }
 
     /**

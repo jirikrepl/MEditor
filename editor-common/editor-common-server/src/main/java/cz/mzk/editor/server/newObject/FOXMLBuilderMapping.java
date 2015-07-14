@@ -24,6 +24,7 @@
 
 package cz.mzk.editor.server.newObject;
 
+import java.beans.Introspector;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
@@ -39,15 +40,17 @@ import org.apache.log4j.Logger;
 
 import cz.mzk.editor.shared.domain.DigitalObjectModel;
 import cz.mzk.editor.shared.rpc.NewDigitalObject;
+import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 
 /**
  * @author Jiri Kremser
  * @version 14.11.2011
  */
 @Named
-public class FOXMLBuilderMapping {
+public class FOXMLBuilderMapping implements ApplicationContextAware {
 
     private static final Logger LOGGER = Logger.getLogger(FOXMLBuilderMapping.class);
 
@@ -84,29 +87,21 @@ public class FOXMLBuilderMapping {
                 if (constructors.length == 0) {
                     return null;
                 } else {
-                    FoxmlBuilder builder = constructors[0].newInstance(object);
-                    ctx.getAutowireCapableBeanFactory().autowireBeanProperties(
-                            builder,
-                            AutowireCapableBeanFactory.AUTOWIRE_BY_TYPE, false);
+                    FoxmlBuilder builder = this.ctx.getBean(Introspector.decapitalize(clazz.getSimpleName()), clazz);
+                    builder.setObject(object);
                     return builder;
                 }
             }
             return null;
-            //            return new MonographBuilder(object);
-        } catch (InstantiationException e) {
-            LOGGER.error(e.getMessage());
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            LOGGER.error(e.getMessage());
-            e.printStackTrace();
         } catch (IllegalArgumentException e) {
-            LOGGER.error(e.getMessage());
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
             LOGGER.error(e.getMessage());
             e.printStackTrace();
         }
         return null;
     }
 
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        this.ctx = applicationContext;
+    }
 }

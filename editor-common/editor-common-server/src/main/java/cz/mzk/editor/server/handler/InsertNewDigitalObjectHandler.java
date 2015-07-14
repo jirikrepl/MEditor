@@ -25,14 +25,13 @@
 package cz.mzk.editor.server.handler;
 
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import cz.mzk.editor.server.UserProvider;
+import cz.mzk.editor.server.util.UserProvider;
 import cz.mzk.editor.server.util.StringUtils;
 import org.apache.log4j.Logger;
 import org.jboss.errai.bus.client.api.base.MessageBuilder;
@@ -58,7 +57,6 @@ import cz.mzk.editor.shared.rpc.NewDigitalObject;
 import cz.mzk.editor.shared.rpc.action.InsertNewDigitalObjectAction;
 import cz.mzk.editor.shared.rpc.action.InsertNewDigitalObjectResult;
 import org.jboss.errai.bus.client.api.messaging.RequestDispatcher;
-import org.springframework.beans.factory.annotation.Qualifier;
 
 
 /**

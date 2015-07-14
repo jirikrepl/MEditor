@@ -37,6 +37,7 @@ import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.server.actionhandler.ActionHandler;
 import com.gwtplatform.dispatch.shared.ActionException;
 
+import cz.mzk.editor.server.util.UserProvider;
 import org.apache.log4j.Logger;
 
 import cz.mzk.editor.client.util.Constants.EDITOR_RIGHTS;
@@ -69,6 +70,9 @@ public class GetUsersInfoHandler
     @Inject
     private ServerUtils serverUtils;
 
+    @Inject
+    private UserProvider userProvider;
+
     /**
      * Instantiates a new gets the recently modified handler.
      * 
@@ -95,10 +99,10 @@ public class GetUsersInfoHandler
         LOGGER.debug("Processing action: GetUsersInfoAction");
         serverUtils.checkExpiredSession();
 
-        if (!serverUtils.checkUserRightOrAll(EDITOR_RIGHTS.EDIT_USERS)
-                && !serverUtils.checkUserRight(EDITOR_RIGHTS.SHOW_ALL_STORED_AND_LOCKS)
-                && !serverUtils.checkUserRight(EDITOR_RIGHTS.SHOW_ALL_STATISTICS)
-                && !serverUtils.checkUserRight(EDITOR_RIGHTS.SHOW_ALL_HISTORY)) {
+        if (!userProvider.checkUserRightOrAll(EDITOR_RIGHTS.EDIT_USERS)
+                && !userProvider.checkUserRight(EDITOR_RIGHTS.SHOW_ALL_STORED_AND_LOCKS)
+                && !userProvider.checkUserRight(EDITOR_RIGHTS.SHOW_ALL_STATISTICS)
+                && !userProvider.checkUserRight(EDITOR_RIGHTS.SHOW_ALL_HISTORY)) {
             ArrayList<UserInfoItem> user = new ArrayList<UserInfoItem>();
             try {
                 user.add(userDAO.getUser());

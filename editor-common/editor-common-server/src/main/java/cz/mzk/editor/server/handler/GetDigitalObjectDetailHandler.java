@@ -42,7 +42,7 @@ import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.server.actionhandler.ActionHandler;
 import com.gwtplatform.dispatch.shared.ActionException;
 
-import cz.mzk.editor.server.UserProvider;
+import cz.mzk.editor.server.util.UserProvider;
 import org.apache.log4j.Logger;
 
 import cz.mzk.editor.client.ConnectionException;
@@ -57,11 +57,8 @@ import cz.mzk.editor.server.modelHandler.FedoraDigitalObjectHandler;
 import cz.mzk.editor.server.modelHandler.StoredDigitalObjectHandler;
 import cz.mzk.editor.server.util.ServerUtils;
 import cz.mzk.editor.shared.rpc.DigitalObjectDetail;
-import cz.mzk.editor.shared.rpc.LockInfo;
 import cz.mzk.editor.shared.rpc.action.GetDigitalObjectDetailAction;
 import cz.mzk.editor.shared.rpc.action.GetDigitalObjectDetailResult;
-import cz.mzk.editor.shared.rpc.action.GetLockInformationAction;
-import org.springframework.stereotype.Service;
 
 // TODO: Auto-generated Javadoc
 /**

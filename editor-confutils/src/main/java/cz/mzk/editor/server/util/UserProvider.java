@@ -1,9 +1,11 @@
-package cz.mzk.editor.server;
+package cz.mzk.editor.server.util;
 
 import cz.mzk.editor.client.util.Constants;
 import cz.mzk.editor.server.DAO.DAOUtils;
 import cz.mzk.editor.server.DAO.DatabaseException;
 import cz.mzk.editor.server.DAO.SecurityUserDAO;
+import cz.mzk.editor.server.EditorUserAuthentication;
+import cz.mzk.editor.server.URLS;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.stereotype.Component;
 
@@ -50,7 +52,7 @@ public class UserProvider {
     }
 
     //TODO-MR: implement!
-    private boolean checkUserRight(Constants.EDITOR_RIGHTS right) {
+    public boolean checkUserRight(Constants.EDITOR_RIGHTS right) {
         return true;
     }
 }

@@ -30,12 +30,10 @@ public class SoundRecordingBuilder extends FoxmlBuilder {
     private final XPath modsXpath = Dom4jUtils.createXPath("/mods:modsCollection/mods:mods");
     private final XPath recordInfoXpath = Dom4jUtils.createXPath("//mods:recordInfo");
 
-    private final DigitalObjectModel model;
-
-    public SoundRecordingBuilder(NewDigitalObject object) {
-        super(object);
-        this.model = object.getModel();
-    }
+//    public SoundRecordingBuilder(NewDigitalObject object) {
+//        super(object);
+//        this.model = object.getModel();
+//    }
 
 
     @Override
@@ -158,7 +156,7 @@ public class SoundRecordingBuilder extends FoxmlBuilder {
 
     @Override
     protected DigitalObjectModel getModel() {
-        return model;
+        return DigitalObjectModel.SOUNDRECORDING;
     }
 
     @SuppressWarnings("unchecked")

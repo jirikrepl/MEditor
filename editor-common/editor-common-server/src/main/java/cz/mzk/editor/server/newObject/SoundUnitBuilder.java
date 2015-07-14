@@ -14,13 +14,10 @@ import org.dom4j.QName;
  */
 public class SoundUnitBuilder extends FoxmlBuilder {
 
-    private final DigitalObjectModel model;
-
-
-    public SoundUnitBuilder(NewDigitalObject object) {
-        super(object);
-        this.model = object.getModel();
-    }
+//    public SoundUnitBuilder(NewDigitalObject object) {
+//        super(object);
+//        this.model = object.getModel();
+//    }
 
     @Override
     protected void decorateMODSStream() {
@@ -92,6 +89,6 @@ public class SoundUnitBuilder extends FoxmlBuilder {
 
     @Override
     protected DigitalObjectModel getModel() {
-        return model;
+        return DigitalObjectModel.SOUND_UNIT;
     }
 }

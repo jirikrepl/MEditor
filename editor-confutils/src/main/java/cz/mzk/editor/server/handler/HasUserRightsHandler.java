@@ -28,6 +28,7 @@ import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.server.actionhandler.ActionHandler;
 import com.gwtplatform.dispatch.shared.ActionException;
 
+import cz.mzk.editor.server.util.UserProvider;
 import org.apache.log4j.Logger;
 
 import cz.mzk.editor.client.util.Constants.EDITOR_RIGHTS;
@@ -50,7 +51,10 @@ public class HasUserRightsHandler
     private static final Logger LOGGER = Logger.getLogger(HasUserRightsHandler.class.getPackage().toString());
 
     @Inject
-    ServerUtils serverUtils;
+    private ServerUtils serverUtils;
+
+    @Inject
+    private UserProvider userProvider;
 
 
     /**
@@ -68,10 +72,10 @@ public class HasUserRightsHandler
             ok[i] = false;
         int index = 0;
         //TODO-MR: TODO!
-//        for (EDITOR_RIGHTS right : action.getRights()) {
-//
-//            ok[index++] = (serverUtils.checkUserRightOrAll(right));
-//        }
+        for (EDITOR_RIGHTS right : action.getRights()) {
+
+            ok[index++] = (userProvider.checkUserRightOrAll(right));
+        }
 
         return new HasUserRightsResult(ok);
     }

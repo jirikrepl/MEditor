@@ -36,16 +36,14 @@ import java.util.List;
 import java.util.UUID;
 
 import javax.inject.Named;
-import javax.servlet.http.HttpServletRequest;
 
 import javax.inject.Inject;
 
-import com.google.inject.Provider;
 import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.server.actionhandler.ActionHandler;
 import com.gwtplatform.dispatch.shared.ActionException;
 
-import cz.mzk.editor.server.UserProvider;
+import cz.mzk.editor.server.util.UserProvider;
 import cz.mzk.editor.server.utils.ScanFolder;
 import cz.mzk.editor.server.utils.ScanFolderImpl;
 import cz.mzk.editor.server.util.AudioUtils;

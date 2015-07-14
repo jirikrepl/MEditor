@@ -74,7 +74,7 @@ public abstract class FoxmlBuilder {
     private String type;
     private int pageIndex;
     private Policy policy = Policy.PRIVATE;
-    private final List<RelsExtRelation> children;
+    private final List<RelsExtRelation> children = new ArrayList<RelsExtRelation>();
     private MetadataBundle bundle;
     private Document document;
     protected Element rootElement;
@@ -93,6 +93,8 @@ public abstract class FoxmlBuilder {
 
     private String base;
 
+    private NewDigitalObject object;
+
     @Inject
     protected EditorConfiguration configuration;
 
@@ -100,15 +102,17 @@ public abstract class FoxmlBuilder {
 
     private final XPath shelfLocatorXpath = Dom4jUtils.createXPath("mods:shelfLocator");
 
-    public FoxmlBuilder(NewDigitalObject object) {
-        this(object, Policy.PRIVATE);
-    }
 
-    public FoxmlBuilder(NewDigitalObject object, Policy policy) {
-        setLabel(object);
-        this.children = new ArrayList<RelsExtRelation>();
-        this.policy = policy;
-    }
+
+//    public FoxmlBuilder(NewDigitalObject object) {
+//        this(object, Policy.PRIVATE);
+//    }
+//
+//    public FoxmlBuilder(NewDigitalObject object, Policy policy) {
+//        this.object = object;
+//        setLabel(object);
+//        this.policy = policy;
+//    }
 
     private void setLabel(NewDigitalObject object) {
         String labelToAdd = "";
@@ -762,4 +766,12 @@ public abstract class FoxmlBuilder {
         return configuration;
     }
 
+    protected NewDigitalObject getObject() {
+        return object;
+    }
+
+    protected void setObject(NewDigitalObject object) {
+        this.setLabel(object);
+        this.object = object;
+    }
 }
