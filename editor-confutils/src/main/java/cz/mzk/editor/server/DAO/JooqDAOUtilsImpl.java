@@ -14,7 +14,7 @@ public class JooqDAOUtilsImpl implements DAOUtils {
 
     @Override
     public boolean checkDigitalObject(String uuid, String model, String name, String description, String input_queue_directory_path, boolean state, boolean closeCon) throws DatabaseException, SQLException {
-        return false;
+        return true;
     }
 
     @Override

@@ -42,8 +42,8 @@ import cz.mzk.editor.client.util.Constants.CRUD_ACTION_TYPES;
  */
 public class DescriptionDAOImpl
         extends AbstractActionDAO
-        implements DescriptionDAO {
-
+//        implements DescriptionDAO
+    {
     private static final Logger LOGGER = Logger.getLogger(DescriptionDAO.class);
 
     /** The Constant DESCRIPTION_SELECT_DESC_STATEMENT. */
@@ -65,7 +65,7 @@ public class DescriptionDAOImpl
     /**
      * {@inheritDoc}
      */
-    @Override
+    //@Override
     public String getCommonDescription(String uuid) throws DatabaseException {
         if (uuid == null) throw new NullPointerException("uuid");
         String description = null;
@@ -89,7 +89,7 @@ public class DescriptionDAOImpl
     /**
      * {@inheritDoc}
      */
-    @Override
+    //@Override
     public boolean putCommonDescription(String uuid, String description, Long user_id)
             throws DatabaseException {
         if (uuid == null) throw new NullPointerException("uuid");
@@ -131,7 +131,7 @@ public class DescriptionDAOImpl
     /**
      * {@inheritDoc}
      */
-    @Override
+    //@Override
     public String getUserDescription(String digital_object_uuid) throws DatabaseException {
 
         PreparedStatement selSt = null;
@@ -159,7 +159,7 @@ public class DescriptionDAOImpl
     /**
      * {@inheritDoc}
      */
-    @Override
+    //@Override
     public boolean checkUserDescription(String digital_object_uuid, String description)
             throws DatabaseException {
 

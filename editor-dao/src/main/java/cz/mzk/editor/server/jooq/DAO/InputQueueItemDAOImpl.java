@@ -9,6 +9,8 @@ import cz.mzk.editor.shared.rpc.IngestInfo;
 import cz.mzk.editor.shared.rpc.InputQueueItem;
 import org.jooq.DSLContext;
 import static org.jooq.impl.DSL.*;
+
+import org.jooq.Record1;
 import org.jooq.Record4;
 import org.jooq.Result;
 import org.springframework.stereotype.Repository;
@@ -129,14 +131,22 @@ public class InputQueueItemDAOImpl implements InputQueueItemDAO {
     }
 
 
-    //TODO-MR implement!
+
     @Override
     public boolean checkInputQueue(String directory_path, String name)
             throws DatabaseException {
         PreparedStatement selSt = null;
-        boolean successful = false;
         String dirPath = DAOUtilsImpl.directoryPathToRightFormat(directory_path);
+        InputQueue inputQueue = InputQueue.INPUT_QUEUE;
+        Result<Record1<String>> inputPaths = dsl.select(inputQueue.NAME).from(inputQueue).where(inputQueue.DIRECTORY_PATH.eq(dirPath)).fetch();
+        if (inputPaths.size() > 0 && name != null) {
+            dsl.update(inputQueue).set(inputQueue.NAME, name).where(inputQueue.DIRECTORY_PATH.eq(dirPath)).execute();;
+        }
+        if (inputPaths.size() == 0) {
+            dsl.insertInto(inputQueue).set(inputQueue.DIRECTORY_PATH, dirPath)
+                    .set(inputQueue.NAME, name).execute();
 
+        }
         return true;
     }
 

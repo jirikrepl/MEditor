@@ -47,7 +47,7 @@ public class SecurityUserDAOImpl implements SecurityUserDAO {
 
 
     @Inject
-    DSLContext create;
+    private DSLContext create;
 
     public Long getUserId(String identifier, USER_IDENTITY_TYPES type, boolean closeCon)
             throws DatabaseException, SQLException {

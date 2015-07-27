@@ -19,7 +19,7 @@ import java.util.Collection;
  * @author: Martin Rumanek
  * @version: 24.2.13
  */
-@ExtensionComponent
+//@ExtensionComponent
 public class GuiceErraiExtension implements ErraiConfigExtension {
 
 

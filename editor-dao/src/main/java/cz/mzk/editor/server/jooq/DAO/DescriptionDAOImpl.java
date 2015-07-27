@@ -3,6 +3,7 @@ package cz.mzk.editor.server.jooq.DAO;
 import cz.mzk.editor.client.util.Constants;
 import cz.mzk.editor.server.DAO.DatabaseException;
 import cz.mzk.editor.server.cz.mzk.server.editor.api.DescriptionDAO;
+import cz.mzk.editor.server.jooq.tables.Description;
 import cz.mzk.editor.server.jooq.tables.DigitalObject;
 import org.jooq.DSLContext;
 import org.springframework.stereotype.Repository;
@@ -30,16 +31,41 @@ public class DescriptionDAOImpl implements DescriptionDAO {
 
     @Override
     public boolean putCommonDescription(String uuid, String description, Long user_id) throws DatabaseException {
+        if (uuid == null) throw new NullPointerException("uuid");
+        if (description == null) throw new NullPointerException("description");
+
+        dsl.update(DigitalObject.DIGITAL_OBJECT)
+                .set(DigitalObject.DIGITAL_OBJECT.UUID, uuid)
+                .set(DigitalObject.DIGITAL_OBJECT.DESCRIPTION, description).execute();
+
+        return true;
+    }
+
+    public String getUserDescription(String uuid, Long userId) throws DatabaseException {
+        if (uuid == null) throw new NullPointerException("uuid");
+        if (userId == null) throw new NullPointerException("user");
+
+        Description descriptionTable = Description.DESCRIPTION;
+
+        return dsl.select(descriptionTable.DESCRIPTION_).from(descriptionTable)
+                .where(descriptionTable.DIGITAL_OBJECT_UUID.eq(uuid))
+                .and(descriptionTable.EDITOR_USER_ID.eq(userId.intValue()))
+                .fetchOne().value1();
+    }
+
+
+
+    @Override
+    public boolean putUserDescription(String uuid, String description, Long userId) throws DatabaseException {
+        if (uuid == null) throw new NullPointerException("uuid");
+        if (userId == null) throw new NullPointerException("user");
+
+        Description descriptionTable = Description.DESCRIPTION;
+
         return false;
     }
 
-    @Override
-    public String getUserDescription(String digital_object_uuid) throws DatabaseException {
-        return null;
-    }
 
-    @Override
-    public boolean checkUserDescription(String digital_object_uuid, String description) throws DatabaseException {
-        return false;
-    }
+
+
 }

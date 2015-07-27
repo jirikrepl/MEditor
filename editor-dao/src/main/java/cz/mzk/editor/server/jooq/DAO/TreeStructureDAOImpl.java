@@ -1,6 +1,7 @@
 package cz.mzk.editor.server.jooq.DAO;
 
 import cz.mzk.editor.client.util.Constants;
+import cz.mzk.editor.server.DAO.DAOUtilsImpl;
 import cz.mzk.editor.server.DAO.DatabaseException;
 import cz.mzk.editor.server.DAO.StoredAndLocksDAO;
 import cz.mzk.editor.server.cz.mzk.server.editor.api.TreeStructureDAO;
@@ -12,6 +13,7 @@ import cz.mzk.editor.shared.rpc.TreeStructureBundle;
 import cz.mzk.editor.shared.rpc.TreeStructureInfo;
 import org.jooq.*;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -24,9 +26,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static org.jooq.impl.DSL.concat;
-import static org.jooq.impl.DSL.trueCondition;
-import static org.jooq.impl.DSL.val;
+import static org.jooq.impl.DSL.*;
 
 /**
  * Created by rumanekm on 6/18/15.
@@ -36,6 +36,9 @@ public class TreeStructureDAOImpl implements TreeStructureDAO {
 
     @Inject
     private DSLContext dsl;
+
+    @Inject
+    private InputQueueItemDAOImpl inputQueueItemDAO;
 
     /**
      * The Enum DISCRIMINATOR.
@@ -96,11 +99,10 @@ public class TreeStructureDAOImpl implements TreeStructureDAO {
     }
 
 
-
     @Override
     public ArrayList<TreeStructureInfo> getAllSavedStructuresOfUser(long userId) throws DatabaseException {
         List<TreeStructureInfo> retList;
-        retList = selectInfosQuery().and(structureActionTable.EDITOR_USER_ID.eq(new Long(userId).intValue())) .fetch().map(new TreeMapper());
+        retList = selectInfosQuery().and(structureActionTable.EDITOR_USER_ID.eq(new Long(userId).intValue())).fetch().map(new TreeMapper());
 
         return new ArrayList<>(retList);
     }
@@ -128,7 +130,6 @@ public class TreeStructureDAOImpl implements TreeStructureDAO {
 
         return new ArrayList<>(retList);
     }
-
 
 
     @Override
@@ -163,7 +164,49 @@ public class TreeStructureDAOImpl implements TreeStructureDAO {
     }
 
     @Override
+    @Transactional
     public boolean saveStructure(long userId, TreeStructureInfo info, List<TreeStructureBundle.TreeStructureNode> structure) throws DatabaseException {
-        return false;
+        if (info == null) throw new NullPointerException("info");
+        if (structure == null) throw new NullPointerException("structure");
+
+
+        if (inputQueueItemDAO.checkInputQueue(info.getInputPath(), null)) {
+            TreeStructure treeTable = TreeStructure.TREE_STRUCTURE;
+            Integer key = dsl.insertInto(treeTable).set(treeTable.BARCODE, info.getBarcode())
+                    .set(treeTable.DESCRIPTION, info.getDescription() != null ? info.getDescription() : "")
+                    .set(treeTable.NAME, info.getName())
+                    .set(treeTable.MODEL, info.getModel())
+                    .set(treeTable.STATE, true)
+                    .set(treeTable.INPUT_QUEUE_DIRECTORY_PATH, DAOUtilsImpl.directoryPathToRightFormat(info.getInputPath()))
+                    .returning(treeTable.ID).fetchOne().value1();
+
+            for (TreeStructureBundle.TreeStructureNode node : structure) {
+                TreeStructureNode treeNodeTable = TreeStructureNode.TREE_STRUCTURE_NODE;
+                dsl.insertInto(treeNodeTable).set(treeNodeTable.TREE_STRUCTURE_ID, key)
+                        .set(treeNodeTable.PROP_ID, node.getPropId())
+                        .set(treeNodeTable.PROP_PARENT, node.getPropParent())
+                        .set(treeNodeTable.PROP_NAME, node.getPropName())
+                        .set(treeNodeTable.PROP_PICTURE_OR_UUID, node.getPropPictureOrUuid())
+                        .set(treeNodeTable.PROP_MODEL_ID, node.getPropModelId())
+                        .set(treeNodeTable.PROP_TYPE, node.getPropType())
+                        .set(treeNodeTable.PROP_DATE_OR_INT_PART_NAME, node.getPropDateOrIntPartName())
+                        .set(treeNodeTable.PROP_NOTE_OR_INT_SUBTITLE, node.getPropNoteOrIntSubtitle())
+                        .set(treeNodeTable.PROP_PART_NUMBER_OR_ALTO, node.getPropPartNumberOrAlto())
+                        .set(treeNodeTable.PROP_ADITIONAL_INFO_OR_OCR, node.getPropAditionalInfoOrOcr())
+                        .set(treeNodeTable.PROP_OCR_PATH, node.getPropOcrPath())
+                        .set(treeNodeTable.PROP_ALTO_PATH, node.getPropAltoPath())
+                        .set(treeNodeTable.PROP_EXIST, node.isPropExist()).execute();
+            }
+
+            CrudTreeStructureAction crudTable = CrudTreeStructureAction.CRUD_TREE_STRUCTURE_ACTION;
+            dsl.insertInto(crudTable).set(crudTable.EDITOR_USER_ID, new Long(userId).intValue())
+                .set(crudTable.TREE_STRUCTURE_ID, key)
+                .set(crudTable.TIMESTAMP, currentTimestamp())
+                .set(crudTable.TYPE, Constants.CRUD_ACTION_TYPES.CREATE.getValue()).execute();
+
+        }
+
+
+        return true;
     }
 }

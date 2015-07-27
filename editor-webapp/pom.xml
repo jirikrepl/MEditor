@@ -263,6 +263,7 @@
 										<include>html/login.html</include>
                     <include>html/loginLocal.html</include>
 										<include>viewer/viewer.html</include>
+										<include>WEB-INF/login.jsp</include>
 									</includes>
 								</resource>
 								<!--<resource>-->
