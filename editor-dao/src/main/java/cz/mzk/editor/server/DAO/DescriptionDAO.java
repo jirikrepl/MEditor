@@ -54,7 +54,7 @@ public interface DescriptionDAO {
      * @throws DatabaseException
      *         the database exception
      */
-    boolean putCommonDescription(String uuid, String description, Long user_id) throws DatabaseException;
+    boolean putCommonDescription(Long user_id, String uuid, String description) throws DatabaseException;
 
     /**
      * Gets the user description.
@@ -65,7 +65,7 @@ public interface DescriptionDAO {
      * @throws DatabaseException
      *         the database exception
      */
-    String getUserDescription(String digital_object_uuid) throws DatabaseException;
+    String getUserDescription(Long userId, String digital_object_uuid) throws DatabaseException;
 
     /**
      * Check user description.
@@ -78,5 +78,5 @@ public interface DescriptionDAO {
      * @throws DatabaseException
      *         the database exception
      */
-    boolean checkUserDescription(String digital_object_uuid, String description) throws DatabaseException;
+    boolean checkUserDescription(Long userId, String digital_object_uuid, String description) throws DatabaseException;
 }

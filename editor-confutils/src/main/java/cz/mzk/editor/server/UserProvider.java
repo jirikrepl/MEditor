@@ -1,8 +1,7 @@
 package cz.mzk.editor.server;
 
-import cz.mzk.editor.client.util.Constants;
-import cz.mzk.editor.server.DAO.DAOUtils;
-import cz.mzk.editor.server.DAO.DatabaseException;
+import cz.mzk.editor.server.DAO.UserDaoNew;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 
 import javax.inject.Inject;
@@ -15,32 +14,23 @@ import java.sql.SQLException;
  */
 public class UserProvider {
 
-    /** The http session provider. */
+    /**
+     * The http session provider.
+     */
     @Inject
     private Provider<HttpSession> httpSessionProvider;
 
     @Inject
-    DAOUtils daoUtils;
+    UserDaoNew userDaoNew;
 
-    public Long getUserId() {
+    public final Long getUserId() {
         SecurityContext secContext =
                 (SecurityContext) httpSessionProvider.get().getAttribute("SPRING_SECURITY_CONTEXT");
-        EditorUserAuthentication authentication = null;
-        if (secContext != null) authentication = (EditorUserAuthentication) secContext.getAuthentication();
+        Authentication authentication = secContext.getAuthentication();
+        return userDaoNew.getUserIdFromPrincipal(authentication.getPrincipal().toString());
+    }
 
-        try {
-        if (authentication != null) {
-            return daoUtils.getUsersId((String) authentication.getPrincipal(),
-                    authentication.getIdentityType(),
-                    true);
-        } else {
-           //TODO
-        }
-        } catch (SQLException e) {
-           //TODO
-        } catch (DatabaseException e) {
-          // TODO
-        }
-        return null;
+    public final String getName() {
+        return "test";
     }
 }

@@ -39,6 +39,7 @@ import cz.mzk.editor.client.util.Constants.EDITOR_RIGHTS;
 import cz.mzk.editor.server.DAO.DatabaseException;
 import cz.mzk.editor.server.DAO.DescriptionDAO;
 import cz.mzk.editor.server.DAO.UserDAO;
+import cz.mzk.editor.server.UserProvider;
 import cz.mzk.editor.server.util.ServerUtils;
 import cz.mzk.editor.shared.rpc.action.PutDescriptionAction;
 import cz.mzk.editor.shared.rpc.action.PutDescriptionResult;
@@ -60,7 +61,10 @@ public class PutDescriptionHandler
 
     /** The user dao. */
     @Inject
-    UserDAO userDAO;
+    private UserDAO userDAO;
+
+    @Inject
+    private UserProvider userProvider;
 
     /**
      * Instantiates a new put recently modified handler.
@@ -93,7 +97,7 @@ public class PutDescriptionHandler
         if (action.getDescription() == null) throw new NullPointerException("getDescription()");
 
         try {
-            descriptionDAO.checkUserDescription(action.getUuid(), action.getDescription());
+            descriptionDAO.checkUserDescription(userProvider.getUserId(), action.getUuid(), action.getDescription());
         } catch (DatabaseException e) {
             throw new ActionException(e);
         }

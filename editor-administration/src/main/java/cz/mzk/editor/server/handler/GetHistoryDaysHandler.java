@@ -40,6 +40,7 @@ import cz.mzk.editor.client.util.Constants.EDITOR_RIGHTS;
 import cz.mzk.editor.server.DAO.ActionDAO;
 import cz.mzk.editor.server.DAO.DAOUtils;
 import cz.mzk.editor.server.DAO.DatabaseException;
+import cz.mzk.editor.server.UserProvider;
 import cz.mzk.editor.server.util.ServerUtils;
 import cz.mzk.editor.shared.rpc.EditorDate;
 import cz.mzk.editor.shared.rpc.action.GetHistoryDaysAction;
@@ -61,6 +62,9 @@ public class GetHistoryDaysHandler
     @Inject
     private DAOUtils daoUtils;
 
+    @Inject
+    private UserProvider userProvider;
+
     /**
      * {@inheritDoc}
      */
@@ -75,7 +79,7 @@ public class GetHistoryDaysHandler
         try {
             if (action.getUserId() != null
                     && !ServerUtils.checkUserRightOrAll(EDITOR_RIGHTS.SHOW_ALL_HISTORY)
-                    && daoUtils.getUserId(true) != action.getUserId()) {
+                    && userProvider.getUserId() != action.getUserId()) {
                 LOGGER.warn("Bad authorization in " + this.getClass().toString());
                 throw new ActionException("Bad authorization in " + this.getClass().toString());
             }
@@ -85,9 +89,6 @@ public class GetHistoryDaysHandler
             LOGGER.error(e.getMessage());
             e.printStackTrace();
             throw new ActionException(e);
-        } catch (SQLException e) {
-            LOGGER.error(e.getMessage());
-            e.printStackTrace();
         }
 
         return new GetHistoryDaysResult(historyDays);

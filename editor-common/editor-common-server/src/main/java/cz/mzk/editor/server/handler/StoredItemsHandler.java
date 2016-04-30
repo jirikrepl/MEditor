@@ -45,6 +45,7 @@ import cz.mzk.editor.client.util.Constants;
 import cz.mzk.editor.server.DAO.DAOUtils;
 import cz.mzk.editor.server.DAO.DatabaseException;
 import cz.mzk.editor.server.DAO.StoredItemsDAO;
+import cz.mzk.editor.server.UserProvider;
 import cz.mzk.editor.server.config.EditorConfiguration;
 import cz.mzk.editor.server.fedora.utils.FedoraUtils;
 import cz.mzk.editor.server.modelHandler.StoredDigitalObjectHandlerImpl;
@@ -74,6 +75,9 @@ public class StoredItemsHandler
 
     /** The constant LOGGER */
     private static final Logger LOGGER = Logger.getLogger(StoredDigitalObjectHandlerImpl.class);
+
+    @Inject
+    private UserProvider userProvider;
 
     @Inject
     public StoredItemsHandler(EditorConfiguration configuration) {
@@ -137,7 +141,7 @@ public class StoredItemsHandler
 
             try {
                 action.getStoredItem().setFileName(foxmlFile);
-                if (storeDao.checkStoredDigitalObject(userId, action.getStoredItem())) {
+                if (storeDao.checkStoredDigitalObject(userProvider.getUserId(), action.getStoredItem())) {
                     return new StoredItemsResult(new ArrayList<StoredItem>());
                 } else {
                     return new StoredItemsResult(null);

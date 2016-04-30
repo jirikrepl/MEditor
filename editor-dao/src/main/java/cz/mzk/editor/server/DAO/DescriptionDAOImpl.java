@@ -89,7 +89,7 @@ public class DescriptionDAOImpl
      * {@inheritDoc}
      */
     @Override
-    public boolean putCommonDescription(String uuid, String description, Long user_id)
+    public boolean putCommonDescription(Long user_id,String uuid, String description)
             throws DatabaseException {
         if (uuid == null) throw new NullPointerException("uuid");
         if (description == null) throw new NullPointerException("description");
@@ -131,14 +131,14 @@ public class DescriptionDAOImpl
      * {@inheritDoc}
      */
     @Override
-    public String getUserDescription(String digital_object_uuid) throws DatabaseException {
+    public String getUserDescription(Long userId, String digital_object_uuid) throws DatabaseException {
 
         PreparedStatement selSt = null;
         String desc = null;
         try {
             selSt = getConnection().prepareStatement(DESCRIPTION_SELECT_DESC_STATEMENT);
             selSt.setString(1, digital_object_uuid);
-            selSt.setLong(2, getUserId(false));
+            selSt.setLong(2, userId);
             ResultSet rs = selSt.executeQuery();
             if (rs.next()) {
                 desc = rs.getString("description");
@@ -159,10 +159,10 @@ public class DescriptionDAOImpl
      * {@inheritDoc}
      */
     @Override
-    public boolean checkUserDescription(String digital_object_uuid, String description)
+    public boolean checkUserDescription(Long userId, String digital_object_uuid, String description)
             throws DatabaseException {
 
-        String desc = getUserDescription(digital_object_uuid);
+        String desc = getUserDescription(userId, digital_object_uuid);
         boolean successful = false;
         PreparedStatement updateSt = null;
 

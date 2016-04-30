@@ -37,6 +37,7 @@ import org.apache.log4j.Logger;
 
 import cz.mzk.editor.server.DAO.DatabaseException;
 import cz.mzk.editor.server.DAO.DescriptionDAO;
+import cz.mzk.editor.server.UserProvider;
 import cz.mzk.editor.server.util.ServerUtils;
 import cz.mzk.editor.shared.rpc.action.GetDescriptionAction;
 import cz.mzk.editor.shared.rpc.action.GetDescriptionResult;
@@ -55,6 +56,9 @@ public class GetDescriptionHandler
     /** The description dao. */
     @Inject
     private DescriptionDAO descriptionDAO;
+
+    @Inject
+    private UserProvider userProvider;
 
     /**
      * Instantiates a new put recently modified handler.
@@ -83,7 +87,7 @@ public class GetDescriptionHandler
         String commonDescription = null;
         String userDescription = null;
         try {
-            userDescription = descriptionDAO.getUserDescription(action.getUuid());
+            userDescription = descriptionDAO.getUserDescription(userProvider.getUserId(), action.getUuid());
             commonDescription = descriptionDAO.getCommonDescription(action.getUuid());
 
         } catch (DatabaseException e) {

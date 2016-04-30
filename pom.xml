@@ -94,6 +94,7 @@
         <errai.version>3.2.1.Final</errai.version>
 		<yaz4j.version>1.5</yaz4j.version>
 		<marc4j.version>2.6.0</marc4j.version>
+		<springsecurity.version>4.0.3.RELEASE</springsecurity.version>
 
 		<warName>meditor</warName>
 		<generatedGwtpSources>target/generated-sources/apt</generatedGwtpSources>
@@ -495,7 +496,7 @@
 			<dependency>
 				<groupId>org.springframework.security</groupId>
 				<artifactId>spring-security-core</artifactId>
-				<version>3.2.5.RELEASE</version>
+				<version>${springsecurity.version}</version>
                 <exclusions>
                     <exclusion>
                         <groupId>commons-logging</groupId>
@@ -506,12 +507,12 @@
 			<dependency>
 				<groupId>org.springframework.security</groupId>
 				<artifactId>spring-security-web</artifactId>
-				<version>3.2.5.RELEASE</version>
+				<version>${springsecurity.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework.security</groupId>
 				<artifactId>spring-security-config</artifactId>
-				<version>3.2.5.RELEASE</version>
+				<version>${springsecurity.version}</version>
 			</dependency>
 			<!-- Spring sec -->
             <dependency>
@@ -563,6 +564,36 @@
                 <artifactId>javax.ws.rs-api</artifactId>
                 <version>2.0.1</version>
             </dependency>
+						<dependency>
+							<groupId>org.keycloak</groupId>
+							<artifactId>keycloak-spring-security-adapter</artifactId>
+							<version>1.9.0.CR1</version>
+						</dependency>
+						<dependency>
+							<groupId>org.springframework</groupId>
+							<artifactId>spring-context</artifactId>
+							<version>4.2.4.RELEASE</version>
+						</dependency>
+						<dependency>
+							<groupId>org.springframework</groupId>
+							<artifactId>spring-core</artifactId>
+							<version>4.2.4.RELEASE</version>
+						</dependency>
+						<dependency>
+							<groupId>org.springframework</groupId>
+							<artifactId>spring-beans</artifactId>
+							<version>4.2.4.RELEASE</version>
+						</dependency>
+						<dependency>
+							<groupId>org.slf4j</groupId>
+							<artifactId>slf4j-log4j12</artifactId>
+							<version>1.7.13</version>
+						</dependency>
+						<dependency>
+							<groupId>org.jboss.logging</groupId>
+							<artifactId>jboss-logging</artifactId>
+							<version>3.3.0.Final</version>
+						</dependency>
 		</dependencies>
 	</dependencyManagement>
 

@@ -43,11 +43,11 @@
 			<artifactId>editor-common-server</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>editor-administration</artifactId>
-			<version>${project.version}</version>
-		</dependency>
+		<!--<dependency>-->
+			<!--<groupId>${project.groupId}</groupId>-->
+			<!--<artifactId>editor-administration</artifactId>-->
+			<!--<version>${project.version}</version>-->
+		<!--</dependency>-->
 		<dependency>
 			<groupId>${project.groupId}</groupId>
 			<artifactId>editor-security</artifactId>

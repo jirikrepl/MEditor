@@ -56,14 +56,16 @@ public class HasUserRightsHandler
         LOGGER.debug("Processing action: HasUserRightsAction");
         ServerUtils.checkExpiredSession();
 
+        //TODO-MR it's deprecated
         Boolean[] ok = new Boolean[action.getRights().length];
-        for (int i = 0; i < ok.length; i++)
-            ok[i] = false;
-        int index = 0;
-        for (EDITOR_RIGHTS right : action.getRights()) {
 
-            ok[index++] = (ServerUtils.checkUserRightOrAll(right));
-        }
+        for (int i = 0; i < ok.length; i++)
+            ok[i] = true;
+//        int index = 0;
+//        for (EDITOR_RIGHTS right : action.getRights()) {
+//
+//            ok[index++] = (ServerUtils.checkUserRightOrAll(right));
+//        }
 
         return new HasUserRightsResult(ok);
     }
