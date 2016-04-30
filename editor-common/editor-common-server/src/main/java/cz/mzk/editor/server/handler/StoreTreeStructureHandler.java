@@ -2,9 +2,9 @@
 
  * Metadata Editor
  * @author Jiri Kremser
- * 
- * 
- * 
+ *
+ *
+ *
  * Metadata Editor - Rich internet application for editing metadata.
  * Copyright (C) 2011  Jiri Kremser (kremser@mzk.cz)
  * Moravian Library in Brno
@@ -13,22 +13,21 @@
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * 
+ *
  */
 
 package cz.mzk.editor.server.handler;
 
-import java.sql.SQLException;
 
 import java.text.DateFormat;
 
@@ -42,6 +41,7 @@ import com.gwtplatform.dispatch.rpc.server.ExecutionContext;
 import com.gwtplatform.dispatch.rpc.server.actionhandler.ActionHandler;
 import com.gwtplatform.dispatch.shared.ActionException;
 
+import cz.mzk.editor.server.UserProvider;
 import org.apache.log4j.Logger;
 
 import cz.mzk.editor.server.DAO.DAOUtils;
@@ -77,6 +77,9 @@ public class StoreTreeStructureHandler
     private DAOUtils daoUtils;
 
     @Inject
+    private UserProvider userProvider;
+
+    @Inject
     public StoreTreeStructureHandler() {
     }
 
@@ -94,7 +97,7 @@ public class StoreTreeStructureHandler
             LOGGER.debug("Processing action: StoreTreeStructureResult role:"
                     + action
                     + ((action.getId() == null && action.getBundle() != null) ? (" for object: " + action
-                            .getBundle().getInfo().getInputPath()) : ""));
+                    .getBundle().getInfo().getInputPath()) : ""));
         }
         ServerUtils.checkExpiredSession();
 
@@ -117,18 +120,6 @@ public class StoreTreeStructureHandler
 
         }
 
-        long userId = 0;
-        try {
-            userId = daoUtils.getUserId(true);
-        } catch (DatabaseException e) {
-            LOGGER.error(e.getMessage());
-            e.printStackTrace();
-            throw new ActionException(e);
-        } catch (SQLException e) {
-            LOGGER.error(e.getMessage());
-            e.printStackTrace();
-            throw new ActionException(e);
-        }
 
         try {
             switch (action.getVerb()) {
@@ -138,11 +129,11 @@ public class StoreTreeStructureHandler
                             DateFormat.getDateInstance(DateFormat.DEFAULT, new Locale("cs", "CZ"));
                     action.getBundle().getInfo().setCreated(dateFormatter.format(new Date()));
                     boolean success =
-                            treeDAO.saveStructure(userId, action.getBundle().getInfo(), action.getBundle()
+                            treeDAO.saveStructure(userProvider.getUserId(), action.getBundle().getInfo(), action.getBundle()
                                     .getNodes());
                     if (success) {
                         return new StoreTreeStructureResult(new ArrayList<TreeStructureInfo>(),
-                                                            new ArrayList<TreeStructureNode>());
+                                new ArrayList<TreeStructureNode>());
                     } else {
                         return new StoreTreeStructureResult(null, null);
                     }
@@ -150,15 +141,15 @@ public class StoreTreeStructureHandler
                     if (action.isAll()) {
                         // for all users
                         return new StoreTreeStructureResult(treeDAO.getAllSavedStructures(action.getId()),
-                                                            null);
+                                null);
                     } else if (action.getId() == null) {
                         // for all objects of particular user
-                        return new StoreTreeStructureResult(treeDAO.getAllSavedStructuresOfUser(userId), null);
+                        return new StoreTreeStructureResult(treeDAO.getAllSavedStructuresOfUser(userProvider.getUserId()), null);
                     } else if (action.getBundle() == null) {
                         // for user's objects of particular user
-                        return new StoreTreeStructureResult(treeDAO.getSavedStructuresOfUser(userId,
-                                                                                             action.getId()),
-                                                            null);
+                        return new StoreTreeStructureResult(treeDAO.getSavedStructuresOfUser(userProvider.getUserId(),
+                                action.getId()),
+                                null);
                     } else {
                         // tree nodes
                         return new StoreTreeStructureResult(null, treeDAO.loadStructure(Long.parseLong(action

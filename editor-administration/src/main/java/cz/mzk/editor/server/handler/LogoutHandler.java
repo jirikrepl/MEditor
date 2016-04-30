@@ -43,6 +43,7 @@ import com.gwtplatform.dispatch.shared.ActionException;
 
 import org.apache.log4j.Logger;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import cz.mzk.editor.server.EditorUserAuthentication;
@@ -96,11 +97,10 @@ public class LogoutHandler
         LOGGER.debug("Processing action: LogoutAction");
         ServerUtils.checkExpiredSession();
 
-        EditorUserAuthentication authentication = ServerUtils.getEditorUserAuthentication();
+        Authentication authentication = ServerUtils.getEditorUserAuthentication();
 
         try {
             ACCESS_LOGGER.info("LOG OUT: [" + FORMATTER.format(new Date()) + "] User " + userDAO.getName()
-                    + " with " + authentication.getIdentityType().toString() + " identifier "
                     + authentication.getPrincipal() + " and IP " + reqProvider.get().getRemoteAddr());
         } catch (DatabaseException e) {
             LOGGER.error(e.getMessage());

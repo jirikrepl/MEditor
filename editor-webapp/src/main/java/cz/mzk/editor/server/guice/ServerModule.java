@@ -35,6 +35,8 @@ import com.google.inject.name.Names;
 
 import com.gwtplatform.dispatch.rpc.server.guice.HandlerModule;
 import cz.mzk.editor.server.*;
+import cz.mzk.editor.server.DAO.UserDaoNew;
+import cz.mzk.editor.server.DAO.UserDaoNewImpl;
 import cz.mzk.editor.server.metadataDownloader.*;
 import org.quartz.SchedulerFactory;
 import org.quartz.impl.StdSchedulerFactory;
@@ -73,8 +75,6 @@ import cz.mzk.editor.server.DAO.UserDAO;
 import cz.mzk.editor.server.DAO.UserDAOImpl;
 import cz.mzk.editor.server.DAO.OcrDao;
 import cz.mzk.editor.server.DAO.OcrDaoImpl;
-import cz.mzk.editor.server.LDAP.LDAPAuthenticationFilter;
-import cz.mzk.editor.server.LDAP.LDAPAuthenticationProvider;
 import cz.mzk.editor.server.config.EditorConfiguration;
 import cz.mzk.editor.server.config.EditorConfigurationImpl;
 import cz.mzk.editor.server.fedora.FedoraAccess;
@@ -141,8 +141,6 @@ import cz.mzk.editor.server.handler.ScanInputQueueHandler;
 import cz.mzk.editor.server.handler.StoreTreeStructureHandler;
 import cz.mzk.editor.server.handler.StoredItemsHandler;
 import cz.mzk.editor.server.handler.UnlockDigitalObjectHandler;
-import cz.mzk.editor.server.janrain.JanrainAuthenticationFilter;
-import cz.mzk.editor.server.janrain.JanrainClient;
 import cz.mzk.editor.server.modelHandler.FedoraDigitalObjectHandler;
 import cz.mzk.editor.server.modelHandler.FedoraDigitalObjectHandlerImpl;
 import cz.mzk.editor.server.modelHandler.StoredDigitalObjectHandler;
@@ -152,8 +150,6 @@ import cz.mzk.editor.server.newObject.FOXMLBuilderMapping;
 import cz.mzk.editor.server.newObject.IngestUtils;
 import cz.mzk.editor.server.quartz.GuiceJobFactory;
 import cz.mzk.editor.server.quartz.Quartz;
-import cz.mzk.editor.server.shibboleth.ShibbolethAuthenticationFilter;
-import cz.mzk.editor.server.shibboleth.ShibbolethClient;
 import cz.mzk.editor.server.util.ServerUtils;
 import cz.mzk.editor.server.utils.ScanFolder;
 import cz.mzk.editor.server.utils.ScanFolderImpl;
@@ -310,6 +306,7 @@ public class ServerModule
         //        bind(UserDAO.class).to(UserDAOImpl.class);
         bind(SecurityUserDAO.class).to(SecurityUserDAOImpl.class);
         bind(UserDAO.class).to(UserDAOImpl.class);
+        bind(UserDaoNew.class).to(UserDaoNewImpl.class);
         //        bind(DBSchemaDAO.class).to(DBSchemaDAOImpl.class);
         //        bind(DAOUtils.class).to(DAOUtilsImpl.class);
         bind(ActionDAO.class).to(ActionDAOImpl.class);
@@ -347,13 +344,7 @@ public class ServerModule
         requestStaticInjection(IngestUtils.class);
         requestStaticInjection(ServerUtils.class);
         requestStaticInjection(FOXMLBuilderMapping.class);
-        requestStaticInjection(JanrainClient.class);
-        requestStaticInjection(JanrainAuthenticationFilter.class);
         requestStaticInjection(SessionListener.class);
-        requestStaticInjection(ShibbolethAuthenticationFilter.class);
-        requestStaticInjection(ShibbolethClient.class);
-        requestStaticInjection(LDAPAuthenticationProvider.class);
-        requestStaticInjection(LDAPAuthenticationFilter.class);
         requestStaticInjection(RequestForAddingServiceImpl.class);
     }
 }

@@ -41,6 +41,7 @@ import cz.mzk.editor.client.util.Constants.EDITOR_RIGHTS;
 import cz.mzk.editor.server.DAO.DAOUtils;
 import cz.mzk.editor.server.DAO.DatabaseException;
 import cz.mzk.editor.server.DAO.StoredAndLocksDAO;
+import cz.mzk.editor.server.UserProvider;
 import cz.mzk.editor.server.util.ServerUtils;
 import cz.mzk.editor.shared.rpc.TreeStructureInfo;
 import cz.mzk.editor.shared.rpc.action.GetAllStoredTreeStructureItemsAction;
@@ -64,6 +65,9 @@ public class GetAllStoredTreeStructureHandler
     @Inject
     private DAOUtils daoUtils;
 
+    @Inject
+    private UserProvider userProvider;
+
     /**
      * {@inheritDoc}
      */
@@ -79,7 +83,7 @@ public class GetAllStoredTreeStructureHandler
         try {
             if (action.getUserId() != null
                     && !ServerUtils.checkUserRightOrAll(EDITOR_RIGHTS.SHOW_ALL_STORED_AND_LOCKS)
-                    && daoUtils.getUserId(true) != action.getUserId()) {
+                    && userProvider.getUserId() != action.getUserId()) {
                 LOGGER.warn("Bad authorization in " + this.getClass().toString());
                 throw new ActionException("Bad authorization in " + this.getClass().toString());
             }
@@ -89,9 +93,6 @@ public class GetAllStoredTreeStructureHandler
             LOGGER.error(e);
             e.printStackTrace();
             throw new ActionException(e);
-        } catch (SQLException e) {
-            LOGGER.error(e.getMessage());
-            e.printStackTrace();
         }
 
         return new GetAllStoredTreeStructureItemsResult(strucItems);

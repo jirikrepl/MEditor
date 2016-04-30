@@ -46,6 +46,7 @@ import org.apache.log4j.Logger;
 import cz.mzk.editor.server.DAO.DAOUtils;
 import cz.mzk.editor.server.DAO.DatabaseException;
 import cz.mzk.editor.server.DAO.RecentlyModifiedItemDAO;
+import cz.mzk.editor.server.UserProvider;
 import cz.mzk.editor.server.config.EditorConfiguration;
 import cz.mzk.editor.server.util.ServerUtils;
 import cz.mzk.editor.shared.rpc.LockInfo;
@@ -82,9 +83,11 @@ public class GetRecentlyModifiedHandler
     @Inject
     private DAOUtils daoUtils;
 
+    private final UserProvider userProvider;
+
     /**
      * Instantiates a new gets the recently modified handler.
-     * 
+     *
      * @param configuration
      *        the configuration
      * @param recentlyModifiedDAO
@@ -92,10 +95,12 @@ public class GetRecentlyModifiedHandler
      */
     @Inject
     public GetRecentlyModifiedHandler(final EditorConfiguration configuration,
-                                      final RecentlyModifiedItemDAO recentlyModifiedDAO) {
+                                      final RecentlyModifiedItemDAO recentlyModifiedDAO,
+                                      final UserProvider userProvider) {
         this.configuration = configuration;
         this.recentlyModifiedDAO = recentlyModifiedDAO;
         this.getLockInformationHandler = new GetLockInformationHandler();
+        this.userProvider = userProvider;
     }
 
     /*
@@ -123,7 +128,7 @@ public class GetRecentlyModifiedHandler
             } else {
                 recItems =
                         recentlyModifiedDAO.getItems(configuration.getRecentlyModifiedNumber(),
-                                                     daoUtils.getUserId(true));
+                                userProvider.getUserId());
             }
 
             for (RecentlyModifiedItem item : recItems) {
@@ -134,10 +139,6 @@ public class GetRecentlyModifiedHandler
             }
             return new GetRecentlyModifiedResult(recItems);
         } catch (DatabaseException e) {
-            LOGGER.error(e.getMessage());
-            e.printStackTrace();
-            throw new ActionException(e);
-        } catch (SQLException e) {
             LOGGER.error(e.getMessage());
             e.printStackTrace();
             throw new ActionException(e);

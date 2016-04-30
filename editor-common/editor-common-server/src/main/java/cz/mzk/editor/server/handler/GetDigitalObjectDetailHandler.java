@@ -52,6 +52,7 @@ import cz.mzk.editor.client.util.Constants.EDITOR_RIGHTS;
 import cz.mzk.editor.server.DAO.DatabaseException;
 import cz.mzk.editor.server.DAO.DescriptionDAO;
 import cz.mzk.editor.server.DAO.DigitalObjectDAO;
+import cz.mzk.editor.server.UserProvider;
 import cz.mzk.editor.server.fedora.utils.FedoraUtils;
 import cz.mzk.editor.server.modelHandler.FedoraDigitalObjectHandler;
 import cz.mzk.editor.server.modelHandler.StoredDigitalObjectHandler;
@@ -96,6 +97,9 @@ public class GetDigitalObjectDetailHandler
     @Inject
     private DigitalObjectDAO digObjDAO;
 
+    @Inject
+    private UserProvider userProvider;
+
     /**
      * Instantiates a new gets the digital object detail handler.
      * 
@@ -124,11 +128,6 @@ public class GetDigitalObjectDetailHandler
 
         LOGGER.debug("Processing action: GetDigitalObjectDetailAction " + action.getUuid());
         ServerUtils.checkExpiredSession();
-
-        if (!ServerUtils.checkUserRightOrAll(EDITOR_RIGHTS.OPEN_OBJECT)) {
-            LOGGER.warn("Bad authorization in " + this.getClass().toString());
-            throw new ActionException("Bad authorization in " + this.getClass().toString());
-        }
 
         // parse input
         String uuid = action.getUuid();
@@ -189,16 +188,18 @@ public class GetDigitalObjectDetailHandler
             String description = null;
             Date modified = null;
             try {
-                description = descriptionDAO.getUserDescription(uuid);
+                description = descriptionDAO.getUserDescription(userProvider.getUserId(), uuid);
 
                 // TODO: is the given user authorized to this operation?
             } catch (DatabaseException e) {
                 throw new ActionException(e);
             }
-            LockInfo lockInfo =
-                    getLockInformationHandler.execute(new GetLockInformationAction(uuid), context)
-                            .getLockInfo();
-            obj.setLockInfo(lockInfo);
+
+            //TODO-MR lock?...is this even a thing?
+//            LockInfo lockInfo =
+//                    getLockInformationHandler.execute(new GetLockInformationAction(uuid), context)
+//                            .getLockInfo();
+//            obj.setLockInfo(lockInfo);
 
             return new GetDigitalObjectDetailResult(obj,
                                                     description == null ? "" : description,

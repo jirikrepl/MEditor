@@ -28,41 +28,32 @@
 package cz.mzk.editor.server.util;
 
 import java.io.IOException;
-
 import java.lang.reflect.Field;
-
 import java.net.HttpURLConnection;
 import java.net.InetAddress;
 import java.net.MalformedURLException;
 import java.net.URLConnection;
 import java.net.UnknownHostException;
-
-import java.sql.SQLException;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
-
 import javax.xml.bind.JAXBElement;
 
-import javax.inject.Inject;
+import org.apache.log4j.Logger;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
 
 import com.google.inject.Provider;
 import com.gwtplatform.dispatch.shared.ActionException;
 
-import org.apache.log4j.Logger;
-
-import org.springframework.security.core.context.SecurityContext;
-
 import cz.mzk.editor.client.util.Constants;
 import cz.mzk.editor.client.util.Constants.EDITOR_RIGHTS;
-import cz.mzk.editor.server.EditorUserAuthentication;
-import cz.mzk.editor.server.URLS;
 import cz.mzk.editor.server.DAO.DAOUtils;
-import cz.mzk.editor.server.DAO.DatabaseException;
+import cz.mzk.editor.server.URLS;
 import cz.mzk.editor.server.config.EditorConfiguration;
 
 // TODO: Auto-generated Javadoc
@@ -88,7 +79,7 @@ public class ServerUtils {
 
     /**
      * Checks if is caused by exception.
-     * 
+     *
      * @param t
      *        the t
      * @param type
@@ -105,35 +96,29 @@ public class ServerUtils {
         return false;
     }
 
-    private static EditorUserAuthentication getEditorUserAuthentication(HttpSession session) {
+    private static Authentication getEditorUserAuthentication(HttpSession session) {
         SecurityContext secContext = (SecurityContext) session.getAttribute("SPRING_SECURITY_CONTEXT");
-        EditorUserAuthentication authentication = null;
-        if (secContext != null) authentication = (EditorUserAuthentication) secContext.getAuthentication();
+
+        Authentication authentication = null;
+        if (secContext != null) authentication = secContext.getAuthentication();
         return authentication;
     }
 
-    public static EditorUserAuthentication getEditorUserAuthentication() {
+    public static Authentication getEditorUserAuthentication() {
         return getEditorUserAuthentication(httpSessionProvider.get());
     }
 
-    public static Long checkExpiredSessionAndGetId(Provider<HttpSession> httpSessionProvider)
+    public static String checkExpiredSessionAndGetId(Provider<HttpSession> httpSessionProvider)
             throws ActionException {
         checkExpiredSession();
-        try {
-            return daoUtils.getUserId(true);
-        } catch (DatabaseException e) {
-            LOGGER.error(e.getMessage());
-            e.printStackTrace();
-            throw new ActionException(e);
-        } catch (SQLException e) {
-            LOGGER.error(e.getMessage());
-            e.printStackTrace();
-            throw new ActionException(e);
-        }
+
+        //TODO-MR
+        return "cdf94ab3-137e-4864-808d-592bd576d6a6";
+
     }
 
     private static void checkExpiredSession(HttpSession session) throws ActionException {
-        EditorUserAuthentication authentication = getEditorUserAuthentication(session);
+        Authentication authentication = getEditorUserAuthentication(session);
         if (authentication == null || !authentication.isAuthenticated()) {
             throw new ActionException(Constants.SESSION_EXPIRED_FLAG + URLS.ROOT()
                     + (URLS.LOCALHOST() ? URLS.LOGIN_LOCAL_PAGE : URLS.LOGIN_PAGE));
@@ -149,14 +134,9 @@ public class ServerUtils {
         return checkUserRight(EDITOR_RIGHTS.ALL) || checkUserRight(right);
     }
 
+    @Deprecated
     public static boolean checkUserRight(EDITOR_RIGHTS right) {
-        try {
-            return daoUtils.hasUserRight(right);
-        } catch (DatabaseException e) {
-            LOGGER.error(e.getMessage());
-            e.printStackTrace();
-            return false;
-        }
+        return true;
     }
 
     private static List<Field> getAllFields(Class<?> clazz) {
@@ -187,10 +167,6 @@ public class ServerUtils {
     }
 
     public static boolean reindex(String pid) {
-        if (!pid.startsWith(Constants.FEDORA_UUID_PREFIX)) {
-            pid = Constants.FEDORA_UUID_PREFIX + pid;
-        }
-
         return krameriusRest(KRAMERIUS_ACTION.REINDEX, pid);
     }
 
@@ -201,7 +177,7 @@ public class ServerUtils {
 
     /**
      * Reindex.
-     * 
+     *
      * @param pid
      *        the pid
      */
