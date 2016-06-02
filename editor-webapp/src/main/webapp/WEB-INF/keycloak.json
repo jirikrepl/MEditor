@@ -1,7 +1,7 @@
 {
   "realm" : "meditor",
   "resource" : "meditor",
-  "realm-public-key" : "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAo6Y+b43eSrYfqRXgcl1c/BhPcLbjm4hEsxf1M4FFFBdVce2nMnSgqioHS/DKoHv3L2Ajq94SoQ1WZ1Ubg0bkGGR5jlMUlTg+GZxKkchRTbt9PH85TPWQF2vZtA1HGMGx6jS3jdr9ddvzlq++FT/tbI8SCjSdWVtGutw3xWKZfBprLbl0TDpAtafOxObxrwozSMyv7HPHI4GuD9fKcNkJWhUc7ySeI/dujqxSjKI42UAtvx7wlCwWWzwPX5+NJ7FwYzeA4rF6IAe7z8+LXOZPkZ8W8+oX2Ba10wuSGQVXd8J/J80zZ8d6gTs3yIVg8y57k6mr0+f/m/u1MAyUd5sR7QIDAQAB",
+  "realm-public-key" : "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAjsel0V2GTaJJ1ufHDP76IuOHNgxPr12SDVStRJjjWVhbj6XSM5ShrQ6t8ScNpEWvtRKvAezxvjKx2KotLJPFUk0yPtllPCuEhceFtwPU+tD7PcpWIK71Ft2bHxFAgHra1r5/TSG2yZZcPUkl4KLVzKZ/nhczhR5E0uBCaKpgktA/nMJlWFCKo4kDxoVOrmOnmsvOOirMnRXLGz2vYW9IWrTTSXWGD2dFZGrjo2dPAq3s8utAhC048hKSCKMOJUHQDS7zovlN7VxVPmPZExxw8ruNNMjuBxNMrPXMGSea6Og+1rhkdeqztwJca5ve3hNZQWuRLCGOdaAUKtJXr8KqlQIDAQAB",
   "auth-server-url" : "http://keycloak-krameriustest.openshift.mzk.cz/auth/",
 
   "credentials" : {
