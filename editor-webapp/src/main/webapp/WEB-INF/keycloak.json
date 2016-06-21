@@ -1,7 +1,7 @@
 {
   "realm" : "meditor",
   "resource" : "meditor",
-  "realm-public-key" : "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtPfTRaki/xKhjSInhGGIeXVLhy+5IJu5Q0PsZbhRTdAsJQPtSqAQprqeQ7joWN2spYDBo3vQrTYTzxXuMHPo1dtt9+FJ9JzOT4JR0K0SGqTXzbfEKLJ5q6eIppFECIH0KCDJvVvZtGM0Agbpl+qM5rT0p5PunRhROlxz5DVf7vfQJi2ZMuOceE7Xk6sFFTV2Zmzm+/GWiyy/9qL6pC8lrEJz416j91IjfXBL6eIl17hEjrJTWkfYNdgvcTzSVH53njn5NHlNXPpD9x6a+4jZsHp1pItJ3uNQoqAo5+d2eq2qipMfB8f33TxcrFw9JjhWwDcE5JMfuSHOb52aZ0ZhEwIDAQAB",
+  "realm-public-key" : "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAgV4B7x/ee9Qgeg+KXo2rRKblTxpnRYdnL8OhmopO81W968eTHRzYRiCJZDuvRAP/XlVRA7jrnUrDgZ8XkiTZnaOh3yC+CvdPePfU0FY+kwzrfBC9EmC5qHLHM4pl4GPcjyhesMOeFyKS03tqIZ9S3vGz5Pocz/lwXD+VaekQcRaKoLqjReuKCiIZe0dkrP2tqsYE1T/pI/69pKLtwAM86vDYoCsAT/Xt7nrMCsxe+847ofsqIq/VXxGUOEuKLPvQ9D6wOGnGtlTRBW/23Nw+ro3mXsIveqglvY4u6JSJpJn1tP/ficj1PL6vW/LQ6nc2yAjS+3BREYyuRNHCutf47wIDAQAB",
   "auth-server-url" : "http://localhost:8080/auth/",
 
   "credentials" : {
