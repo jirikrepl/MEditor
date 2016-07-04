@@ -1,0 +1,60 @@
+meditor:
+  image: meditor-travis
+  container_name: medit
+  restart: always
+  environment:
+   - dbName=meditor
+   - dbHost=meditorPostgres
+   - dbPassword=meditor
+   - z39.50Profile=mzk
+   - oaiUrls=https://aleph.mzk.cz/OAI
+   - fedoraHost=http://fedora.mzk.cz/fedora
+   - fedoraLogin=fedoraAdmin
+   - fedoraPassword=flouTMouSe71
+   - fedoraVersion=3.5
+   - krameriusHost=http://krameriustest.mzk.cz/search
+   - krameriusLogin=krameriusAdmin
+   - krameriusPassword=jerryMouse
+   - createIngestInfoXmlFile=no
+   - documentTypes=monograph, periodical
+   - imageServer.url=http://imageserver.mzk.cz/
+   - imageServer.known=/data/imageserver
+   - imageServer.unknown=/data/imageserver/meditor/
+   - imageExtension=jpg, JPG, png, tiff, tif, jpeg, jp2, pdf, wav, mp3, ogg
+   - hostname=https://localhost
+   - genImagesLifetime=7
+   - identities=ldap
+   - inputQueue=/data/meditor/import
+  volumes:
+    - /data/meditor:/data/meditor
+    - /data/imageserver:/data/imageserver
+    - /home/kreplj/import:/data/meditor/import
+  ports:
+    - "80:8080"
+    - "443:8443"
+  links:
+    - meditorPostgres
+    - ldap
+meditorPostgres:
+  image: "postgres:9.5"
+  restart: always
+  environment:
+    - POSTGRES_USER=meditor
+    - POSTGRES_PASSWORD=meditor
+    - POSTGRES_DB=meditor
+#  volumes:
+#    - /data/meditor/postgres:/var/lib/postgresql/data
+#  ports:
+#    - "5432:5432"
+ldap:
+  image: jirikrepl/slapd
+phpldapadmin:
+  image: windfisch/phpldapadmin
+  links:
+    - ldap
+  environment:
+    -  LDAP_HOST=ldap
+    -  LDAP_BASE_DN=dc=medit,dc=mzk,dc=cz
+    -  LDAP_LOGIN_DN=cn=admin,dc=medit,dc=mzk,dc=cz
+  ports:
+    - "444:443"
